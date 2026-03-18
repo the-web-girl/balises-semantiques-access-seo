@@ -1,0 +1,2651 @@
+<!DOCTYPE html>
+<!--
+  ╔══════════════════════════════════════════════════════════════════════╗
+  ║   RÉFÉRENCE COMPLÈTE DES BALISES SÉMANTIQUES HTML5                  ║
+  ║   Fichier pédagogique — IntA11Y - Solutions                                ║
+  ║   Toutes les balises HTML5 existantes, commentées et expliquées     ║
+  ╠══════════════════════════════════════════════════════════════════════╣
+  ║  PLAN DU FICHIER :                                                   ║
+  ║  1.  <!DOCTYPE> et <html>      — Base du document                   ║
+  ║  2.  <head>                    — Métadonnées invisibles              ║
+  ║  3.  <body>                    — Contenu visible                     ║
+  ║  4.  <header>                  — En-tête                            ║
+  ║  5.  <nav>                     — Navigation                         ║
+  ║  6.  <main>                    — Contenu principal                   ║
+  ║  7.  <article>                 — Contenu autonome                   ║
+  ║  8.  <section>                 — Section thématique                 ║
+  ║  9.  <aside>                   — Contenu secondaire                 ║
+  ║  10. <footer>                  — Pied de page                       ║
+  ║  11. Titres <h1> à <h6>        — Hiérarchie                        ║
+  ║  12. Texte : <p> <br> <hr>     — Paragraphes et séparateurs        ║
+  ║  13. Mise en forme inline      — <strong> <em> <span> etc.         ║
+  ║  14. Listes : <ul> <ol> <dl>   — Listes non ordonnées/ordonnées    ║
+  ║  15. Liens : <a>               — Hyperliens                        ║
+  ║  16. Images : <img> <figure>   — Médias                            ║
+  ║  17. Tableaux : <table>        — Données tabulaires                 ║
+  ║  18. Formulaires : <form>      — Saisie utilisateur                ║
+  ║  19. Médias : <video> <audio>  — Contenu multimédia                ║
+  ║  20. Embarqué : <iframe>       — Contenu externe                   ║
+  ║  21. Scripts : <script>        — JavaScript                        ║
+  ║  22. Balises spéciales         — <details> <dialog> <template>     ║
+  ╚══════════════════════════════════════════════════════════════════════╝
+-->
+
+<!--
+  ════════════════════════════════════════════════════════════════════════
+  1. <!DOCTYPE html>
+  ════════════════════════════════════════════════════════════════════════
+  Pas une balise HTML — c'est une DÉCLARATION de type de document.
+  Elle indique au navigateur quelle version de HTML utiliser.
+  "html" (sans numéro) = HTML5, la version moderne.
+  OBLIGATOIRE : toujours en toute première ligne, avant tout le reste.
+  Sans DOCTYPE, le navigateur entre en "quirks mode" (mode de compatibilité
+  avec les anciens navigateurs) et peut afficher la page de façon incorrecte.
+-->
+
+<!--
+    ════════════════════════════════════════════════════════════════════════
+    2. <html>
+    ════════════════════════════════════════════════════════════════════════
+    Balise RACINE du document. Elle englobe TOUT le contenu HTML.
+    Il n'existe qu'une seule balise <html> par page.
+
+    Attributs importants :
+    - lang="fr"   → Langue principale du contenu (OBLIGATOIRE pour l'accessibilité).
+                    Utilisé par les lecteurs d'écran pour choisir la bonne voix.
+                    Par le navigateur pour proposer la traduction.
+                    Par les moteurs de recherche pour le référencement.
+                    Valeurs courantes : "fr", "en", "es", "de", "ja"...
+    - dir="ltr"   → Direction du texte : ltr (left-to-right, gauche→droite)
+                    ou rtl (right-to-left) pour l'arabe, l'hébreu...
+  -->
+  <html lang="fr" dir="ltr">
+
+  <!--
+    ════════════════════════════════════════════════════════════════════════
+    3. <head>
+    ════════════════════════════════════════════════════════════════════════
+    Contient les MÉTADONNÉES du document : informations pour le navigateur,
+    les moteurs de recherche et les réseaux sociaux.
+    Le contenu du <head> n'est PAS affiché à l'utilisateur (sauf <title>).
+    Doit être enfant direct de <html>.
+  -->
+  <head>
+
+    <!--
+      <meta charset="UTF-8">
+      ──────────────────────
+      Définit l'ENCODAGE des caractères du document.
+      UTF-8 = encodage universel supportant tous les caractères du monde :
+      - Lettres accentuées françaises : é è à ù î ô û ç ê
+      - Symboles : € © ® ™ ° …
+      - Emojis : 😀 🎓 ✓
+      - Caractères asiatiques, arabes, cyrilliques, etc.
+      TOUJOURS mettre en PREMIER dans le <head>, avant tout autre élément.
+      Sans ça : les caractères spéciaux s'affichent en "carrés" ou "???".
+    -->
+    <meta charset="UTF-8">
+
+    <!--
+      <meta name="viewport">
+      ───────────────────────
+      Contrôle l'affichage sur les appareils mobiles (RESPONSIVE DESIGN).
+      INDISPENSABLE pour que la page s'adapte aux smartphones et tablettes.
+
+      content="width=device-width" :
+        La largeur de la page = la largeur réelle de l'écran.
+        Sans ça, mobile affiche la version desktop rétrécie et illisible.
+
+      initial-scale=1.0 :
+        Pas de zoom automatique au chargement.
+        L'échelle de départ est 1:1 (sans agrandissement ni réduction).
+
+      Autres valeurs possibles (rarement utilisées) :
+        maximum-scale=1.0 → empêche le zoom utilisateur (déconseillé, nuit à l'accessibilité)
+        user-scalable=no  → interdit le zoom (INTERDIT par WCAG 1.4.4)
+    -->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!--
+      <title>
+      ────────
+      Titre du document. Affiché dans :
+      - L'onglet du navigateur
+      - La barre de titre de la fenêtre
+      - Les résultats de recherche Google (SEO)
+      - Les favoris/marque-pages
+      - L'historique du navigateur
+      - Les partages sur réseaux sociaux (si pas d'og:title)
+      OBLIGATOIRE pour l'accessibilité (WCAG 2.4.2).
+      Doit être unique et descriptif (pas juste "Page" ou "Index").
+      Longueur recommandée : 50-60 caractères pour Google.
+    -->
+    <title>Référence des balises HTML5 — IntA11Y - Solutions</title>
+
+    <!--
+      <meta name="description">
+      ──────────────────────────
+      Description courte de la page (150-160 caractères max).
+      Utilisée par :
+      - Google dans les résultats de recherche (snippet)
+      - Les réseaux sociaux pour les prévisualisations de liens
+      - Les lecteurs d'écran (parfois)
+      N'affecte PAS directement le classement Google, mais influence
+      le taux de clic (CTR) donc indirectement le SEO.
+    -->
+    <meta name="description" content="Référence complète de toutes les balises sémantiques HTML5, commentées et expliquées pour les intégrateurs débutants.">
+
+    <!--
+      <meta name="keywords">
+      ───────────────────────
+      Mots-clés de la page. IGNORÉ par Google depuis 2009 (spam trop facile).
+      Encore utilisé par quelques moteurs de recherche mineurs (Yandex, Baidu).
+      On peut le mettre mais il n'a presque plus d'utilité.
+    -->
+    <meta name="keywords" content="HTML, balises, sémantique, référence, débutant">
+
+    <!--
+      <meta name="author">
+      ─────────────────────
+      Identifie l'auteur du document.
+      Utilisé par certains agrégateurs de contenu et outils SEO.
+    -->
+    <meta name="author" content="IntA11Y - Solutions">
+
+    <!--
+      <meta name="robots">
+      ─────────────────────
+      Indique aux robots des moteurs de recherche (Googlebot, etc.)
+      comment traiter la page.
+      Valeurs courantes :
+      - index, follow   → Indexer la page et suivre ses liens (défaut)
+      - noindex         → Ne pas indexer la page dans les résultats
+      - nofollow        → Ne pas suivre les liens de la page
+      - noarchive       → Ne pas mettre en cache la page
+      - noindex,nofollow → Page complètement privée des moteurs
+    -->
+    <meta name="robots" content="index, follow">
+
+    <!--
+      <meta name="theme-color">
+      ──────────────────────────
+      Couleur de la barre de statut sur mobile (Chrome Android, Safari iOS).
+      Donne un aspect "app native" à la page web.
+      Valeur : n'importe quelle couleur CSS valide.
+    -->
+    <meta name="theme-color" content="#1a1a2e">
+
+    <!--
+      Open Graph — Métadonnées pour les réseaux sociaux
+      ──────────────────────────────────────────────────
+      Protocole créé par Facebook, utilisé par tous les réseaux sociaux.
+      Contrôle l'apparence de la prévisualisation quand on partage un lien.
+      Sans ces balises, les réseaux choisissent n'importe quelle image
+      et texte de la page.
+
+      og:title       → Titre affiché dans la carte de partage
+      og:description → Description dans la carte de partage
+      og:image       → Image de prévisualisation (min 1200×630px recommandé)
+      og:url         → URL canonique de la page
+      og:type        → Type de contenu (website, article, video, book...)
+      og:site_name   → Nom du site
+      og:locale      → Langue (fr_FR, en_US...)
+    -->
+    <meta property="og:title" content="Référence des balises HTML5">
+    <meta property="og:description" content="Toutes les balises sémantiques HTML5 commentées pour les débutants.">
+    <meta property="og:image" content="https://example.com/image-partage.jpg">
+    <meta property="og:url" content="https://example.com/balises-html">
+    <meta property="og:type" content="article">
+    <meta property="og:site_name" content="IntA11Y - Solutions">
+    <meta property="og:locale" content="fr_FR">
+
+    <!--
+      Twitter Cards — Métadonnées spécifiques à Twitter/X
+      ─────────────────────────────────────────────────────
+      Similaires à Open Graph mais spécifiques à Twitter.
+      twitter:card → Type de carte : summary, summary_large_image, app, player
+      Twitter utilise og: en fallback si ces balises sont absentes.
+    -->
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Référence des balises HTML5">
+    <meta name="twitter:description" content="Toutes les balises HTML5 commentées.">
+    <meta name="twitter:image" content="https://example.com/image-twitter.jpg">
+
+    <!--
+      <link rel="canonical">
+      ───────────────────────
+      Indique à Google l'URL "officielle" de la page.
+      Évite le contenu dupliqué si la même page est accessible via
+      plusieurs URLs différentes (avec/sans www, avec/sans /, avec paramètres...).
+      SEO : évite de "diluer" le jus de lien entre plusieurs URLs identiques.
+    -->
+    <link rel="canonical" href="https://example.com/balises-html">
+
+    <!--
+      <link rel="stylesheet">
+      ─────────────────────────
+      Lie une feuille de style CSS externe au document.
+      rel="stylesheet" → type de relation entre le document et le fichier lié.
+      href → chemin vers le fichier CSS.
+      media → à quel média appliquer le CSS (screen, print, all...).
+      Peut être répété autant de fois que nécessaire.
+    -->
+    <link rel="stylesheet" href="./style.css" media="all">
+
+    <!--
+      <link rel="alternate">
+      ───────────────────────
+      Versions alternatives du document.
+      Exemples courants :
+      - Version dans une autre langue (hreflang)
+      - Flux RSS/Atom (type="application/rss+xml")
+      - Version imprimable
+    -->
+    <link rel="alternate" hreflang="en" href="https://example.com/en/html-tags">
+    <link rel="alternate" type="application/rss+xml" title="Flux RSS" href="/feed.xml">
+
+    <!--
+      <link rel="icon"> — Favicon
+      ────────────────────────────
+      Petite icône affichée dans l'onglet et les favoris.
+      Formats : .ico (compatibilité max), .png, .svg (moderne).
+      sizes → dimensions de l'icône en pixels.
+      Plusieurs <link rel="icon"> peuvent coexister pour différentes tailles.
+    -->
+    <link rel="icon" type="image/x-icon" href="/favicon.ico">
+    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+    <!--
+      rel="apple-touch-icon" → Icône sur l'écran d'accueil iOS (iPhone/iPad).
+      Utilisée quand l'utilisateur "Ajoute à l'écran d'accueil".
+    -->
+
+    <!--
+      <link rel="manifest">
+      ──────────────────────
+      Fichier JSON décrivant l'application web progressive (PWA).
+      Permet d'installer la page comme une app native sur mobile/desktop.
+        Contient : nom de l'app, icônes, couleurs, orientation, etc.
+    -->
+    <link rel="manifest" href="/manifest.json">
+
+    <!--
+      <link rel="preconnect"> et <link rel="preload">
+      ─────────────────────────────────────────────────
+      Optimisations de performance (chargement anticipé).
+
+      preconnect → Ouvre la connexion au serveur en avance
+                  (DNS + TCP + TLS). Gain de 100-300ms.
+                  Utile pour les polices Google, CDN, APIs.
+
+      preload → Charge une ressource en avance avec haute priorité.
+                as → type de ressource : font, style, script, image...
+                crossorigin → nécessaire pour les polices (CORS).
+
+      prefetch → Charge en arrière-plan des ressources pour la PROCHAINE page.
+                Priorité basse, après le chargement de la page courante.
+    -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preload" href="/fonts/mafont.woff2" as="font" type="font/woff2" crossorigin>
+    <link rel="prefetch" href="/page-suivante.html">
+      
+  <!--
+    <base>
+    ───────
+    Définit l'URL de base pour tous les liens relatifs de la page.
+    Tous les href="chemin/fichier.html" seront résolus par rapport à cette base.
+    Aussi utile pour target="_blank" global (tous les liens ouvriront un nouvel onglet).
+    ATTENTION : une seule balise <base> par page, en haut du <head>.
+    Peut causer des problèmes si mal utilisée (tous les ancres # sont affectés).
+  -->
+  <!-- <base href="https://example.com/" target="_self"> -->
+  <!-- Commenté ici pour ne pas perturber les liens de démonstration -->
+
+  <!--
+    <script> dans le <head>
+    ────────────────────────
+    Généralement déconseillé car bloque le rendu de la page.
+    Utiliser defer ou async pour éviter le blocage.
+
+    defer  → Le script est téléchargé en parallèle mais exécuté
+             APRÈS que le HTML est complètement parsé.
+             Respecte l'ordre des scripts.
+             RECOMMANDÉ pour les scripts qui manipulent le DOM.
+
+    async  → Le script est téléchargé en parallèle et exécuté
+             DÈS qu'il est disponible, sans attendre le HTML.
+             Ne garantit pas l'ordre d'exécution.
+             Pour les scripts indépendants (analytics, pub...).
+
+    type="module" → Charge le script comme un module ES6 (import/export).
+                    Toujours différé (comme defer). Scoped automatiquement.
+  -->
+  <script src="/analytics.js" async></script>
+  <!-- <script src="/app.js" defer></script> -->
+  <!-- <script type="module" src="/modules/main.js"></script> -->
+
+  <!--
+    <noscript> dans le <head>
+    ──────────────────────────
+    Contenu affiché SI JavaScript est désactivé dans le navigateur.
+    Dans le <head>, ne peut contenir que des balises <link>, <style> et <meta>.
+    Dans le <body>, peut contenir n'importe quel contenu HTML.
+  -->
+  <noscript>
+    <style> .js-only { display: none !important; } </style>
+  </noscript>
+
+</head>
+<!--
+  ════════════════════════════════════════════════════════════════════════
+  FIN DU <head>
+  ════════════════════════════════════════════════════════════════════════
+-->
+
+<!--
+  ════════════════════════════════════════════════════════════════════════
+  4. <body>
+  ════════════════════════════════════════════════════════════════════════
+  Contient TOUT le contenu visible de la page.
+  Il n'existe qu'un seul <body> par page.
+  Doit être enfant direct de <html>, après <head>.
+
+  Attributs (anciens, aujourd'hui gérés en CSS) :
+  bgcolor, text, link, alink, vlink → DÉPRÉCIÉS, utiliser CSS
+  onload, onunload → Évènements JS, préférer addEventListener en JS
+
+  data-* → Attributs personnalisés, utilisables par JavaScript.
+-->
+<body>
+
+<!-- ── LIEN D'ÉVITEMENT (Skip Link) ──────────────────────────────────
+  WCAG 2.4.1 — Bypass Blocks
+  Premier élément focusable de la page (première pression Tab).
+  Invisible jusqu'au focus clavier, visible quand Tab est pressé.
+  Permet de sauter la navigation pour aller directement au contenu.
+  OBLIGATOIRE pour l'accessibilité clavier et les lecteurs d'écran.
+-->
+<a href="#contenu-principal" class="skip">Aller au contenu principal</a>
+
+<!--
+  ════════════════════════════════════════════════════════════════════════
+  5. <header>
+  ════════════════════════════════════════════════════════════════════════
+  En-tête d'une page OU d'une section.
+
+  Deux usages distincts :
+  ① En-tête principal de la page (une seule fois, hors <article>/<section>) :
+     → Contient logo, navigation principale, slogan.
+     → Rôle ARIA implicite : banner (landmark "en-tête de site").
+     → Pas besoin de role="banner" (redondant).
+
+  ② En-tête d'un <article> ou <section> :
+     → Contient le titre et les métadonnées de cet article/section.
+     → Rôle ARIA implicite : generic (pas de landmark).
+
+  Ne PAS confondre avec :
+  - <head> → métadonnées du document (invisible)
+  - <h1>-<h6> → titres de contenu
+-->
+<header class="site-header" id="haut-de-page">
+  <!--
+    Le <header> contient ici :
+    - Un lien logo (<a>)
+    - Une navigation principale (<nav>)
+    - Des boutons d'action (recherche, connexion)
+  -->
+  <a href="/" class="logo" aria-label="IntA11Y - Solutions — Accueil">
+    🎓 IntA11Y - Solutions
+  </a>
+
+  <!--
+    ════════════════════════════════════════════════════════════════════
+    6. <nav>
+    ════════════════════════════════════════════════════════════════════
+    Navigation : liens de navigation importants du site.
+    Rôle ARIA implicite : navigation (landmark "navigation").
+    NE PAS utiliser pour tous les groupes de liens, seulement
+    les navigations PRINCIPALES (menu principal, fil d'Ariane,
+    pagination, navigation de section).
+
+    aria-label → Nomme la navigation pour les lecteurs d'écran.
+    Obligatoire si plusieurs <nav> sur la même page, sinon ils
+    s'appellent tous "navigation" et on ne peut pas les distinguer.
+
+    Ne pas mettre role="navigation" (redondant avec <nav>).
+  -->
+  <nav aria-label="Navigation principale">
+    <!--
+      <ul> à l'intérieur d'une <nav> est la structure recommandée.
+      Permet aux lecteurs d'écran d'annoncer "liste de N éléments".
+    -->
+    <ul>
+      <li><a href="#structure">Structure</a></li>
+      <li><a href="#texte">Texte</a></li>
+      <li><a href="#listes">Listes</a></li>
+      <li><a href="#formulaires">Formulaires</a></li>
+      <li><a href="#medias">Médias</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!--
+  ════════════════════════════════════════════════════════════════════════
+  HERO — En-tête visuel de la page
+  (pas une balise sémantique spécifique, utilise <div> ou <section>)
+  ════════════════════════════════════════════════════════════════════════
+-->
+<div class="hero" role="banner">
+  <!--
+    role="banner" utilisé ici sur un <div> (et non sur le <header>)
+    car le <div> ne possède pas ce rôle implicitement.
+    Cette pratique est acceptable quand on ne peut pas utiliser <header>.
+  -->
+  <h1>Référence des balises HTML5</h1>
+  <p>Toutes les balises sémantiques HTML5, commentées et expliquées pour les intégrateurs débutants.</p>
+</div>
+
+<!--
+  ════════════════════════════════════════════════════════════════════════
+  7. <main>
+  ════════════════════════════════════════════════════════════════════════
+  Contenu PRINCIPAL et UNIQUE de la page.
+  Ce qui distingue cette page de toutes les autres pages du site.
+  Rôle ARIA implicite : main (landmark "contenu principal").
+
+  Règles strictes :
+  ✓ UN SEUL <main> par page (jamais deux).
+  ✓ Ne doit pas être enfant de <article>, <aside>, <footer>, <header>, <nav>.
+  ✓ Peut avoir tabindex="-1" pour permettre le focus via le skip link.
+
+  Ne pas mettre role="main" (redondant avec <main>).
+-->
+<main id="contenu-principal" tabindex="-1">
+  <div class="wrapper">
+
+    <!-- ── FIL D'ARIANE (Breadcrumb navigation) ───────────────────────
+      Navigation secondaire montrant la position de l'utilisateur
+      dans la hiérarchie du site.
+      aria-label="Fil d'Ariane" → identifie ce <nav> secondaire.
+      aria-current="page" → indique la page actuelle (dernière étape).
+    -->
+    <nav aria-label="Fil d'Ariane" style="padding: 16px 0 0;">
+      <ol class="breadcrumb">
+        <!--
+          <ol> (ordered list) utilisé pour le fil d'Ariane car
+          l'ordre des étapes est important et signifiant.
+        -->
+        <li><a href="/">Accueil</a><span aria-hidden="true"> › </span></li>
+        <li><a href="/cours">Cours</a><span aria-hidden="true"> › </span></li>
+        <li><span aria-current="page">Référence HTML5</span></li>
+      </ol>
+    </nav>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         SECTION 1 : STRUCTURE
+         ════════════════════════════════════════════════════════════════ -->
+    <section id="structure" aria-labelledby="titre-structure">
+      <!--
+        <section>
+        ─────────
+        Regroupe du contenu THÉMATIQUEMENT LIÉ au sein d'un document.
+        Doit toujours avoir un titre (<h2>, <h3>...) qui le décrit.
+        Rôle ARIA implicite : region (si titré avec aria-labelledby).
+        NE PAS utiliser <section> juste pour styliser (utiliser <div>).
+
+        Différence section vs div :
+        <section> → contenu thématique, apparaît dans le plan du document
+        <div>     → division générique, pas de sens sémantique
+
+        Différence section vs article :
+        <section> → partie d'un tout, nécessite son contexte
+        <article> → contenu autonome, compréhensible seul (blog post, tweet...)
+      -->
+
+      <h2 id="titre-structure" style="font-size:1.3rem; margin: 32px 0 16px; padding-top: 16px; border-top: 2px solid var(--bord);">
+        🏗️ Balises de structure
+      </h2>
+
+      <!-- ── header ── -->
+      <div class="ref-section">
+        <div class="ref-section-header">
+          <span class="tag-cat">Structure</span>
+          <h2>&lt;header&gt;</h2>
+        </div>
+        <div class="ref-section-body">
+
+          <!-- Bloc balise header -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;header&gt;</span>
+              <span class="balise-type type-structure">Structure</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                En-tête d'une page ou d'une section. Contient généralement le logo,
+                le titre principal, la navigation ou une introduction.
+                Peut apparaître plusieurs fois (en-tête de page + en-têtes d'articles).
+                <strong>Rôle ARIA implicite : banner</strong> (quand enfant direct de body).
+              </p>
+              <div class="attrs">
+                <div class="attrs-label">Attributs spécifiques</div>
+                <div class="attr-item">
+                  <span class="attr-name">Aucun attribut spécifique</span>
+                  <span class="attr-desc">— Utilise les attributs globaux (id, class, aria-label...)</span>
+                </div>
+              </div>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu dans la page</div>
+                <div class="demo-zone">
+                  <header style="background:#1a1a2e;color:#fff;padding:12px 16px;border-radius:6px;display:flex;align-items:center;gap:12px;">
+                    <strong>🎓 Mon Site</strong>
+                    <nav><ul style="display:flex;gap:8px;list-style:none;"><li><a href="#" style="color:rgba(255,255,255,.8);text-decoration:none;">Accueil</a></li><li><a href="#" style="color:rgba(255,255,255,.8);text-decoration:none;">Blog</a></li></ul></nav>
+                  </header>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bloc balise nav -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;nav&gt;</span>
+              <span class="balise-type type-structure">Structure</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Zone de navigation principale ou secondaire du site.
+                Réservée aux <strong>liens de navigation importants</strong>
+                (menu principal, fil d'Ariane, pagination).
+                Pas pour tous les groupes de liens.
+                <strong>Rôle ARIA implicite : navigation</strong>.
+              </p>
+              <div class="attrs">
+                <div class="attrs-label">Bonnes pratiques</div>
+                <div class="attr-item">
+                  <span class="attr-name">aria-label="..."</span>
+                  <span class="attr-desc">— Nommer chaque &lt;nav&gt; si plusieurs sur la page</span>
+                </div>
+                <div class="attr-item">
+                  <span class="attr-name">aria-current="page"</span>
+                  <span class="attr-desc">— Sur le lien de la page courante</span>
+                </div>
+              </div>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <div class="nav-demo">
+                    <nav aria-label="Navigation de démonstration">
+                      <ul>
+                        <li><a href="#" aria-current="page">Accueil</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Contact</a></li>
+                      </ul>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bloc balise main -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;main&gt;</span>
+              <span class="balise-type type-structure">Structure</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Contenu principal et unique de la page. Ce qui distingue cette page
+                de toutes les autres. <strong>UN SEUL par page.</strong>
+                Ne peut pas être enfant de &lt;article&gt;, &lt;aside&gt;, &lt;footer&gt;,
+                &lt;header&gt; ou &lt;nav&gt;.
+                <strong>Rôle ARIA implicite : main</strong>.
+              </p>
+            </div>
+          </div>
+
+          <!-- Bloc balise footer -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;footer&gt;</span>
+              <span class="balise-type type-structure">Structure</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Pied de page d'une page ou d'une section. Contient généralement :
+                copyright, liens légaux, informations de contact, liens secondaires.
+                Comme &lt;header&gt;, peut apparaître dans des articles et sections.
+                <strong>Rôle ARIA implicite : contentinfo</strong> (quand enfant direct de body).
+              </p>
+            </div>
+          </div>
+
+          <!-- Bloc balise article -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;article&gt;</span>
+              <span class="balise-type type-structure">Structure</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Contenu <strong>autonome et auto-suffisant</strong> : compréhensible seul,
+                hors de son contexte. Exemples : article de blog, post de forum,
+                tweet, commentaire, fiche produit, widget météo.
+                Peut contenir son propre &lt;header&gt;, &lt;footer&gt;, &lt;section&gt;.
+                <strong>Rôle ARIA implicite : article</strong>.
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <article class="article-demo">
+                    <header>
+                      <h3>Mon article de blog</h3>
+                      <p style="font-size:.82rem;color:var(--txt2);">Publié le <time datetime="2026-03-18">18 mars 2026</time> par <address style="display:inline;font-style:normal;"><a href="#">Jean Dupont</a></address></p>
+                    </header>
+                    <p>Le contenu de l'article va ici. Il est compréhensible seul, même hors contexte.</p>
+                    <footer>
+                      <p>Tags : <a href="#">HTML</a>, <a href="#">Web</a></p>
+                    </footer>
+                  </article>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bloc balise section -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;section&gt;</span>
+              <span class="balise-type type-structure">Structure</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Regroupe du contenu thématiquement lié. Toujours accompagnée d'un titre.
+                Apparaît dans le plan du document. Utiliser &lt;div&gt; si c'est
+                juste pour le style CSS sans sens sémantique.
+                <strong>Rôle ARIA implicite : region</strong> (si aria-labelledby ou aria-label).
+              </p>
+            </div>
+          </div>
+
+          <!-- Bloc balise aside -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;aside&gt;</span>
+              <span class="balise-type type-structure">Structure</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Contenu <strong>indirectement lié</strong> au contenu principal.
+                En rapport mais pas essentiel : barre latérale, encart, publicité,
+                biographie de l'auteur, liens connexes, note de bas de page.
+                <strong>Rôle ARIA implicite : complementary</strong>.
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <aside class="aside-demo">
+                    <h4>💡 Le saviez-vous ?</h4>
+                    <p>HTML5 a été standardisé en 2014 par le W3C.</p>
+                  </aside>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bloc balise div -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;div&gt;</span>
+              <span class="balise-type type-structure">Structure</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                <strong>Conteneur générique block.</strong> Aucun sens sémantique.
+                Utilisé quand aucune autre balise sémantique ne convient.
+                Sert uniquement au style CSS ou au ciblage JavaScript.
+                "div soup" = abus de &lt;div&gt; là où des balises sémantiques seraient plus appropriées.
+                <strong>Rôle ARIA implicite : generic</strong>.
+              </p>
+            </div>
+          </div>
+
+          <!-- Bloc balise span -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;span&gt;</span>
+              <span class="balise-type type-structure">Structure</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                <strong>Conteneur générique inline.</strong> Version inline du &lt;div&gt;.
+                Aucun sens sémantique. Utilisé pour styliser une portion de texte
+                ou la cibler en JavaScript quand aucune autre balise inline ne convient.
+                Exemple : colorer un mot dans une phrase.
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <p>Ce texte a un mot <span style="color:var(--rouge);font-weight:700;">important</span> mis en évidence.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bloc balise address -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;address&gt;</span>
+              <span class="balise-type type-structure">Structure</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Coordonnées de contact de l'auteur ou du propriétaire du document
+                ou d'un article. Peut contenir : adresse postale, email, téléphone,
+                réseaux sociaux, site web. Ne pas utiliser pour des adresses
+                génériques non liées à l'auteur.
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <address>
+                    <strong>IntA11Y - Solutions</strong><br>
+                    123 rue du Code, 75001 Paris<br>
+                    <a href="mailto:contact@ecole.fr">contact@ecole.fr</a><br>
+                    <a href="tel:+33123456789">01 23 45 67 89</a>
+                  </address>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         SECTION 2 : TITRES ET TEXTE
+         ════════════════════════════════════════════════════════════════ -->
+    <section id="texte" aria-labelledby="titre-texte">
+      <h2 id="titre-texte" style="font-size:1.3rem; margin: 32px 0 16px; padding-top: 16px; border-top: 2px solid var(--bord);">
+        📝 Titres et texte
+      </h2>
+
+      <div class="ref-section">
+        <div class="ref-section-header">
+          <span class="tag-cat">Texte</span>
+          <h2>Titres &lt;h1&gt; à &lt;h6&gt;</h2>
+        </div>
+        <div class="ref-section-body">
+
+          <!-- Bloc h1-h6 -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;h1&gt; → &lt;h6&gt;</span>
+              <span class="balise-type type-texte">Texte</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Titres de section, du plus important (h1) au moins important (h6).
+                Créent la <strong>hiérarchie du document</strong> (plan du document).
+                Les lecteurs d'écran les utilisent pour naviguer.
+                Google les utilise pour comprendre la structure du contenu.
+                <br><br>
+                Règles importantes :
+                <br>✓ <strong>Un seul &lt;h1&gt;</strong> par page (titre principal).
+                <br>✓ <strong>Ne pas sauter de niveaux</strong> : h1 → h2 → h3 (pas h1 → h3).
+                <br>✗ <strong>NE PAS</strong> choisir le niveau selon la taille visuelle (utiliser CSS).
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <h1>h1 — Titre principal de la page (un seul)</h1>
+                  <h2>h2 — Titre de section principale</h2>
+                  <h3>h3 — Titre de sous-section</h3>
+                  <h4>h4 — Titre de niveau 4</h4>
+                  <h5>h5 — Titre de niveau 5</h5>
+                  <h6>h6 — Titre de niveau 6 (le moins important)</h6>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bloc p -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;p&gt;</span>
+              <span class="balise-type type-texte">Texte</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Paragraphe de texte. Élément block avec espacement automatique
+                en haut et en bas. La balise fermante &lt;/p&gt; est techniquement
+                optionnelle mais toujours recommandée. Ne pas utiliser &lt;p&gt;
+                pour des images ou des liens seuls (utiliser &lt;div&gt;).
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <p>Premier paragraphe. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore.</p>
+                  <p>Deuxième paragraphe. Les navigateurs ajoutent automatiquement une marge entre les paragraphes.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bloc br -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;br&gt;</span>
+              <span class="balise-type type-texte">Texte</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Saut de ligne dans du texte. Balise <strong>auto-fermante</strong>
+                (pas de &lt;/br&gt;). Utiliser UNIQUEMENT pour des sauts de ligne
+                sémantiquement significatifs (poèmes, adresses, paroles de chanson).
+                NE PAS utiliser &lt;br&gt; pour créer des espacements visuels
+                (utiliser CSS margin/padding à la place).
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <p>
+                    Ligne 1<br>
+                    Ligne 2 (après un saut de ligne)<br>
+                    Ligne 3 — Exemple : adresse postale
+                  </p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bloc hr -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;hr&gt;</span>
+              <span class="balise-type type-texte">Texte</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Séparation thématique entre des paragraphes ou sections.
+                Balise <strong>auto-fermante</strong>. Représente un changement
+                de sujet dans le contenu. Affiché comme une ligne horizontale
+                par défaut. Le style peut être modifié avec CSS.
+                <strong>Rôle ARIA implicite : separator</strong>.
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <p>Avant le séparateur thématique.</p>
+                  <hr>
+                  <p>Après le séparateur — nouveau sujet.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bloc blockquote -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;blockquote&gt;</span>
+              <span class="balise-type type-texte">Texte</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Citation longue provenant d'une autre source, affichée en bloc.
+                L'attribut <code>cite</code> précise l'URL de la source.
+                Pour une citation courte inline, utiliser &lt;q&gt;.
+                Pour nommer la source, utiliser &lt;cite&gt; à l'intérieur.
+              </p>
+              <div class="attrs">
+                <div class="attrs-label">Attributs</div>
+                <div class="attr-item"><span class="attr-name">cite="url"</span><span class="attr-desc">→ URL de la source de la citation</span></div>
+              </div>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <blockquote cite="https://example.com">
+                    <p>"Any fool can write code that a computer can understand. Good programmers write code that humans can understand."</p>
+                    <cite>— Martin Fowler</cite>
+                  </blockquote>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bloc q -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;q&gt;</span>
+              <span class="balise-type type-texte">Texte</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Citation courte <strong>inline</strong> (dans une phrase).
+                Le navigateur ajoute automatiquement les guillemets selon
+                la langue du document (lang="fr" → guillemets français « »).
+                Pour une citation longue, utiliser &lt;blockquote&gt;.
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <p>Comme disait Shakespeare : <q cite="https://example.com">To be or not to be.</q></p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bloc cite -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;cite&gt;</span>
+              <span class="balise-type type-texte">Texte</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Nom d'une œuvre : livre, film, chanson, article, tableau, site web...
+                Affiché en italique par défaut. NE PAS utiliser pour nommer
+                une personne (utiliser pour l'œuvre, pas l'auteur).
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <p>J'ai lu <cite>Le Petit Prince</cite> d'Antoine de Saint-Exupéry.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bloc pre et code -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;pre&gt; &lt;code&gt;</span>
+              <span class="balise-type type-texte">Texte</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                <code>&lt;pre&gt;</code> — Texte préformaté : conserve les espaces,
+                les tabulations et les sauts de ligne exactement comme dans le HTML.
+                Police monospace par défaut.
+                <br><br>
+                <code>&lt;code&gt;</code> — Fragment de code informatique inline.
+                Police monospace. Souvent utilisé dans du texte courant.
+                <br><br>
+                <strong>Combo &lt;pre&gt;&lt;code&gt;</strong> → Bloc de code multilignes
+                (la combinaison standard pour afficher du code).
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <p>Utilisez <code>console.log()</code> pour déboguer.</p>
+                  <pre><code>function saluer(nom) {
+  return "Bonjour, " + nom + " !";
+}
+console.log(saluer("Alice"));</code></pre>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bloc kbd samp var -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;kbd&gt; &lt;samp&gt; &lt;var&gt;</span>
+              <span class="balise-type type-texte">Texte</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Balises techniques liées au code et aux interactions clavier.
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <p><kbd>kbd</kbd> — Entrée clavier : Appuyez sur <kbd>Ctrl</kbd> + <kbd>C</kbd> pour copier.</p>
+                  <p><samp>samp</samp> — Sortie d'un programme : <samp>Erreur 404 : fichier introuvable</samp></p>
+                  <p><var>var</var> — Variable mathématique : <var>E</var> = <var>m</var> × <var>c</var>²</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Balises inline de mise en forme -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Mise en forme inline</span>
+              <span class="balise-type type-texte">Texte</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">Balises pour modifier l'apparence ou le sens d'une portion de texte.</p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu de chaque balise</div>
+                <div class="demo-zone" style="display:flex;flex-direction:column;gap:8px;">
+                  <p><strong>&lt;strong&gt;</strong> — <strong>Texte important</strong> (gras sémantique). Les lecteurs d'écran accentuent la lecture. ≠ &lt;b&gt; (gras visuel pur).</p>
+                  <p><strong>&lt;em&gt;</strong> — <em>Texte mis en emphase</em> (italique sémantique). Lecteurs d'écran changent le ton. ≠ &lt;i&gt; (italique visuel).</p>
+                  <p><strong>&lt;b&gt;</strong> — <b>Gras sans importance sémantique</b> (mots-clés, noms de produits).</p>
+                  <p><strong>&lt;i&gt;</strong> — <i>Italique sans emphase</i> (termes techniques, noms étrangers, pensées).</p>
+                  <p><strong>&lt;u&gt;</strong> — <u>Soulignement sémantique</u> (fautes d'orthographe, noms propres chinois). Éviter car ressemble à un lien.</p>
+                  <p><strong>&lt;s&gt;</strong> — <s>Texte barré / obsolète</s> (prix réduit, ancienne version).</p>
+                  <p><strong>&lt;del&gt;</strong> — <del>Texte supprimé</del> (modification de document, WCAG accessible).</p>
+                  <p><strong>&lt;ins&gt;</strong> — <ins>Texte inséré</ins> (contenu ajouté à un document).</p>
+                  <p><strong>&lt;mark&gt;</strong> — <mark>Texte surligné</mark> (résultat de recherche, passage pertinent).</p>
+                  <p><strong>&lt;small&gt;</strong> — <small>Texte de petite taille</small> (mentions légales, copyright, commentaires).</p>
+                  <p><strong>&lt;sub&gt;</strong> — H<sub>2</sub>O — Indice inférieur (formules chimiques, notes de bas de page).</p>
+                  <p><strong>&lt;sup&gt;</strong> — E=mc<sup>2</sup> — Exposant supérieur (puissances, notes de renvoi).</p>
+                  <p><strong>&lt;abbr&gt;</strong> — <abbr title="HyperText Markup Language">HTML</abbr> — Abréviation avec définition au survol (title obligatoire).</p>
+                  <p><strong>&lt;dfn&gt;</strong> — <dfn title="Langage de balisage">HTML</dfn> — Définition d'un terme (première occurrence).</p>
+                  <p><strong>&lt;time&gt;</strong> — Publié le <time datetime="2026-03-18">18 mars 2026</time> — Date/heure machine-readable.</p>
+                  <p><strong>&lt;wbr&gt;</strong> — Longmot<wbr>SansEspace — Opportunité de saut de ligne (URL longues).</p>
+                  <p><strong>&lt;bdi&gt;</strong> — <bdi>نص عربي</bdi> — Isolement bidirectionnel (texte RTL dans texte LTR).</p>
+                  <p><strong>&lt;bdo&gt;</strong> — <bdo dir="rtl">Texte inversé</bdo> — Direction de texte forcée (dir="rtl" ou "ltr").</p>
+                  <p><strong>&lt;ruby&gt; &lt;rt&gt; &lt;rp&gt;</strong> — <ruby>漢<rp>(</rp><rt>kan</rt><rp>)</rp></ruby> — Annotations phonétiques (japonais, chinois).</p>
+                  <p><strong>&lt;data&gt;</strong> — <data value="1234">Produit A</data> — Valeur machine associée à du contenu lisible.</p>
+                  <p><strong>&lt;output&gt;</strong> — Résultat : <output name="result" for="a b">42</output> — Résultat d'un calcul ou d'une action.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         SECTION 3 : LISTES
+         ════════════════════════════════════════════════════════════════ -->
+    <section id="listes" aria-labelledby="titre-listes">
+      <h2 id="titre-listes" style="font-size:1.3rem; margin: 32px 0 16px; padding-top: 16px; border-top: 2px solid var(--bord);">
+        📋 Listes
+      </h2>
+
+      <div class="ref-section">
+        <div class="ref-section-header">
+          <span class="tag-cat">Listes</span>
+          <h2>&lt;ul&gt; &lt;ol&gt; &lt;dl&gt;</h2>
+        </div>
+        <div class="ref-section-body">
+
+          <!-- ul -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;ul&gt;</span>
+              <span class="balise-type type-liste">Liste</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                <strong>Liste non ordonnée</strong> (unordered list). L'ordre des éléments
+                n'a pas d'importance. Affichée avec des puces par défaut.
+                Ne peut contenir que des &lt;li&gt; comme enfants directs.
+                Utiliser quand les items sont équivalents et interchangeables.
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <ul>
+                    <li>Pommes</li>
+                    <li>Bananes</li>
+                    <li>
+                      Agrumes (liste imbriquée)
+                      <ul>
+                        <li>Oranges</li>
+                        <li>Citrons</li>
+                      </ul>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ol -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;ol&gt;</span>
+              <span class="balise-type type-liste">Liste</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                <strong>Liste ordonnée</strong> (ordered list). L'ordre est important.
+                Affichée avec des numéros par défaut.
+                Exemples : étapes d'une recette, classement, procédure.
+              </p>
+              <div class="attrs">
+                <div class="attrs-label">Attributs</div>
+                <div class="attr-item"><span class="attr-name">type</span><span class="attr-desc">→ "1" (1,2,3), "a" (a,b,c), "A" (A,B,C), "i" (i,ii,iii), "I" (I,II,III)</span></div>
+                <div class="attr-item"><span class="attr-name">start="5"</span><span class="attr-desc">→ Commence à partir de 5</span></div>
+                <div class="attr-item"><span class="attr-name">reversed</span><span class="attr-desc">→ Compte à rebours</span></div>
+              </div>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <ol>
+                    <li>Préchauffer le four à 180°C</li>
+                    <li>Mélanger les ingrédients</li>
+                    <li>Enfourner 30 minutes</li>
+                  </ol>
+                  <ol type="A" start="3">
+                    <li value="3">Troisième élément (commence à C)</li>
+                    <li>Quatrième (D)</li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- li -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;li&gt;</span>
+              <span class="balise-type type-liste">Liste</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                <strong>Élément de liste</strong> (list item). Enfant direct de &lt;ul&gt;,
+                &lt;ol&gt; ou &lt;menu&gt;. Peut contenir n'importe quel contenu
+                (texte, images, d'autres listes...).
+              </p>
+              <div class="attrs">
+                <div class="attrs-label">Attribut</div>
+                <div class="attr-item"><span class="attr-name">value="N"</span><span class="attr-desc">→ Définit la valeur numérique de cet item (dans &lt;ol&gt; uniquement)</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- dl dt dd -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;dl&gt; &lt;dt&gt; &lt;dd&gt;</span>
+              <span class="balise-type type-liste">Liste</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                <strong>Liste de définitions</strong> (description list). Paires terme/définition.
+                <code>&lt;dl&gt;</code> — Conteneur de la liste de définitions.
+                <code>&lt;dt&gt;</code> — Terme à définir (definition term).
+                <code>&lt;dd&gt;</code> — Définition du terme (definition description).
+                Un &lt;dt&gt; peut avoir plusieurs &lt;dd&gt;. Plusieurs &lt;dt&gt; peuvent
+                partager un &lt;dd&gt;. Utilisé pour glossaires, FAQ, métadonnées.
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <dl>
+                    <dt>HTML</dt>
+                    <dd>HyperText Markup Language — Langage de balisage pour structurer le contenu web.</dd>
+                    <dt>CSS</dt>
+                    <dd>Cascading Style Sheets — Langage de présentation pour styliser les pages HTML.</dd>
+                    <dt>JavaScript</dt>
+                    <dd>Langage de programmation pour rendre les pages web interactives.</dd>
+                    <dd>Utilisé aussi côté serveur avec Node.js.</dd>
+                  </dl>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- menu -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;menu&gt;</span>
+              <span class="balise-type type-liste">Liste</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Liste de commandes ou d'options (sémantiquement un menu d'actions).
+                Similaire à &lt;ul&gt; mais sémantiquement destiné aux interfaces
+                (barres d'outils, menus contextuels). Contient des &lt;li&gt; avec
+                des &lt;button&gt; ou &lt;a&gt; à l'intérieur.
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <menu style="list-style:none;display:flex;gap:8px;padding:0;">
+                    <li><button type="button" style="padding:6px 12px;border:1px solid var(--bord);border-radius:4px;cursor:pointer;">✂️ Couper</button></li>
+                    <li><button type="button" style="padding:6px 12px;border:1px solid var(--bord);border-radius:4px;cursor:pointer;">📋 Copier</button></li>
+                    <li><button type="button" style="padding:6px 12px;border:1px solid var(--bord);border-radius:4px;cursor:pointer;">📌 Coller</button></li>
+                  </menu>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         SECTION 4 : LIENS ET NAVIGATION
+         ════════════════════════════════════════════════════════════════ -->
+    <section id="liens" aria-labelledby="titre-liens">
+      <h2 id="titre-liens" style="font-size:1.3rem; margin: 32px 0 16px; padding-top: 16px; border-top: 2px solid var(--bord);">
+        🔗 Liens
+      </h2>
+
+      <div class="ref-section">
+        <div class="ref-section-header">
+          <span class="tag-cat">Lien</span>
+          <h2>&lt;a&gt; — Hyperlien</h2>
+        </div>
+        <div class="ref-section-body">
+
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;a&gt;</span>
+              <span class="balise-type type-lien">Lien</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                <strong>Hyperlien</strong> (anchor). Élément fondamental du Web.
+                Peut lier vers : une autre page, une ancre (#id), un email,
+                un téléphone, un fichier, un fragment JavaScript.
+                <strong>Rôle ARIA implicite : link</strong>.
+                Utiliser &lt;a href&gt; pour naviguer, &lt;button&gt; pour agir.
+              </p>
+              <div class="attrs">
+                <div class="attrs-label">Attributs principaux</div>
+                <div class="attr-item"><span class="attr-name">href="url"</span><span class="attr-desc">→ Destination du lien (OBLIGATOIRE pour être un lien actif)</span></div>
+                <div class="attr-item"><span class="attr-name">target="_blank"</span><span class="attr-desc">→ Ouvrir dans un nouvel onglet</span></div>
+                <div class="attr-item"><span class="attr-name">target="_self"</span><span class="attr-desc">→ Ouvrir dans le même onglet (défaut)</span></div>
+                <div class="attr-item"><span class="attr-name">target="_parent"</span><span class="attr-desc">→ Ouvrir dans le cadre parent (iframes)</span></div>
+                <div class="attr-item"><span class="attr-name">target="_top"</span><span class="attr-desc">→ Ouvrir dans la fenêtre complète (iframes)</span></div>
+                <div class="attr-item"><span class="attr-name">rel="noopener noreferrer"</span><span class="attr-desc">→ Sécurité OBLIGATOIRE avec target="_blank"</span></div>
+                <div class="attr-item"><span class="attr-name">rel="nofollow"</span><span class="attr-desc">→ Demande aux moteurs de ne pas suivre ce lien (SEO)</span></div>
+                <div class="attr-item"><span class="attr-name">rel="external"</span><span class="attr-desc">→ Indique un lien externe</span></div>
+                <div class="attr-item"><span class="attr-name">download</span><span class="attr-desc">→ Déclenche un téléchargement au lieu de naviguer</span></div>
+                <div class="attr-item"><span class="attr-name">download="nom.pdf"</span><span class="attr-desc">→ Spécifie le nom du fichier téléchargé</span></div>
+                <div class="attr-item"><span class="attr-name">hreflang="en"</span><span class="attr-desc">→ Langue du document cible</span></div>
+                <div class="attr-item"><span class="attr-name">type="application/pdf"</span><span class="attr-desc">→ Type MIME du document cible</span></div>
+                <div class="attr-item"><span class="attr-name">aria-label="..."</span><span class="attr-desc">→ Description accessible (si le texte du lien n'est pas clair)</span></div>
+                <div class="attr-item"><span class="attr-name">aria-current="page"</span><span class="attr-desc">→ Indique la page courante dans une navigation</span></div>
+              </div>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Exemples de liens</div>
+                <div class="demo-zone" style="display:flex;flex-direction:column;gap:8px;">
+                  <p><a href="https://example.com">Lien externe</a></p>
+                  <p><a href="https://example.com" target="_blank" rel="noopener noreferrer">Nouvel onglet (avec sécurité)</a></p>
+                  <p><a href="/page.html">Lien interne relatif</a></p>
+                  <p><a href="#titre-liens">Ancre (même page)</a></p>
+                  <p><a href="mailto:contact@example.com">Email</a></p>
+                  <p><a href="tel:+33123456789">Téléphone : 01 23 45 67 89</a></p>
+                  <p><a href="sms:+33612345678">SMS</a></p>
+                  <p><a href="/document.pdf" download="mon-document.pdf">Télécharger le PDF</a></p>
+                  <p><a href="#" aria-label="Accéder à la page À propos">🔗</a> — Lien avec aria-label car l'icône seule n'est pas descriptive</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         SECTION 5 : IMAGES ET MÉDIAS
+         ════════════════════════════════════════════════════════════════ -->
+    <section id="medias" aria-labelledby="titre-medias">
+      <h2 id="titre-medias" style="font-size:1.3rem; margin: 32px 0 16px; padding-top: 16px; border-top: 2px solid var(--bord);">
+        🖼️ Images et médias
+      </h2>
+
+      <div class="ref-section">
+        <div class="ref-section-header">
+          <span class="tag-cat">Média</span>
+          <h2>&lt;img&gt; &lt;figure&gt; &lt;picture&gt; &lt;video&gt; &lt;audio&gt;</h2>
+        </div>
+        <div class="ref-section-body">
+
+          <!-- img -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;img&gt;</span>
+              <span class="balise-type type-media">Média</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Affiche une image. Balise <strong>auto-fermante</strong>.
+                L'attribut <code>alt</code> est <strong>OBLIGATOIRE</strong> pour l'accessibilité
+                (WCAG 1.1.1). Les lecteurs d'écran lisent le texte alt.
+                Si l'image est décorative : alt="" (vide, pas absent).
+              </p>
+              <div class="attrs">
+                <div class="attrs-label">Attributs</div>
+                <div class="attr-item"><span class="attr-name">src="url"</span><span class="attr-desc">→ Source de l'image (OBLIGATOIRE)</span></div>
+                <div class="attr-item"><span class="attr-name">alt="description"</span><span class="attr-desc">→ Texte alternatif (OBLIGATOIRE, vide si décoratif)</span></div>
+                <div class="attr-item"><span class="attr-name">width="300"</span><span class="attr-desc">→ Largeur en pixels (évite le layout shift)</span></div>
+                <div class="attr-item"><span class="attr-name">height="200"</span><span class="attr-desc">→ Hauteur en pixels (évite le layout shift)</span></div>
+                <div class="attr-item"><span class="attr-name">loading="lazy"</span><span class="attr-desc">→ Chargement différé (images hors écran) — Performance</span></div>
+                <div class="attr-item"><span class="attr-name">loading="eager"</span><span class="attr-desc">→ Chargement immédiat (défaut)</span></div>
+                <div class="attr-item"><span class="attr-name">decoding="async"</span><span class="attr-desc">→ Décodage asynchrone — Performance</span></div>
+                <div class="attr-item"><span class="attr-name">srcset="img-2x.jpg 2x"</span><span class="attr-desc">→ Images haute résolution (écrans Retina)</span></div>
+                <div class="attr-item"><span class="attr-name">sizes="(max-width:768px) 100vw, 50vw"</span><span class="attr-desc">→ Taille d'affichage selon l'écran (avec srcset)</span></div>
+                <div class="attr-item"><span class="attr-name">crossorigin="anonymous"</span><span class="attr-desc">→ Requête CORS pour les images sur autre domaine</span></div>
+                <div class="attr-item"><span class="attr-name">referrerpolicy</span><span class="attr-desc">→ Contrôle l'envoi du Referer header</span></div>
+                <div class="attr-item"><span class="attr-name">ismap</span><span class="attr-desc">→ Image-map côté serveur (rare)</span></div>
+                <div class="attr-item"><span class="attr-name">usemap="#mapname"</span><span class="attr-desc">→ Lie à une &lt;map&gt; côté client</span></div>
+              </div>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <img src="https://picsum.photos/400/200" alt="Image de démonstration — paysage généré aléatoirement" width="400" height="200" loading="lazy" decoding="async">
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- figure figcaption -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;figure&gt; &lt;figcaption&gt;</span>
+              <span class="balise-type type-media">Média</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                <code>&lt;figure&gt;</code> — Contenu autonome référencé depuis le texte principal :
+                image, graphique, diagramme, code, poème, tableau...
+                Peut être déplacé sans affecter le flux principal.
+                <br><br>
+                <code>&lt;figcaption&gt;</code> — Légende du &lt;figure&gt; (facultative).
+                Premier ou dernier enfant de &lt;figure&gt;.
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <figure>
+                    <img src="https://picsum.photos/300/150" alt="Exemple de figure HTML avec légende" width="300" height="150">
+                    <figcaption>Fig. 1 — Exemple d'image avec sa légende dans un élément figure.</figcaption>
+                  </figure>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- picture source -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;picture&gt; &lt;source&gt;</span>
+              <span class="balise-type type-media">Média</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                <code>&lt;picture&gt;</code> — Conteneur d'images adaptatives.
+                Permet de servir des formats modernes (WebP, AVIF) avec
+                fallback vers JPEG/PNG. Aussi pour le responsive art direction
+                (image différente selon la taille d'écran).
+                <br><br>
+                <code>&lt;source&gt;</code> — Source alternative testée dans l'ordre.
+                Le navigateur choisit la première qui correspond.
+                <code>&lt;img&gt;</code> en dernier = fallback obligatoire.
+              </p>
+              <div class="attrs">
+                <div class="attrs-label">Attributs de &lt;source&gt;</div>
+                <div class="attr-item"><span class="attr-name">srcset="img.webp"</span><span class="attr-desc">→ URL de l'image source</span></div>
+                <div class="attr-item"><span class="attr-name">type="image/webp"</span><span class="attr-desc">→ Type MIME (permet au navigateur de savoir s'il supporte)</span></div>
+                <div class="attr-item"><span class="attr-name">media="(max-width:768px)"</span><span class="attr-desc">→ Media query pour l'art direction responsive</span></div>
+              </div>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Code et rendu</div>
+                <div class="demo-zone">
+                  <picture>
+                    <!-- WebP si supporté (format moderne, 25-35% plus léger) -->
+                    <source srcset="https://picsum.photos/300/120" type="image/webp">
+                    <!-- Image mobile sur petit écran -->
+                    <source srcset="https://picsum.photos/300/120" media="(max-width: 480px)">
+                    <!-- Fallback JPEG pour anciens navigateurs -->
+                    <img src="https://picsum.photos/300/120" alt="Image adaptive avec picture et source" width="300" height="120" loading="lazy">
+                  </picture>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- map area -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;map&gt; &lt;area&gt;</span>
+              <span class="balise-type type-media">Média</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                <code>&lt;map&gt;</code> — Définit une image cliquable avec plusieurs zones.
+                <code>&lt;area&gt;</code> — Zone cliquable dans la map (auto-fermante).
+                shape = rect (rectangle), circle (cercle), poly (polygone), default (tout).
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu (image avec zones cliquables)</div>
+                <div class="demo-zone">
+                  <img src="https://picsum.photos/300/100" alt="Image avec zones cliquables" usemap="#demo-map" width="300" height="100">
+                  <map name="demo-map">
+                    <area shape="rect" coords="0,0,150,100" href="#" alt="Zone gauche">
+                    <area shape="rect" coords="150,0,300,100" href="#" alt="Zone droite">
+                  </map>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- svg -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;svg&gt;</span>
+              <span class="balise-type type-media">Média</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                <strong>Scalable Vector Graphics</strong> — Images vectorielles embarquées directement
+                dans le HTML. Infiniment zoomables sans perte de qualité.
+                Accessibles (les éléments peuvent avoir aria-label, title, desc).
+                Manipulables par CSS et JavaScript.
+                Meilleur pour : logos, icônes, graphiques, animations.
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <svg width="200" height="100" viewBox="0 0 200 100" aria-label="Formes géométriques SVG" role="img">
+                    <title>Formes géométriques SVG</title>
+                    <rect x="10" y="10" width="80" height="80" fill="#1a1a2e" rx="8"/>
+                    <circle cx="150" cy="50" r="40" fill="#22c55e"/>
+                    <polygon points="100,10 190,90 10,90" fill="none" stroke="#b91c1c" stroke-width="3"/>
+                  </svg>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- canvas -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;canvas&gt;</span>
+              <span class="balise-type type-media">Média</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Zone de dessin bitmap contrôlée par JavaScript.
+                Utilisé pour : jeux 2D/3D, visualisations de données, effets,
+                retouche photo, animations complexes.
+                Contrairement à SVG : pas accessible, pas scalable, pas de DOM.
+                Le contenu entre les balises = fallback si canvas non supporté.
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu (dessiné par JavaScript)</div>
+                <div class="demo-zone">
+                  <canvas id="demo-canvas" width="300" height="100" aria-label="Dessin de démonstration Canvas">
+                    Votre navigateur ne supporte pas Canvas.
+                  </canvas>
+                  <script>
+                    (function() {
+                      var c = document.getElementById('demo-canvas');
+                      if (!c) return;
+                      var ctx = c.getContext('2d');
+                      // Fond
+                      ctx.fillStyle = '#1a1a2e';
+                      ctx.fillRect(0, 0, 300, 100);
+                      // Cercle
+                      ctx.beginPath();
+                      ctx.arc(50, 50, 35, 0, Math.PI * 2);
+                      ctx.fillStyle = '#22c55e';
+                      ctx.fill();
+                      // Rectangle
+                      ctx.fillStyle = '#b91c1c';
+                      ctx.fillRect(100, 20, 80, 60);
+                      // Texte
+                      ctx.fillStyle = '#fff';
+                      ctx.font = '14px monospace';
+                      ctx.fillText('Canvas 2D', 195, 55);
+                    })();
+                  </script>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- video -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;video&gt;</span>
+              <span class="balise-type type-media">Média</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Lecteur vidéo natif HTML5. Plusieurs &lt;source&gt; = compatibilité
+                navigateurs (différents formats supportés). Le texte entre les balises
+                = fallback pour les navigateurs ne supportant pas la vidéo.
+                WCAG : toujours fournir des sous-titres (track kind="subtitles").
+              </p>
+              <div class="attrs">
+                <div class="attrs-label">Attributs importants</div>
+                <div class="attr-item"><span class="attr-name">src="video.mp4"</span><span class="attr-desc">→ Source directe (ou utiliser &lt;source&gt;)</span></div>
+                <div class="attr-item"><span class="attr-name">controls</span><span class="attr-desc">→ Affiche les contrôles natifs (play/pause/volume...)</span></div>
+                <div class="attr-item"><span class="attr-name">autoplay</span><span class="attr-desc">→ Lecture automatique (nécessite muted pour fonctionner)</span></div>
+                <div class="attr-item"><span class="attr-name">muted</span><span class="attr-desc">→ Son coupé par défaut</span></div>
+                <div class="attr-item"><span class="attr-name">loop</span><span class="attr-desc">→ Lecture en boucle</span></div>
+                <div class="attr-item"><span class="attr-name">poster="img.jpg"</span><span class="attr-desc">→ Image affichée avant la lecture</span></div>
+                <div class="attr-item"><span class="attr-name">preload="auto|metadata|none"</span><span class="attr-desc">→ Stratégie de préchargement</span></div>
+                <div class="attr-item"><span class="attr-name">playsinline</span><span class="attr-desc">→ Lecture dans la page sur iOS (pas plein écran forcé)</span></div>
+                <div class="attr-item"><span class="attr-name">width / height</span><span class="attr-desc">→ Dimensions en pixels</span></div>
+              </div>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Code</div>
+                <div class="demo-zone">
+                  <video controls width="100%" poster="https://picsum.photos/400/225" preload="metadata" aria-label="Vidéo de démonstration">
+                    <source src="video.mp4" type="video/mp4">
+                    <source src="video.webm" type="video/webm">
+                    <track kind="subtitles" src="subtitles-fr.vtt" srclang="fr" label="Français" default>
+                    <track kind="subtitles" src="subtitles-en.vtt" srclang="en" label="English">
+                    Votre navigateur ne supporte pas la vidéo HTML5.
+                  </video>
+                  <p style="font-size:.8rem;color:var(--txt2);margin-top:6px;">⚠️ Aucune vidéo chargée dans cet exemple — le poster s'affiche.</p>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- audio -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;audio&gt;</span>
+              <span class="balise-type type-media">Média</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Lecteur audio natif HTML5. Même principe que &lt;video&gt; mais
+                sans dimensions visuelles. Formats : MP3, OGG, WAV, AAC, FLAC.
+              </p>
+              <div class="attrs">
+                <div class="attrs-label">Attributs (mêmes que video sauf poster/width/height)</div>
+                <div class="attr-item"><span class="attr-name">controls</span><span class="attr-desc">→ Contrôles natifs (TOUJOURS recommandé pour l'accessibilité)</span></div>
+                <div class="attr-item"><span class="attr-name">autoplay</span><span class="attr-desc">→ Lecture automatique (déconseillé — mauvaise UX et accessibilité)</span></div>
+              </div>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <audio controls aria-label="Audio de démonstration">
+                    <source src="audio.mp3" type="audio/mpeg">
+                    <source src="audio.ogg" type="audio/ogg">
+                    Votre navigateur ne supporte pas l'audio HTML5.
+                  </audio>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- track -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;track&gt;</span>
+              <span class="balise-type type-media">Média</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Piste de texte pour &lt;video&gt; et &lt;audio&gt; (sous-titres,
+                légendes, chapitres, descriptions). Format WebVTT (.vtt).
+                WCAG 1.2.2 exige des sous-titres pour toutes les vidéos.
+              </p>
+              <div class="attrs">
+                <div class="attrs-label">Valeurs de kind</div>
+                <div class="attr-item"><span class="attr-name">subtitles</span><span class="attr-desc">→ Sous-titres (traduction du dialogue)</span></div>
+                <div class="attr-item"><span class="attr-name">captions</span><span class="attr-desc">→ Légendes pour sourds (dialogue + sons)</span></div>
+                <div class="attr-item"><span class="attr-name">descriptions</span><span class="attr-desc">→ Description audio pour malvoyants</span></div>
+                <div class="attr-item"><span class="attr-name">chapters</span><span class="attr-desc">→ Chapitres pour la navigation</span></div>
+                <div class="attr-item"><span class="attr-name">metadata</span><span class="attr-desc">→ Métadonnées pour JavaScript</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- iframe -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;iframe&gt;</span>
+              <span class="balise-type type-media">Embarqué</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                <strong>Inline Frame</strong> — Embarque une autre page web dans la page courante.
+                Utilisé pour : vidéos YouTube/Vimeo, Google Maps, Tweets,
+                formulaires externes, widgets de paiement.
+                Chaque iframe a son propre contexte de navigation (DOM séparé).
+                SÉCURITÉ : sandbox isole le contenu. CSP contrôle les permissions.
+              </p>
+              <div class="attrs">
+                <div class="attrs-label">Attributs</div>
+                <div class="attr-item"><span class="attr-name">src="url"</span><span class="attr-desc">→ URL de la page à embarquer</span></div>
+                <div class="attr-item"><span class="attr-name">title="description"</span><span class="attr-desc">→ Description du contenu (OBLIGATOIRE pour l'accessibilité)</span></div>
+                <div class="attr-item"><span class="attr-name">width / height</span><span class="attr-desc">→ Dimensions</span></div>
+                <div class="attr-item"><span class="attr-name">loading="lazy"</span><span class="attr-desc">→ Chargement différé (performance)</span></div>
+                <div class="attr-item"><span class="attr-name">sandbox</span><span class="attr-desc">→ Restreint les permissions (sécurité)</span></div>
+                <div class="attr-item"><span class="attr-name">sandbox="allow-scripts allow-same-origin"</span><span class="attr-desc">→ Permissions spécifiques</span></div>
+                <div class="attr-item"><span class="attr-name">allow="camera; microphone"</span><span class="attr-desc">→ Permissions Permissions Policy</span></div>
+                <div class="attr-item"><span class="attr-name">allowfullscreen</span><span class="attr-desc">→ Autorise le plein écran</span></div>
+                <div class="attr-item"><span class="attr-name">referrerpolicy</span><span class="attr-desc">→ Contrôle le Referer envoyé</span></div>
+              </div>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu (OpenStreetMap)</div>
+                <div class="demo-zone">
+                  <iframe
+                    src="https://www.openstreetmap.org/export/embed.html?bbox=2.3,48.8,2.4,48.9&layer=mapnik"
+                    title="Carte OpenStreetMap de Paris"
+                    width="100%"
+                    height="200"
+                    loading="lazy"
+                    sandbox="allow-scripts allow-same-origin"
+                    style="border-radius:var(--r);border:1px solid var(--bord);">
+                  </iframe>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- embed object -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;embed&gt; &lt;object&gt; &lt;param&gt;</span>
+              <span class="balise-type type-media">Embarqué</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Anciens mécanismes d'intégration (Flash, Java, plugins).
+                Aujourd'hui quasi-obsolètes. Remplacés par &lt;video&gt;, &lt;audio&gt;,
+                &lt;iframe&gt;, SVG, Canvas.
+                <code>&lt;embed&gt;</code> — Contenu externe sans fallback possible.
+                <code>&lt;object&gt;</code> — Contenu externe avec fallback (contenu entre les balises).
+                <code>&lt;param&gt;</code> — Paramètre pour &lt;object&gt;.
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         SECTION 6 : TABLEAUX
+         ════════════════════════════════════════════════════════════════ -->
+    <section id="tableaux" aria-labelledby="titre-tableaux">
+      <h2 id="titre-tableaux" style="font-size:1.3rem; margin: 32px 0 16px; padding-top: 16px; border-top: 2px solid var(--bord);">
+        📊 Tableaux
+      </h2>
+
+      <div class="ref-section">
+        <div class="ref-section-header">
+          <span class="tag-cat">Tableau</span>
+          <h2>&lt;table&gt; — Données tabulaires</h2>
+        </div>
+        <div class="ref-section-body">
+
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;table&gt; et toutes ses balises</span>
+              <span class="balise-type type-tableau">Tableau</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Réservé aux <strong>données tabulaires</strong> (lignes + colonnes avec relation).
+                NE PAS utiliser pour la mise en page (utiliser CSS Grid/Flexbox).
+                Un tableau mal structuré est incompréhensible pour les lecteurs d'écran.
+              </p>
+              <div class="attrs">
+                <div class="attrs-label">Balises du tableau</div>
+                <div class="attr-item"><span class="attr-name">&lt;table&gt;</span><span class="attr-desc">→ Conteneur principal du tableau</span></div>
+                <div class="attr-item"><span class="attr-name">&lt;caption&gt;</span><span class="attr-desc">→ Titre/description du tableau (RECOMMANDÉ pour l'accessibilité)</span></div>
+                <div class="attr-item"><span class="attr-name">&lt;thead&gt;</span><span class="attr-desc">→ En-tête du tableau (groupe les lignes d'en-tête)</span></div>
+                <div class="attr-item"><span class="attr-name">&lt;tbody&gt;</span><span class="attr-desc">→ Corps du tableau (groupe les données)</span></div>
+                <div class="attr-item"><span class="attr-name">&lt;tfoot&gt;</span><span class="attr-desc">→ Pied du tableau (totaux, résumé)</span></div>
+                <div class="attr-item"><span class="attr-name">&lt;tr&gt;</span><span class="attr-desc">→ Ligne du tableau (table row)</span></div>
+                <div class="attr-item"><span class="attr-name">&lt;th&gt;</span><span class="attr-desc">→ Cellule d'en-tête (table header) — gras + centré par défaut</span></div>
+                <div class="attr-item"><span class="attr-name">&lt;td&gt;</span><span class="attr-desc">→ Cellule de données (table data)</span></div>
+                <div class="attr-item"><span class="attr-name">&lt;colgroup&gt; &lt;col&gt;</span><span class="attr-desc">→ Groupe et style de colonnes entières</span></div>
+                <div class="attr-item"><span class="attr-name">scope="col|row|colgroup|rowgroup"</span><span class="attr-desc">→ Sur &lt;th&gt; : indique ce que l'en-tête couvre (accessibilité)</span></div>
+                <div class="attr-item"><span class="attr-name">colspan="2"</span><span class="attr-desc">→ La cellule occupe 2 colonnes</span></div>
+                <div class="attr-item"><span class="attr-name">rowspan="3"</span><span class="attr-desc">→ La cellule occupe 3 lignes</span></div>
+                <div class="attr-item"><span class="attr-name">headers="id-th"</span><span class="attr-desc">→ Lie une &lt;td&gt; à son &lt;th&gt; par id (tableaux complexes)</span></div>
+              </div>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone" style="overflow-x:auto;">
+                  <table>
+                    <caption>Comparatif des langages web</caption>
+                    <colgroup>
+                      <col style="width:25%">
+                      <col style="width:25%">
+                      <col style="width:25%">
+                      <col style="width:25%">
+                    </colgroup>
+                    <thead>
+                      <tr>
+                        <th scope="col">Langage</th>
+                        <th scope="col">Type</th>
+                        <th scope="col">Rôle</th>
+                        <th scope="col">Difficulté</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>HTML</td>
+                        <td>Balisage</td>
+                        <td>Structure</td>
+                        <td>⭐</td>
+                      </tr>
+                      <tr>
+                        <td>CSS</td>
+                        <td>Style</td>
+                        <td>Présentation</td>
+                        <td>⭐⭐</td>
+                      </tr>
+                      <tr>
+                        <td>JavaScript</td>
+                        <td>Programmation</td>
+                        <td>Interactivité</td>
+                        <td>⭐⭐⭐</td>
+                      </tr>
+                    </tbody>
+                    <tfoot>
+                      <tr>
+                        <td colspan="4">Total : 3 langages fondamentaux du Web</td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         SECTION 7 : FORMULAIRES
+         ════════════════════════════════════════════════════════════════ -->
+    <section id="formulaires" aria-labelledby="titre-formulaires">
+      <h2 id="titre-formulaires" style="font-size:1.3rem; margin: 32px 0 16px; padding-top: 16px; border-top: 2px solid var(--bord);">
+        📋 Formulaires
+      </h2>
+
+      <div class="ref-section">
+        <div class="ref-section-header">
+          <span class="tag-cat">Formulaire</span>
+          <h2>&lt;form&gt; et tous ses éléments</h2>
+        </div>
+        <div class="ref-section-body">
+
+          <!-- form -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;form&gt;</span>
+              <span class="balise-type type-form">Formulaire</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Conteneur d'un formulaire interactif. Groupe les champs de saisie
+                et définit comment les données sont envoyées au serveur.
+              </p>
+              <div class="attrs">
+                <div class="attrs-label">Attributs principaux</div>
+                <div class="attr-item"><span class="attr-name">action="url"</span><span class="attr-desc">→ URL où envoyer les données (vide = page courante)</span></div>
+                <div class="attr-item"><span class="attr-name">method="GET"</span><span class="attr-desc">→ Données dans l'URL (recherche, filtres)</span></div>
+                <div class="attr-item"><span class="attr-name">method="POST"</span><span class="attr-desc">→ Données dans le corps de la requête (données sensibles)</span></div>
+                <div class="attr-item"><span class="attr-name">enctype="multipart/form-data"</span><span class="attr-desc">→ OBLIGATOIRE pour l'envoi de fichiers</span></div>
+                <div class="attr-item"><span class="attr-name">novalidate</span><span class="attr-desc">→ Désactive la validation native du navigateur</span></div>
+                <div class="attr-item"><span class="attr-name">autocomplete="on|off"</span><span class="attr-desc">→ Active/désactive l'autocomplétion</span></div>
+                <div class="attr-item"><span class="attr-name">aria-label="Nom du formulaire"</span><span class="attr-desc">→ Nommer le formulaire (accessibilité)</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- label -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;label&gt;</span>
+              <span class="balise-type type-form">Formulaire</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Étiquette d'un champ de formulaire. <strong>OBLIGATOIRE</strong>
+                pour l'accessibilité (WCAG 1.3.1, RGAA 11.1).
+                Cliquer sur le label active/coche le champ associé.
+                Deux façons de lier : <code>for="id"</code> sur le label + <code>id="id"</code> sur l'input,
+                ou imbriquer l'input dans le label.
+              </p>
+            </div>
+          </div>
+
+          <!-- input — tous les types -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;input type="..."&gt;</span>
+              <span class="balise-type type-form">Formulaire</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Champ de saisie. Balise <strong>auto-fermante</strong>. Le type détermine
+                l'interface affichée et la validation. Toujours associé à un &lt;label&gt;.
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Tous les types d'input</div>
+                <div class="demo-zone">
+                  <form aria-label="Démonstration de tous les types d'input" style="gap:16px;">
+
+                    <div>
+                      <label for="inp-text">text — Texte libre</label>
+                      <input type="text" id="inp-text" name="text" placeholder="Votre nom" autocomplete="name">
+                    </div>
+
+                    <div>
+                      <label for="inp-email">email — Adresse email</label>
+                      <input type="email" id="inp-email" name="email" placeholder="exemple@mail.com" autocomplete="email">
+                    </div>
+
+                    <div>
+                      <label for="inp-password">password — Mot de passe</label>
+                      <input type="password" id="inp-password" name="password" autocomplete="new-password">
+                    </div>
+
+                    <div>
+                      <label for="inp-tel">tel — Téléphone</label>
+                      <input type="tel" id="inp-tel" name="tel" placeholder="+33 6 00 00 00 00" autocomplete="tel">
+                    </div>
+
+                    <div>
+                      <label for="inp-url">url — URL</label>
+                      <input type="url" id="inp-url" name="url" placeholder="https://example.com">
+                    </div>
+
+                    <div>
+                      <label for="inp-number">number — Nombre</label>
+                      <input type="number" id="inp-number" name="number" min="0" max="100" step="5" value="25">
+                      <!--
+                        min  → valeur minimale autorisée
+                        max  → valeur maximale autorisée
+                        step → incrément de chaque clic sur les flèches
+                      -->
+                    </div>
+
+                    <div>
+                      <label for="inp-range">range — Curseur (slider)</label>
+                      <input type="range" id="inp-range" name="range" min="0" max="100" step="10" value="40">
+                    </div>
+
+                    <div>
+                      <label for="inp-date">date — Date</label>
+                      <input type="date" id="inp-date" name="date" value="2026-03-18" min="2020-01-01" max="2030-12-31">
+                    </div>
+
+                    <div>
+                      <label for="inp-time">time — Heure</label>
+                      <input type="time" id="inp-time" name="time" value="14:30">
+                    </div>
+
+                    <div>
+                      <label for="inp-datetime">datetime-local — Date et heure locale</label>
+                      <input type="datetime-local" id="inp-datetime" name="datetime" value="2026-03-18T14:30">
+                    </div>
+
+                    <div>
+                      <label for="inp-month">month — Mois</label>
+                      <input type="month" id="inp-month" name="month" value="2026-03">
+                    </div>
+
+                    <div>
+                      <label for="inp-week">week — Semaine</label>
+                      <input type="week" id="inp-week" name="week" value="2026-W11">
+                    </div>
+
+                    <div>
+                      <label for="inp-color">color — Sélecteur de couleur</label>
+                      <input type="color" id="inp-color" name="color" value="#22c55e">
+                    </div>
+
+                    <div>
+                      <label for="inp-search">search — Recherche</label>
+                      <input type="search" id="inp-search" name="search" placeholder="Rechercher..." aria-label="Recherche de démonstration">
+                    </div>
+
+                    <div>
+                      <label for="inp-file">file — Fichier</label>
+                      <input type="file" id="inp-file" name="file" accept=".pdf,.jpg,.png" multiple>
+                      <!--
+                        accept → types MIME ou extensions acceptés
+                        multiple → permet de sélectionner plusieurs fichiers
+                      -->
+                    </div>
+
+                    <fieldset>
+                      <legend>checkbox — Cases à cocher (choix multiples)</legend>
+                      <div class="check-group">
+                        <label for="chk-html">
+                          <input type="checkbox" id="chk-html" name="langs" value="html" checked>
+                          HTML
+                        </label>
+                        <label for="chk-css">
+                          <input type="checkbox" id="chk-css" name="langs" value="css">
+                          CSS
+                        </label>
+                        <label for="chk-js">
+                          <input type="checkbox" id="chk-js" name="langs" value="js">
+                          JavaScript
+                        </label>
+                      </div>
+                    </fieldset>
+
+                    <fieldset>
+                      <legend>radio — Boutons radio (choix unique)</legend>
+                      <div class="radio-group">
+                        <label for="rad-debutant">
+                          <input type="radio" id="rad-debutant" name="niveau" value="debutant" checked>
+                          Débutant
+                        </label>
+                        <label for="rad-intermediaire">
+                          <input type="radio" id="rad-intermediaire" name="niveau" value="intermediaire">
+                          Intermédiaire
+                        </label>
+                        <label for="rad-avance">
+                          <input type="radio" id="rad-avance" name="niveau" value="avance">
+                          Avancé
+                        </label>
+                      </div>
+                    </fieldset>
+
+                    <div>
+                      <!-- hidden — Champ caché (non visible, mais envoyé avec le formulaire) -->
+                      <input type="hidden" name="csrf_token" value="abc123xyz">
+                      <p style="font-size:.82rem;color:var(--txt2);">hidden — Champ invisible envoyé avec le formulaire (ex: token CSRF, ID session).</p>
+                    </div>
+
+                    <div>
+                      <label for="inp-image">image — Bouton image</label><br>
+                      <input type="image" id="inp-image" src="https://picsum.photos/80/30" alt="Bouton image de soumission" width="80" height="30">
+                    </div>
+
+                    <div>
+                      <!-- submit — Bouton d'envoi du formulaire -->
+                      <input type="submit" value="Envoyer (input submit)">
+                    </div>
+
+                    <div>
+                      <!-- reset — Réinitialise tous les champs du formulaire -->
+                      <input type="reset" value="Réinitialiser (input reset)">
+                    </div>
+
+                    <div>
+                      <!-- button — Bouton générique (type="button" dans <input>) -->
+                      <input type="button" value="Bouton (input button)">
+                    </div>
+
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Attributs communs des inputs -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Attributs communs des &lt;input&gt;</span>
+              <span class="balise-type type-form">Formulaire</span>
+            </div>
+            <div class="balise-body">
+              <div class="attrs">
+                <div class="attr-item"><span class="attr-name">name="champ"</span><span class="attr-desc">→ Clé envoyée au serveur (OBLIGATOIRE pour la soumission)</span></div>
+                <div class="attr-item"><span class="attr-name">id="champ"</span><span class="attr-desc">→ Identifiant unique pour le label for="" (OBLIGATOIRE pour l'accessibilité)</span></div>
+                <div class="attr-item"><span class="attr-name">value="..."</span><span class="attr-desc">→ Valeur initiale ou valeur envoyée</span></div>
+                <div class="attr-item"><span class="attr-name">placeholder="..."</span><span class="attr-desc">→ Texte indicatif (disparaît à la saisie) — NE REMPLACE PAS le label</span></div>
+                <div class="attr-item"><span class="attr-name">required</span><span class="attr-desc">→ Champ obligatoire (validation native)</span></div>
+                <div class="attr-item"><span class="attr-name">disabled</span><span class="attr-desc">→ Désactivé (non envoyé, non interactif)</span></div>
+                <div class="attr-item"><span class="attr-name">readonly</span><span class="attr-desc">→ Lecture seule (envoyé, non modifiable)</span></div>
+                <div class="attr-item"><span class="attr-name">autofocus</span><span class="attr-desc">→ Focus automatique au chargement (un seul par page)</span></div>
+                <div class="attr-item"><span class="attr-name">autocomplete="..."</span><span class="attr-desc">→ Type de donnée pour l'autocomplétion (name, email, tel...)</span></div>
+                <div class="attr-item"><span class="attr-name">pattern="[A-Z]{3}"</span><span class="attr-desc">→ Expression régulière de validation</span></div>
+                <div class="attr-item"><span class="attr-name">minlength / maxlength</span><span class="attr-desc">→ Longueur min/max du texte</span></div>
+                <div class="attr-item"><span class="attr-name">aria-describedby="id"</span><span class="attr-desc">→ Lie un message d'aide ou d'erreur au champ</span></div>
+                <div class="attr-item"><span class="attr-name">aria-invalid="true"</span><span class="attr-desc">→ Indique un champ invalide aux lecteurs d'écran</span></div>
+                <div class="attr-item"><span class="attr-name">aria-required="true"</span><span class="attr-desc">→ Champ obligatoire (en plus de required)</span></div>
+                <div class="attr-item"><span class="attr-name">form="form-id"</span><span class="attr-desc">→ Lie l'input à un &lt;form&gt; par id (même si hors du form)</span></div>
+                <div class="attr-item"><span class="attr-name">list="datalist-id"</span><span class="attr-desc">→ Suggestions depuis un &lt;datalist&gt;</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- textarea -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;textarea&gt;</span>
+              <span class="balise-type type-form">Formulaire</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Zone de texte multiligne. Redimensionnable par l'utilisateur.
+                Pas d'attribut value — le contenu est entre les balises.
+              </p>
+              <div class="attrs">
+                <div class="attr-item"><span class="attr-name">rows="5"</span><span class="attr-desc">→ Nombre de lignes visibles</span></div>
+                <div class="attr-item"><span class="attr-name">cols="40"</span><span class="attr-desc">→ Largeur en caractères</span></div>
+                <div class="attr-item"><span class="attr-name">resize: none</span><span class="attr-desc">→ En CSS : empêche le redimensionnement</span></div>
+                <div class="attr-item"><span class="attr-name">wrap="hard|soft"</span><span class="attr-desc">→ Comportement du retour à la ligne</span></div>
+              </div>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <label for="msg">Message</label>
+                  <textarea id="msg" name="message" rows="4" placeholder="Votre message ici..." maxlength="500"></textarea>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- select option optgroup -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;select&gt; &lt;option&gt; &lt;optgroup&gt;</span>
+              <span class="balise-type type-form">Formulaire</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Liste déroulante de sélection.
+                <code>&lt;select&gt;</code> — Conteneur de la liste.
+                <code>&lt;option&gt;</code> — Élément de la liste.
+                <code>&lt;optgroup&gt;</code> — Groupe d'options avec label.
+              </p>
+              <div class="attrs">
+                <div class="attr-item"><span class="attr-name">multiple</span><span class="attr-desc">→ Permet la sélection multiple (Ctrl+clic)</span></div>
+                <div class="attr-item"><span class="attr-name">size="5"</span><span class="attr-desc">→ Nombre d'options visibles</span></div>
+                <div class="attr-item"><span class="attr-name">selected</span><span class="attr-desc">→ Sur &lt;option&gt; : présélectionné</span></div>
+                <div class="attr-item"><span class="attr-name">disabled</span><span class="attr-desc">→ Sur &lt;option&gt; : option inactive</span></div>
+                <div class="attr-item"><span class="attr-name">value="..."</span><span class="attr-desc">→ Sur &lt;option&gt; : valeur envoyée (si absent, le texte est utilisé)</span></div>
+              </div>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <label for="pays">Pays</label>
+                  <select id="pays" name="pays">
+                    <option value="" disabled selected>Choisissez un pays...</option>
+                    <optgroup label="Europe">
+                      <option value="fr">France</option>
+                      <option value="be">Belgique</option>
+                      <option value="ch">Suisse</option>
+                    </optgroup>
+                    <optgroup label="Amérique">
+                      <option value="us">États-Unis</option>
+                      <option value="ca">Canada</option>
+                    </optgroup>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- datalist -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;datalist&gt;</span>
+              <span class="balise-type type-form">Formulaire</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Liste de suggestions pour un &lt;input list="id"&gt;.
+                Combine la liberté de saisie d'un input avec des suggestions
+                comme un select. L'utilisateur peut taper autre chose que les suggestions.
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <label for="langage">Langage favori</label>
+                  <input type="text" id="langage" name="langage" list="langages-list" placeholder="Tapez ou choisissez...">
+                  <datalist id="langages-list">
+                    <option value="HTML">
+                    <option value="CSS">
+                    <option value="JavaScript">
+                    <option value="TypeScript">
+                    <option value="Python">
+                    <option value="Rust">
+                  </datalist>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- fieldset legend -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;fieldset&gt; &lt;legend&gt;</span>
+              <span class="balise-type type-form">Formulaire</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                <code>&lt;fieldset&gt;</code> — Groupe des champs de formulaire liés.
+                Dessine une bordure autour du groupe par défaut.
+                <code>&lt;legend&gt;</code> — Titre/description du groupe (toujours premier enfant de fieldset).
+                OBLIGATOIRE pour l'accessibilité des groupes de radios/checkboxes.
+                Le lecteur d'écran lit la légende avant chaque option du groupe.
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <fieldset>
+                    <legend>Informations personnelles</legend>
+                    <div style="display:flex;flex-direction:column;gap:8px;">
+                      <div><label for="fs-prenom">Prénom</label><input type="text" id="fs-prenom" name="prenom"></div>
+                      <div><label for="fs-nom">Nom</label><input type="text" id="fs-nom" name="nom"></div>
+                    </div>
+                  </fieldset>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- button -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;button&gt;</span>
+              <span class="balise-type type-form">Formulaire</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Bouton interactif. Peut contenir du HTML (texte, images, icônes).
+                Plus flexible que &lt;input type="button"&gt;.
+                <strong>Rôle ARIA implicite : button</strong>.
+                Toujours préciser type= pour éviter les comportements inattendus.
+              </p>
+              <div class="attrs">
+                <div class="attr-item"><span class="attr-name">type="submit"</span><span class="attr-desc">→ Soumet le formulaire parent (DÉFAUT si non précisé dans un form)</span></div>
+                <div class="attr-item"><span class="attr-name">type="reset"</span><span class="attr-desc">→ Réinitialise le formulaire</span></div>
+                <div class="attr-item"><span class="attr-name">type="button"</span><span class="attr-desc">→ Bouton générique (aucun comportement natif, contrôlé par JS)</span></div>
+                <div class="attr-item"><span class="attr-name">disabled</span><span class="attr-desc">→ Désactivé (non cliquable, non focusable)</span></div>
+                <div class="attr-item"><span class="attr-name">form="form-id"</span><span class="attr-desc">→ Lie le bouton à un formulaire par id</span></div>
+                <div class="attr-item"><span class="attr-name">formaction="url"</span><span class="attr-desc">→ Surcharge l'action du formulaire pour ce bouton</span></div>
+                <div class="attr-item"><span class="attr-name">formmethod="POST"</span><span class="attr-desc">→ Surcharge la méthode du formulaire</span></div>
+                <div class="attr-item"><span class="attr-name">aria-label="..."</span><span class="attr-desc">→ Si l'icône seule n'est pas explicite</span></div>
+                <div class="attr-item"><span class="attr-name">aria-pressed="true|false"</span><span class="attr-desc">→ État d'un bouton bascule (toggle)</span></div>
+                <div class="attr-item"><span class="attr-name">aria-expanded="true|false"</span><span class="attr-desc">→ État d'un bouton qui ouvre/ferme un contenu</span></div>
+              </div>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone" style="display:flex;flex-wrap:wrap;gap:10px;">
+                  <button type="button" style="background:var(--accent);color:#fff;border:none;padding:8px 16px;border-radius:var(--r);cursor:pointer;">✓ Soumettre</button>
+                  <button type="button" style="background:none;border:2px solid var(--bord);padding:8px 16px;border-radius:var(--r);cursor:pointer;">Annuler</button>
+                  <button type="button" disabled style="background:#e2e8f0;border:none;padding:8px 16px;border-radius:var(--r);cursor:not-allowed;color:#a0aec0;">Désactivé</button>
+                  <button type="button" aria-pressed="false" style="background:#f0f4f8;border:1px solid var(--bord);padding:8px 16px;border-radius:var(--r);cursor:pointer;" onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed')==='true' ? 'false' : 'true');this.style.background=this.getAttribute('aria-pressed')==='true'?'var(--accent)':'#f0f4f8';this.style.color=this.getAttribute('aria-pressed')==='true'?'#fff':'inherit'">Toggle (aria-pressed)</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- progress meter output -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;progress&gt; &lt;meter&gt; &lt;output&gt;</span>
+              <span class="balise-type type-form">Formulaire</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Éléments de formulaire pour afficher des valeurs.
+              </p>
+              <div class="attrs">
+                <div class="attr-item"><span class="attr-name">&lt;progress value="70" max="100"&gt;</span><span class="attr-desc">→ Barre de progression (indéterminée si pas de value)</span></div>
+                <div class="attr-item"><span class="attr-name">&lt;meter value="6" min="0" max="10" low="3" high="8" optimum="9"&gt;</span><span class="attr-desc">→ Jauge avec zones (basse/haute/optimale)</span></div>
+                <div class="attr-item"><span class="attr-name">&lt;output name="res" for="a b"&gt;</span><span class="attr-desc">→ Résultat d'un calcul (lié aux inputs par for)</span></div>
+              </div>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone" style="display:flex;flex-direction:column;gap:12px;">
+                  <div>
+                    <label for="prog1">Progression du téléchargement : 70%</label>
+                    <progress id="prog1" value="70" max="100">70%</progress>
+                  </div>
+                  <div>
+                    <label for="prog2">Progression indéterminée</label>
+                    <progress id="prog2">En cours...</progress>
+                  </div>
+                  <div>
+                    <label for="met1">Niveau de batterie (6/10)</label>
+                    <meter id="met1" value="6" min="0" max="10" low="3" high="8" optimum="9">6/10</meter>
+                  </div>
+                  <div>
+                    <label>Calcul (a + b = résultat) :</label>
+                    <div style="display:flex;gap:8px;align-items:center;">
+                      <input type="number" id="val-a" value="5" style="width:70px;padding:4px 8px;border:1px solid var(--bord);border-radius:4px;" oninput="document.getElementById('calc-result').value = +this.value + +document.getElementById('val-b').value">
+                      <span>+</span>
+                      <input type="number" id="val-b" value="3" style="width:70px;padding:4px 8px;border:1px solid var(--bord);border-radius:4px;" oninput="document.getElementById('calc-result').value = +document.getElementById('val-a').value + +this.value">
+                      <span>=</span>
+                      <output id="calc-result" name="resultat" for="val-a val-b">8</output>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formulaire complet d'exemple -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Formulaire complet d'exemple</span>
+              <span class="balise-type type-form">Formulaire</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">Un formulaire d'inscription complet avec toutes les bonnes pratiques.</p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone">
+                  <form action="#" method="POST" novalidate aria-label="Formulaire d'inscription">
+                    <fieldset>
+                      <legend>Informations de compte</legend>
+
+                      <div>
+                        <label for="f-prenom">
+                          Prénom <span aria-hidden="true" style="color:var(--rouge)">*</span>
+                          <span class="sr-only">(obligatoire)</span>
+                        </label>
+                        <input type="text" id="f-prenom" name="prenom"
+                               required aria-required="true"
+                               autocomplete="given-name"
+                               aria-describedby="f-prenom-aide">
+                        <small id="f-prenom-aide" style="color:var(--txt2);display:block;margin-top:3px;">Entre 2 et 50 caractères.</small>
+                      </div>
+
+                      <div>
+                        <label for="f-email">
+                          Email <span aria-hidden="true" style="color:var(--rouge)">*</span>
+                        </label>
+                        <input type="email" id="f-email" name="email"
+                               required aria-required="true"
+                               autocomplete="email"
+                               placeholder="vous@exemple.com">
+                      </div>
+
+                      <div>
+                        <label for="f-mdp">
+                          Mot de passe <span aria-hidden="true" style="color:var(--rouge)">*</span>
+                        </label>
+                        <input type="password" id="f-mdp" name="password"
+                               required minlength="8"
+                               autocomplete="new-password"
+                               aria-describedby="f-mdp-aide">
+                        <small id="f-mdp-aide" style="color:var(--txt2);display:block;margin-top:3px;">Minimum 8 caractères.</small>
+                      </div>
+                    </fieldset>
+
+                    <fieldset>
+                      <legend>Votre niveau</legend>
+                      <div class="radio-group">
+                        <label for="f-niv1"><input type="radio" id="f-niv1" name="niveau" value="debutant" required> Débutant</label>
+                        <label for="f-niv2"><input type="radio" id="f-niv2" name="niveau" value="intermediaire"> Intermédiaire</label>
+                        <label for="f-niv3"><input type="radio" id="f-niv3" name="niveau" value="avance"> Avancé</label>
+                      </div>
+                    </fieldset>
+
+                    <div>
+                      <label for="f-cgu">
+                        <input type="checkbox" id="f-cgu" name="cgu" required aria-required="true">
+                        J'accepte les <a href="#">conditions d'utilisation</a>
+                      </label>
+                    </div>
+
+                    <p style="font-size:.8rem;color:var(--txt2);">
+                      <span aria-hidden="true" style="color:var(--rouge)">*</span> Champs obligatoires
+                    </p>
+
+                    <button type="submit" style="background:var(--accent);color:#fff;border:none;padding:10px 24px;border-radius:var(--r);cursor:pointer;font-weight:700;font-size:.95rem;">
+                      Créer mon compte
+                    </button>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         SECTION 8 : BALISES SPÉCIALES
+         ════════════════════════════════════════════════════════════════ -->
+    <section id="special" aria-labelledby="titre-special">
+      <h2 id="titre-special" style="font-size:1.3rem; margin: 32px 0 16px; padding-top: 16px; border-top: 2px solid var(--bord);">
+        ✨ Balises spéciales
+      </h2>
+
+      <div class="ref-section">
+        <div class="ref-section-header">
+          <span class="tag-cat">Spécial</span>
+          <h2>&lt;details&gt; &lt;dialog&gt; &lt;template&gt; &lt;slot&gt;</h2>
+        </div>
+        <div class="ref-section-body">
+
+          <!-- details summary -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;details&gt; &lt;summary&gt;</span>
+              <span class="balise-type type-special">Spécial</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                <code>&lt;details&gt;</code> — Widget d'accordéon natif HTML.
+                Le contenu est masqué/affiché au clic sans JavaScript.
+                L'attribut <code>open</code> l'ouvre par défaut.
+                <code>&lt;summary&gt;</code> — Premier enfant de details, toujours visible,
+                sert de titre cliquable pour ouvrir/fermer.
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu (cliquer pour ouvrir)</div>
+                <div class="demo-zone">
+                  <details>
+                    <summary>📖 Qu'est-ce que le HTML ?</summary>
+                    <p>HTML (HyperText Markup Language) est le langage de balisage
+                    standard pour créer des pages web. Il définit la structure et
+                    le sens du contenu web.</p>
+                  </details>
+                  <details open>
+                    <summary>✅ CSS — déjà ouvert par défaut (attribut open)</summary>
+                    <p>CSS (Cascading Style Sheets) est le langage de style utilisé
+                    pour décrire la présentation d'un document HTML.</p>
+                  </details>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- dialog -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;dialog&gt;</span>
+              <span class="balise-type type-special">Spécial</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Boîte de dialogue / modale native HTML5. Gère automatiquement :
+                focus trap, accessibilité ARIA, arrière-plan modal (::backdrop).
+                Ouverture : <code>dialog.showModal()</code> (modale) ou <code>dialog.show()</code> (non-modale).
+                Fermeture : bouton avec <code>method="dialog"</code> dans un &lt;form&gt; interne.
+                L'attribut <code>open</code> l'affiche (préférer la méthode JS).
+                <strong>Rôle ARIA implicite : dialog</strong>.
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Rendu (cliquer le bouton)</div>
+                <div class="demo-zone">
+                  <button type="button" class="dialog-btn" onclick="document.getElementById('demo-dialog').showModal()">
+                    Ouvrir la boîte de dialogue
+                  </button>
+                  <dialog id="demo-dialog" aria-labelledby="dialog-titre" aria-describedby="dialog-desc">
+                    <h3 id="dialog-titre">Confirmation</h3>
+                    <p id="dialog-desc">Êtes-vous sûr de vouloir effectuer cette action ?</p>
+                    <form method="dialog" style="display:flex;gap:8px;margin-top:12px;">
+                      <!-- method="dialog" → ferme la modale à la soumission -->
+                      <button type="submit" style="background:var(--accent);color:#fff;border:none;padding:8px 16px;border-radius:var(--r);cursor:pointer;">Confirmer</button>
+                      <button type="button" class="dialog-close" onclick="document.getElementById('demo-dialog').close()">Annuler</button>
+                    </form>
+                  </dialog>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- template slot -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;template&gt; &lt;slot&gt;</span>
+              <span class="balise-type type-special">Spécial</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                <code>&lt;template&gt;</code> — Contenu HTML inerte (non rendu, non exécuté).
+                Stocke du HTML réutilisable activable par JavaScript via
+                <code>template.content.cloneNode(true)</code>.
+                Utilisé pour les Web Components et la génération dynamique.
+                <br><br>
+                <code>&lt;slot&gt;</code> — Emplacement de contenu dans un Shadow DOM
+                (Web Components). Permet d'injecter du contenu depuis l'extérieur
+                du composant.
+              </p>
+              <div class="balise-exemple">
+                <div class="balise-exemple-label">Démo</div>
+                <div class="demo-zone">
+                  <!-- Le template n'est pas visible -->
+                  <template id="carte-template">
+                    <div style="border:1px solid var(--bord);border-radius:var(--r);padding:10px;margin:4px 0;">
+                      <strong class="carte-nom"></strong>
+                      <p class="carte-desc" style="font-size:.85rem;color:var(--txt2);margin:4px 0 0;"></p>
+                    </div>
+                  </template>
+                  <div id="template-container"></div>
+                  <button type="button" style="background:var(--primaire);color:#fff;border:none;padding:6px 14px;border-radius:var(--r);cursor:pointer;font-size:.85rem;" onclick="
+                    var tpl = document.getElementById('carte-template');
+                    var clone = tpl.content.cloneNode(true);
+                    var n = document.getElementById('template-container').children.length + 1;
+                    clone.querySelector('.carte-nom').textContent = 'Carte n°' + n;
+                    clone.querySelector('.carte-desc').textContent = 'Générée depuis &lt;template&gt;';
+                    document.getElementById('template-container').appendChild(clone);
+                  ">Ajouter une carte depuis &lt;template&gt;</button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- script et noscript dans le body -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">&lt;script&gt; &lt;noscript&gt;</span>
+              <span class="balise-type type-script">Script</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                <code>&lt;script&gt;</code> — Intègre ou charge du JavaScript.
+                Dans le body = exécuté quand rencontré.
+                <strong>Toujours en bas du &lt;body&gt;</strong> ou avec defer/async
+                dans le head, pour ne pas bloquer l'affichage de la page.
+                <br><br>
+                <code>&lt;noscript&gt;</code> — Contenu de fallback affiché si JavaScript
+                est désactivé. Dans le body : peut contenir n'importe quel HTML.
+              </p>
+              <div class="attrs">
+                <div class="attr-item"><span class="attr-name">src="script.js"</span><span class="attr-desc">→ Fichier JS externe</span></div>
+                <div class="attr-item"><span class="attr-name">defer</span><span class="attr-desc">→ Exécution après parsing HTML complet</span></div>
+                <div class="attr-item"><span class="attr-name">async</span><span class="attr-desc">→ Exécution dès téléchargement (sans ordre garanti)</span></div>
+                <div class="attr-item"><span class="attr-name">type="module"</span><span class="attr-desc">→ Module ES6 (import/export)</span></div>
+                <div class="attr-item"><span class="attr-name">integrity="sha384-..."</span><span class="attr-desc">→ Vérification d'intégrité (SRI) pour fichiers CDN</span></div>
+                <div class="attr-item"><span class="attr-name">crossorigin="anonymous"</span><span class="attr-desc">→ CORS pour les scripts externes</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Autres balises head -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Autres balises du &lt;head&gt;</span>
+              <span class="balise-type type-meta">Méta</span>
+            </div>
+            <div class="balise-body">
+              <div class="attrs">
+                <div class="attr-item"><span class="attr-name">&lt;meta http-equiv="refresh" content="5;url=/page"&gt;</span><span class="attr-desc">→ Redirection automatique après 5 secondes</span></div>
+                <div class="attr-item"><span class="attr-name">&lt;meta http-equiv="X-UA-Compatible" content="IE=edge"&gt;</span><span class="attr-desc">→ Mode de rendu Internet Explorer (legacy)</span></div>
+                <div class="attr-item"><span class="attr-name">&lt;meta name="color-scheme" content="light dark"&gt;</span><span class="attr-desc">→ Thèmes supportés (clair/sombre)</span></div>
+                <div class="attr-item"><span class="attr-name">&lt;meta name="generator" content="WordPress"&gt;</span><span class="attr-desc">→ Outil utilisé pour générer la page</span></div>
+                <div class="attr-item"><span class="attr-name">&lt;meta name="referrer" content="no-referrer"&gt;</span><span class="attr-desc">→ Politique de Referrer par défaut</span></div>
+                <div class="attr-item"><span class="attr-name">&lt;meta name="format-detection" content="telephone=no"&gt;</span><span class="attr-desc">→ Empêche iOS de transformer les numéros en liens</span></div>
+                <div class="attr-item"><span class="attr-name">&lt;link rel="pingback" href="/xmlrpc.php"&gt;</span><span class="attr-desc">→ URL de pingback (WordPress, blogs)</span></div>
+                <div class="attr-item"><span class="attr-name">&lt;link rel="search" href="/opensearch.xml"&gt;</span><span class="attr-desc">→ Plugin de recherche OpenSearch</span></div>
+                <div class="attr-item"><span class="attr-name">&lt;link rel="next" href="/page-2"&gt;</span><span class="attr-desc">→ Page suivante (pagination)</span></div>
+                <div class="attr-item"><span class="attr-name">&lt;link rel="prev" href="/page-1"&gt;</span><span class="attr-desc">→ Page précédente (pagination)</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Attributs globaux -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Attributs globaux (sur TOUTES les balises)</span>
+              <span class="balise-type type-meta">Global</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">Ces attributs peuvent être utilisés sur n'importe quelle balise HTML.</p>
+              <div class="attrs">
+                <div class="attr-item"><span class="attr-name">id="identifiant"</span><span class="attr-desc">→ Identifiant UNIQUE sur la page. Cible CSS (#id), JS, ancres (#id)</span></div>
+                <div class="attr-item"><span class="attr-name">class="nom"</span><span class="attr-desc">→ Classe(s) CSS (séparées par des espaces). Non unique</span></div>
+                <div class="attr-item"><span class="attr-name">style="color:red"</span><span class="attr-desc">→ Style CSS inline (priorité maximale, éviter sauf cas particuliers)</span></div>
+                <div class="attr-item"><span class="attr-name">title="info"</span><span class="attr-desc">→ Info-bulle au survol. Texte descriptif supplémentaire</span></div>
+                <div class="attr-item"><span class="attr-name">lang="fr"</span><span class="attr-desc">→ Langue du contenu de CET élément (si différente du document)</span></div>
+                <div class="attr-item"><span class="attr-name">dir="ltr|rtl|auto"</span><span class="attr-desc">→ Direction du texte de cet élément</span></div>
+                <div class="attr-item"><span class="attr-name">tabindex="0"</span><span class="attr-desc">→ 0 = focusable dans l'ordre naturel | -1 = focusable par JS seulement | N = ordre personnalisé</span></div>
+                <div class="attr-item"><span class="attr-name">hidden</span><span class="attr-desc">→ Masque l'élément (display:none) et le retire de l'accessibilité</span></div>
+                <div class="attr-item"><span class="attr-name">contenteditable="true"</span><span class="attr-desc">→ Rend le contenu éditable par l'utilisateur</span></div>
+                <div class="attr-item"><span class="attr-name">draggable="true"</span><span class="attr-desc">→ Rend l'élément glissable (drag and drop)</span></div>
+                <div class="attr-item"><span class="attr-name">spellcheck="true"</span><span class="attr-desc">→ Active la vérification orthographique</span></div>
+                <div class="attr-item"><span class="attr-name">translate="yes|no"</span><span class="attr-desc">→ Autorise/interdit la traduction automatique</span></div>
+                <div class="attr-item"><span class="attr-name">accesskey="k"</span><span class="attr-desc">→ Raccourci clavier (Alt+k ou Ctrl+k selon OS)</span></div>
+                <div class="attr-item"><span class="attr-name">data-mon-attribut="valeur"</span><span class="attr-desc">→ Attribut personnalisé lu par JS via dataset.monAttribut</span></div>
+                <div class="attr-item"><span class="attr-name">aria-label="..."</span><span class="attr-desc">→ Nom accessible (lecteur d'écran) — remplace le texte visible</span></div>
+                <div class="attr-item"><span class="attr-name">aria-labelledby="id"</span><span class="attr-desc">→ Nom accessible via un autre élément</span></div>
+                <div class="attr-item"><span class="attr-name">aria-describedby="id"</span><span class="attr-desc">→ Description accessible via un autre élément</span></div>
+                <div class="attr-item"><span class="attr-name">aria-hidden="true"</span><span class="attr-desc">→ Masqué des lecteurs d'écran (décoratif)</span></div>
+                <div class="attr-item"><span class="attr-name">aria-live="polite|assertive"</span><span class="attr-desc">→ Zone mise à jour dynamiquement annoncée aux lecteurs d'écran</span></div>
+                <div class="attr-item"><span class="attr-name">role="..."</span><span class="attr-desc">→ Rôle ARIA (button, link, dialog, alert, img, heading...) si balise sémantique impossible</span></div>
+                <div class="attr-item"><span class="attr-name">inert</span><span class="attr-desc">→ Rend l'élément et tous ses descendants non interactifs et invisibles à l'accessibilité</span></div>
+                <div class="attr-item"><span class="attr-name">popover</span><span class="attr-desc">→ (Nouveau) Popover natif HTML (tooltip, dropdown) sans JS</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- ════════════════════════════════════════════════════════════════
+         SECTION 9 : RÉCAPITULATIF
+         ════════════════════════════════════════════════════════════════ -->
+    <section aria-labelledby="titre-recap">
+      <h2 id="titre-recap" style="font-size:1.3rem; margin: 32px 0 16px; padding-top: 16px; border-top: 2px solid var(--bord);">
+        📌 Règles d'or à retenir
+      </h2>
+
+      <div class="ref-section">
+        <div class="ref-section-header">
+          <span class="tag-cat">Résumé</span>
+          <h2>Les règles fondamentales</h2>
+        </div>
+        <div class="ref-section-body">
+          <div class="demo-zone" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
+
+            <div style="background:#f0fff4;border:1px solid #9ae6b4;border-radius:var(--r);padding:14px;">
+              <h3 style="color:#276749;font-size:.95rem;margin-bottom:8px;">✅ Sémantique</h3>
+              <ul style="padding-left:16px;font-size:.85rem;color:var(--txt2);">
+                <li>Un seul &lt;h1&gt; par page</li>
+                <li>Hiérarchie h1→h2→h3 sans sauter</li>
+                <li>Un seul &lt;main&gt; par page</li>
+                <li>&lt;article&gt; = contenu autonome</li>
+                <li>&lt;section&gt; = toujours avec un titre</li>
+                <li>&lt;nav&gt; = navigations principales seulement</li>
+                <li>&lt;div&gt;/&lt;span&gt; = dernier recours</li>
+              </ul>
+            </div>
+
+            <div style="background:#ebf8ff;border:1px solid #90cdf4;border-radius:var(--r);padding:14px;">
+              <h3 style="color:#2b6cb0;font-size:.95rem;margin-bottom:8px;">♿ Accessibilité</h3>
+              <ul style="padding-left:16px;font-size:.85rem;color:var(--txt2);">
+                <li>lang="fr" sur &lt;html&gt;</li>
+                <li>alt="" sur chaque &lt;img&gt;</li>
+                <li>&lt;label for&gt; sur chaque champ</li>
+                <li>Contraste texte ≥ 4.5:1 (WCAG)</li>
+                <li>Skip link en premier</li>
+                <li>&lt;fieldset&gt;+&lt;legend&gt; pour radios/checkbox</li>
+                <li>Sous-titres pour vidéos</li>
+              </ul>
+            </div>
+
+            <div style="background:#fffbeb;border:1px solid #f6e05e;border-radius:var(--r);padding:14px;">
+              <h3 style="color:#b7791f;font-size:.95rem;margin-bottom:8px;">🔗 Liens et boutons</h3>
+              <ul style="padding-left:16px;font-size:.85rem;color:var(--txt2);">
+                <li>&lt;a href&gt; = naviguer</li>
+                <li>&lt;button&gt; = agir</li>
+                <li>type="button" toujours sur &lt;button&gt;</li>
+                <li>rel="noopener noreferrer" + _blank</li>
+                <li>aria-label si texte pas clair</li>
+                <li>aria-current="page" sur lien actif</li>
+              </ul>
+            </div>
+
+            <div style="background:#fff5f5;border:1px solid #feb2b2;border-radius:var(--r);padding:14px;">
+              <h3 style="color:#c53030;font-size:.95rem;margin-bottom:8px;">⚡ Performance</h3>
+              <ul style="padding-left:16px;font-size:.85rem;color:var(--txt2);">
+                <li>loading="lazy" sur les images</li>
+                <li>width et height sur &lt;img&gt;</li>
+                <li>&lt;script&gt; en bas du &lt;body&gt;</li>
+                <li>defer ou async sur les scripts</li>
+                <li>preconnect pour les polices</li>
+                <li>&lt;picture&gt; pour les formats modernes</li>
+              </ul>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- fin .wrapper -->
+</main>
+
+<!--
+  ════════════════════════════════════════════════════════════════════════
+  8. <footer>
+  ════════════════════════════════════════════════════════════════════════
+  Pied de page principal du site.
+  Rôle ARIA implicite : contentinfo (landmark "pied de page").
+  Contient : copyright, liens légaux, plan du site, contact...
+  Pas besoin de role="contentinfo" (redondant).
+-->
+<footer class="site-footer">
+  <p>© IntA11Y - Solutions <span id="annee"></span> — Référence HTML5 pédagogique</p>
+  <nav aria-label="Liens légaux" style="margin-top:8px;">
+    <ul style="list-style:none;display:flex;justify-content:center;gap:20px;flex-wrap:wrap;">
+      <li><a href="#">Mentions légales</a></li>
+      <li><a href="#">Politique de confidentialité</a></li>
+      <li><a href="#">Accessibilité</a></li>
+    </ul>
+  </nav>
+</footer>
+
+<script src="./app.js"></script>
+<!--
+  ════════════════════════════════════════════════════════════════════════
+  FIN DU FICHIER
+  Structure complète du document HTML5 :
+
+  <!DOCTYPE html>           → Type de document
+  <html lang="fr">          → Balise racine
+    <head>                  → Métadonnées (invisible)
+      <meta charset>        → Encodage
+      <meta viewport>       → Responsive
+      <title>               → Onglet navigateur
+      <meta description>    → SEO
+      <meta og:*>           → Réseaux sociaux
+      <link canonical>      → SEO
+      <link stylesheet>     → CSS externe
+      <link icon>           → Favicon
+      <style>               → CSS inline
+      <script defer>        → JS en avance
+    </head>
+    <body>                  → Contenu visible
+      <a class="skip">      → Accessibilité clavier
+      <header>              → En-tête + <nav>
+      <main>                → Contenu principal
+        <section>           → Sections thématiques
+          <article>         → Contenu autonome
+          <aside>           → Contenu secondaire
+          <h1>-<h6>         → Titres
+          <p> <ul> <ol>     → Texte et listes
+          <a>               → Liens
+          <img>             → Images
+          <table>           → Données tabulaires
+          <form>            → Formulaires
+          <dialog>          → Modales
+          <details>         → Accordéon
+        </section>
+      </main>
+      <footer>              → Pied de page
+      <script>              → JavaScript (en bas)
+    </body>
+  </html>
+  ════════════════════════════════════════════════════════════════════════
+-->
+
+</body>
+</html>
