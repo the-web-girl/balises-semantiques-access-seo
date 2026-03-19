@@ -2,7 +2,7 @@
 <!--
   ╔══════════════════════════════════════════════════════════════════════╗
   ║   RÉFÉRENCE COMPLÈTE DES BALISES SÉMANTIQUES HTML5                  ║
-  ║   Fichier pédagogique — IntA11Y - Solutions                                ║
+  ║   Fichier pédagogique — IntA11Y - Solutions                               ║
   ║   Toutes les balises HTML5 existantes, commentées et expliquées     ║
   ╠══════════════════════════════════════════════════════════════════════╣
   ║  PLAN DU FICHIER :                                                   ║
@@ -44,252 +44,585 @@
 -->
 
 <!--
-    ════════════════════════════════════════════════════════════════════════
-    2. <html>
-    ════════════════════════════════════════════════════════════════════════
-    Balise RACINE du document. Elle englobe TOUT le contenu HTML.
-    Il n'existe qu'une seule balise <html> par page.
+  ════════════════════════════════════════════════════════════════════════
+  2. <html>
+  ════════════════════════════════════════════════════════════════════════
+  Balise RACINE du document. Elle englobe TOUT le contenu HTML.
+  Il n'existe qu'une seule balise <html> par page.
 
-    Attributs importants :
-    - lang="fr"   → Langue principale du contenu (OBLIGATOIRE pour l'accessibilité).
-                    Utilisé par les lecteurs d'écran pour choisir la bonne voix.
-                    Par le navigateur pour proposer la traduction.
-                    Par les moteurs de recherche pour le référencement.
-                    Valeurs courantes : "fr", "en", "es", "de", "ja"...
-    - dir="ltr"   → Direction du texte : ltr (left-to-right, gauche→droite)
-                    ou rtl (right-to-left) pour l'arabe, l'hébreu...
-  -->
-  <html lang="fr" dir="ltr">
+  Attributs importants :
+  - lang="fr"   → Langue principale du contenu (OBLIGATOIRE pour l'accessibilité).
+                  Utilisé par les lecteurs d'écran pour choisir la bonne voix.
+                  Par le navigateur pour proposer la traduction.
+                  Par les moteurs de recherche pour le référencement.
+                  Valeurs courantes : "fr", "en", "es", "de", "ja"...
+  - dir="ltr"   → Direction du texte : ltr (left-to-right, gauche→droite)
+                  ou rtl (right-to-left) pour l'arabe, l'hébreu...
+-->
+<html lang="fr" dir="ltr">
+
+<!--
+  ════════════════════════════════════════════════════════════════════════
+  3. <head>
+  ════════════════════════════════════════════════════════════════════════
+  Contient les MÉTADONNÉES du document : informations pour le navigateur,
+  les moteurs de recherche et les réseaux sociaux.
+  Le contenu du <head> n'est PAS affiché à l'utilisateur (sauf <title>).
+  Doit être enfant direct de <html>.
+-->
+<head>
 
   <!--
-    ════════════════════════════════════════════════════════════════════════
-    3. <head>
-    ════════════════════════════════════════════════════════════════════════
-    Contient les MÉTADONNÉES du document : informations pour le navigateur,
-    les moteurs de recherche et les réseaux sociaux.
-    Le contenu du <head> n'est PAS affiché à l'utilisateur (sauf <title>).
-    Doit être enfant direct de <html>.
-  -->
-  <head>
-
-    <!--
-      <meta charset="UTF-8">
-      ──────────────────────
-      Définit l'ENCODAGE des caractères du document.
-      UTF-8 = encodage universel supportant tous les caractères du monde :
-      - Lettres accentuées françaises : é è à ù î ô û ç ê
-      - Symboles : € © ® ™ ° …
-      - Emojis : 😀 🎓 ✓
-      - Caractères asiatiques, arabes, cyrilliques, etc.
-      TOUJOURS mettre en PREMIER dans le <head>, avant tout autre élément.
-      Sans ça : les caractères spéciaux s'affichent en "carrés" ou "???".
-    -->
     <meta charset="UTF-8">
+    ──────────────────────
+    Définit l'ENCODAGE des caractères du document.
+    UTF-8 = encodage universel supportant tous les caractères du monde :
+    - Lettres accentuées françaises : é è à ù î ô û ç ê
+    - Symboles : € © ® ™ ° …
+    - Emojis : 😀 🎓 ✓
+    - Caractères asiatiques, arabes, cyrilliques, etc.
+    TOUJOURS mettre en PREMIER dans le <head>, avant tout autre élément.
+    Sans ça : les caractères spéciaux s'affichent en "carrés" ou "???".
+  -->
+  <meta charset="UTF-8">
 
-    <!--
-      <meta name="viewport">
-      ───────────────────────
-      Contrôle l'affichage sur les appareils mobiles (RESPONSIVE DESIGN).
-      INDISPENSABLE pour que la page s'adapte aux smartphones et tablettes.
+  <!--
+    <meta name="viewport">
+    ───────────────────────
+    Contrôle l'affichage sur les appareils mobiles (RESPONSIVE DESIGN).
+    INDISPENSABLE pour que la page s'adapte aux smartphones et tablettes.
 
-      content="width=device-width" :
-        La largeur de la page = la largeur réelle de l'écran.
-        Sans ça, mobile affiche la version desktop rétrécie et illisible.
+    content="width=device-width" :
+      La largeur de la page = la largeur réelle de l'écran.
+      Sans ça, mobile affiche la version desktop rétrécie et illisible.
 
-      initial-scale=1.0 :
-        Pas de zoom automatique au chargement.
-        L'échelle de départ est 1:1 (sans agrandissement ni réduction).
+    initial-scale=1.0 :
+      Pas de zoom automatique au chargement.
+      L'échelle de départ est 1:1 (sans agrandissement ni réduction).
 
-      Autres valeurs possibles (rarement utilisées) :
-        maximum-scale=1.0 → empêche le zoom utilisateur (déconseillé, nuit à l'accessibilité)
-        user-scalable=no  → interdit le zoom (INTERDIT par WCAG 1.4.4)
-    -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    Autres valeurs possibles (rarement utilisées) :
+      maximum-scale=1.0 → empêche le zoom utilisateur (déconseillé, nuit à l'accessibilité)
+      user-scalable=no  → interdit le zoom (INTERDIT par WCAG 1.4.4)
+  -->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <!--
-      <title>
-      ────────
-      Titre du document. Affiché dans :
-      - L'onglet du navigateur
-      - La barre de titre de la fenêtre
-      - Les résultats de recherche Google (SEO)
-      - Les favoris/marque-pages
-      - L'historique du navigateur
-      - Les partages sur réseaux sociaux (si pas d'og:title)
-      OBLIGATOIRE pour l'accessibilité (WCAG 2.4.2).
-      Doit être unique et descriptif (pas juste "Page" ou "Index").
-      Longueur recommandée : 50-60 caractères pour Google.
-    -->
-    <title>Référence des balises HTML5 — IntA11Y - Solutions</title>
+  <!--
+    <title>
+    ────────
+    Titre du document. Affiché dans :
+    - L'onglet du navigateur
+    - La barre de titre de la fenêtre
+    - Les résultats de recherche Google (SEO)
+    - Les favoris/marque-pages
+    - L'historique du navigateur
+    - Les partages sur réseaux sociaux (si pas d'og:title)
+    OBLIGATOIRE pour l'accessibilité (WCAG 2.4.2).
+    Doit être unique et descriptif (pas juste "Page" ou "Index").
+    Longueur recommandée : 50-60 caractères pour Google.
+  -->
+  <title>Référence des balises HTML5 — École du Web</title>
 
-    <!--
-      <meta name="description">
-      ──────────────────────────
-      Description courte de la page (150-160 caractères max).
-      Utilisée par :
-      - Google dans les résultats de recherche (snippet)
-      - Les réseaux sociaux pour les prévisualisations de liens
-      - Les lecteurs d'écran (parfois)
-      N'affecte PAS directement le classement Google, mais influence
-      le taux de clic (CTR) donc indirectement le SEO.
-    -->
-    <meta name="description" content="Référence complète de toutes les balises sémantiques HTML5, commentées et expliquées pour les intégrateurs débutants.">
+  <!--
+    <meta name="description">
+    ──────────────────────────
+    Description courte de la page (150-160 caractères max).
+    Utilisée par :
+    - Google dans les résultats de recherche (snippet)
+    - Les réseaux sociaux pour les prévisualisations de liens
+    - Les lecteurs d'écran (parfois)
+    N'affecte PAS directement le classement Google, mais influence
+    le taux de clic (CTR) donc indirectement le SEO.
+  -->
+  <meta name="description" content="Référence complète de toutes les balises sémantiques HTML5, commentées et expliquées pour les intégrateurs débutants.">
 
-    <!--
-      <meta name="keywords">
-      ───────────────────────
-      Mots-clés de la page. IGNORÉ par Google depuis 2009 (spam trop facile).
-      Encore utilisé par quelques moteurs de recherche mineurs (Yandex, Baidu).
-      On peut le mettre mais il n'a presque plus d'utilité.
-    -->
-    <meta name="keywords" content="HTML, balises, sémantique, référence, débutant">
+  <!--
+    <meta name="keywords">
+    ───────────────────────
+    Mots-clés de la page. IGNORÉ par Google depuis 2009 (spam trop facile).
+    Encore utilisé par quelques moteurs de recherche mineurs (Yandex, Baidu).
+    On peut le mettre mais il n'a presque plus d'utilité.
+  -->
+  <meta name="keywords" content="HTML, balises, sémantique, référence, débutant">
 
-    <!--
-      <meta name="author">
-      ─────────────────────
-      Identifie l'auteur du document.
-      Utilisé par certains agrégateurs de contenu et outils SEO.
-    -->
-    <meta name="author" content="IntA11Y - Solutions">
+  <!--
+    <meta name="author">
+    ─────────────────────
+    Identifie l'auteur du document.
+    Utilisé par certains agrégateurs de contenu et outils SEO.
+  -->
+  <meta name="author" content="École du Web">
 
-    <!--
-      <meta name="robots">
-      ─────────────────────
-      Indique aux robots des moteurs de recherche (Googlebot, etc.)
-      comment traiter la page.
-      Valeurs courantes :
-      - index, follow   → Indexer la page et suivre ses liens (défaut)
-      - noindex         → Ne pas indexer la page dans les résultats
-      - nofollow        → Ne pas suivre les liens de la page
-      - noarchive       → Ne pas mettre en cache la page
-      - noindex,nofollow → Page complètement privée des moteurs
-    -->
-    <meta name="robots" content="index, follow">
+  <!--
+    <meta name="robots">
+    ─────────────────────
+    Indique aux robots des moteurs de recherche (Googlebot, etc.)
+    comment traiter la page.
+    Valeurs courantes :
+    - index, follow   → Indexer la page et suivre ses liens (défaut)
+    - noindex         → Ne pas indexer la page dans les résultats
+    - nofollow        → Ne pas suivre les liens de la page
+    - noarchive       → Ne pas mettre en cache la page
+    - noindex,nofollow → Page complètement privée des moteurs
+  -->
+  <meta name="robots" content="index, follow">
 
-    <!--
-      <meta name="theme-color">
-      ──────────────────────────
-      Couleur de la barre de statut sur mobile (Chrome Android, Safari iOS).
-      Donne un aspect "app native" à la page web.
-      Valeur : n'importe quelle couleur CSS valide.
-    -->
-    <meta name="theme-color" content="#1a1a2e">
+  <!--
+    <meta name="theme-color">
+    ──────────────────────────
+    Couleur de la barre de statut sur mobile (Chrome Android, Safari iOS).
+    Donne un aspect "app native" à la page web.
+    Valeur : n'importe quelle couleur CSS valide.
+  -->
+  <meta name="theme-color" content="#1a1a2e">
 
-    <!--
-      Open Graph — Métadonnées pour les réseaux sociaux
-      ──────────────────────────────────────────────────
-      Protocole créé par Facebook, utilisé par tous les réseaux sociaux.
-      Contrôle l'apparence de la prévisualisation quand on partage un lien.
-      Sans ces balises, les réseaux choisissent n'importe quelle image
-      et texte de la page.
+  <!--
+    Open Graph — Métadonnées pour les réseaux sociaux
+    ──────────────────────────────────────────────────
+    Protocole créé par Facebook, utilisé par tous les réseaux sociaux.
+    Contrôle l'apparence de la prévisualisation quand on partage un lien.
+    Sans ces balises, les réseaux choisissent n'importe quelle image
+    et texte de la page.
 
-      og:title       → Titre affiché dans la carte de partage
-      og:description → Description dans la carte de partage
-      og:image       → Image de prévisualisation (min 1200×630px recommandé)
-      og:url         → URL canonique de la page
-      og:type        → Type de contenu (website, article, video, book...)
-      og:site_name   → Nom du site
-      og:locale      → Langue (fr_FR, en_US...)
-    -->
-    <meta property="og:title" content="Référence des balises HTML5">
-    <meta property="og:description" content="Toutes les balises sémantiques HTML5 commentées pour les débutants.">
-    <meta property="og:image" content="https://example.com/image-partage.jpg">
-    <meta property="og:url" content="https://example.com/balises-html">
-    <meta property="og:type" content="article">
-    <meta property="og:site_name" content="IntA11Y - Solutions">
-    <meta property="og:locale" content="fr_FR">
+    og:title       → Titre affiché dans la carte de partage
+    og:description → Description dans la carte de partage
+    og:image       → Image de prévisualisation (min 1200×630px recommandé)
+    og:url         → URL canonique de la page
+    og:type        → Type de contenu (website, article, video, book...)
+    og:site_name   → Nom du site
+    og:locale      → Langue (fr_FR, en_US...)
+  -->
+  <meta property="og:title" content="Référence des balises HTML5">
+  <meta property="og:description" content="Toutes les balises sémantiques HTML5 commentées pour les débutants.">
+  <meta property="og:image" content="https://example.com/image-partage.jpg">
+  <meta property="og:url" content="https://example.com/balises-html">
+  <meta property="og:type" content="article">
+  <meta property="og:site_name" content="École du Web">
+  <meta property="og:locale" content="fr_FR">
 
-    <!--
-      Twitter Cards — Métadonnées spécifiques à Twitter/X
-      ─────────────────────────────────────────────────────
-      Similaires à Open Graph mais spécifiques à Twitter.
-      twitter:card → Type de carte : summary, summary_large_image, app, player
-      Twitter utilise og: en fallback si ces balises sont absentes.
-    -->
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="Référence des balises HTML5">
-    <meta name="twitter:description" content="Toutes les balises HTML5 commentées.">
-    <meta name="twitter:image" content="https://example.com/image-twitter.jpg">
+  <!--
+    Twitter Cards — Métadonnées spécifiques à Twitter/X
+    ─────────────────────────────────────────────────────
+    Similaires à Open Graph mais spécifiques à Twitter.
+    twitter:card → Type de carte : summary, summary_large_image, app, player
+    Twitter utilise og: en fallback si ces balises sont absentes.
+  -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:title" content="Référence des balises HTML5">
+  <meta name="twitter:description" content="Toutes les balises HTML5 commentées.">
+  <meta name="twitter:image" content="https://example.com/image-twitter.jpg">
 
-    <!--
-      <link rel="canonical">
-      ───────────────────────
-      Indique à Google l'URL "officielle" de la page.
-      Évite le contenu dupliqué si la même page est accessible via
-      plusieurs URLs différentes (avec/sans www, avec/sans /, avec paramètres...).
-      SEO : évite de "diluer" le jus de lien entre plusieurs URLs identiques.
-    -->
-    <link rel="canonical" href="https://example.com/balises-html">
+  <!--
+    <link rel="canonical">
+    ───────────────────────
+    Indique à Google l'URL "officielle" de la page.
+    Évite le contenu dupliqué si la même page est accessible via
+    plusieurs URLs différentes (avec/sans www, avec/sans /, avec paramètres...).
+    SEO : évite de "diluer" le jus de lien entre plusieurs URLs identiques.
+  -->
+  <link rel="canonical" href="https://example.com/balises-html">
 
-    <!--
-      <link rel="stylesheet">
-      ─────────────────────────
-      Lie une feuille de style CSS externe au document.
-      rel="stylesheet" → type de relation entre le document et le fichier lié.
-      href → chemin vers le fichier CSS.
-      media → à quel média appliquer le CSS (screen, print, all...).
-      Peut être répété autant de fois que nécessaire.
-    -->
-    <link rel="stylesheet" href="./style.css" media="all">
+  <!--
+    <link rel="stylesheet">
+    ─────────────────────────
+    Lie une feuille de style CSS externe au document.
+    rel="stylesheet" → type de relation entre le document et le fichier lié.
+    href → chemin vers le fichier CSS.
+    media → à quel média appliquer le CSS (screen, print, all...).
+    Peut être répété autant de fois que nécessaire.
+  -->
+  <link rel="stylesheet" href="./style.css" media="all">
 
-    <!--
-      <link rel="alternate">
-      ───────────────────────
-      Versions alternatives du document.
-      Exemples courants :
-      - Version dans une autre langue (hreflang)
-      - Flux RSS/Atom (type="application/rss+xml")
-      - Version imprimable
-    -->
-    <link rel="alternate" hreflang="en" href="https://example.com/en/html-tags">
-    <link rel="alternate" type="application/rss+xml" title="Flux RSS" href="/feed.xml">
+  <!--
+    <link rel="alternate">
+    ───────────────────────
+    Versions alternatives du document.
+    Exemples courants :
+    - Version dans une autre langue (hreflang)
+    - Flux RSS/Atom (type="application/rss+xml")
+    - Version imprimable
+  -->
+  <link rel="alternate" hreflang="en" href="https://example.com/en/html-tags">
+  <link rel="alternate" type="application/rss+xml" title="Flux RSS" href="/feed.xml">
 
-    <!--
-      <link rel="icon"> — Favicon
-      ────────────────────────────
-      Petite icône affichée dans l'onglet et les favoris.
-      Formats : .ico (compatibilité max), .png, .svg (moderne).
-      sizes → dimensions de l'icône en pixels.
-      Plusieurs <link rel="icon"> peuvent coexister pour différentes tailles.
-    -->
-    <link rel="icon" type="image/x-icon" href="/favicon.ico">
-    <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
-    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
-    <!--
-      rel="apple-touch-icon" → Icône sur l'écran d'accueil iOS (iPhone/iPad).
-      Utilisée quand l'utilisateur "Ajoute à l'écran d'accueil".
-    -->
+  <!--
+    <link rel="icon"> — Favicon
+    ────────────────────────────
+    Petite icône affichée dans l'onglet et les favoris.
+    Formats : .ico (compatibilité max), .png, .svg (moderne).
+    sizes → dimensions de l'icône en pixels.
+    Plusieurs <link rel="icon"> peuvent coexister pour différentes tailles.
+  -->
+  <link rel="icon" type="image/x-icon" href="/favicon.ico">
+  <link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png">
+  <!--
+    rel="apple-touch-icon" → Icône sur l'écran d'accueil iOS (iPhone/iPad).
+    Utilisée quand l'utilisateur "Ajoute à l'écran d'accueil".
+  -->
 
-    <!--
-      <link rel="manifest">
-      ──────────────────────
-      Fichier JSON décrivant l'application web progressive (PWA).
-      Permet d'installer la page comme une app native sur mobile/desktop.
-        Contient : nom de l'app, icônes, couleurs, orientation, etc.
-    -->
-    <link rel="manifest" href="/manifest.json">
+  <!--
+    <link rel="manifest">
+    ──────────────────────
+    Fichier JSON décrivant l'application web progressive (PWA).
+    Permet d'installer la page comme une app native sur mobile/desktop.
+    Contient : nom de l'app, icônes, couleurs, orientation, etc.
+  -->
+  <link rel="manifest" href="/manifest.json">
 
-    <!--
-      <link rel="preconnect"> et <link rel="preload">
-      ─────────────────────────────────────────────────
-      Optimisations de performance (chargement anticipé).
+  <!--
+    <link rel="preconnect"> et <link rel="preload">
+    ─────────────────────────────────────────────────
+    Optimisations de performance (chargement anticipé).
 
-      preconnect → Ouvre la connexion au serveur en avance
-                  (DNS + TCP + TLS). Gain de 100-300ms.
-                  Utile pour les polices Google, CDN, APIs.
+    preconnect → Ouvre la connexion au serveur en avance
+                 (DNS + TCP + TLS). Gain de 100-300ms.
+                 Utile pour les polices Google, CDN, APIs.
 
-      preload → Charge une ressource en avance avec haute priorité.
-                as → type de ressource : font, style, script, image...
-                crossorigin → nécessaire pour les polices (CORS).
+    preload → Charge une ressource en avance avec haute priorité.
+              as → type de ressource : font, style, script, image...
+              crossorigin → nécessaire pour les polices (CORS).
 
-      prefetch → Charge en arrière-plan des ressources pour la PROCHAINE page.
-                Priorité basse, après le chargement de la page courante.
-    -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preload" href="/fonts/mafont.woff2" as="font" type="font/woff2" crossorigin>
-    <link rel="prefetch" href="/page-suivante.html">
-      
+    prefetch → Charge en arrière-plan des ressources pour la PROCHAINE page.
+               Priorité basse, après le chargement de la page courante.
+  -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preload" href="/fonts/mafont.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="prefetch" href="/page-suivante.html">
+
+  <!--
+    <style>
+    ────────
+    CSS écrit directement dans le HTML (inline dans le <head>).
+    Utile pour : styles critiques (above-the-fold), styles spécifiques à une page,
+    prototypage rapide, emails HTML.
+    À éviter en production : préférer les fichiers .css externes (réutilisabilité,
+    cache navigateur, séparation des responsabilités).
+  -->
+  <style>
+    /* ── VARIABLES CSS ───────────────────────────────────────── */
+    :root {
+      --primaire: #1a1a2e;
+      --accent:   #22c55e;
+      --fond:     #f8f9fa;
+      --txt:      #1a1a2e;
+      --txt2:     #4a5568;
+      --bord:     #e2e8f0;
+      --rouge:    #e53e3e;
+      --bleu:     #3182ce;
+      --ambre:    #d69e2e;
+      --violet:   #805ad5;
+      --r:        6px;
+    }
+
+    /* ── RESET ───────────────────────────────────────────────── */
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--fond);
+      color: var(--txt);
+      line-height: 1.7;
+    }
+
+    /* ── ACCESSIBILITÉ ───────────────────────────────────────── */
+    :focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 3px;
+    }
+    .skip {
+      position: absolute; top: -100px; left: 16px; z-index: 9999;
+      background: var(--primaire); color: #fff;
+      padding: 10px 18px; border-radius: 0 0 var(--r) var(--r);
+      text-decoration: none; font-weight: 700;
+      transition: top .2s;
+    }
+    .skip:focus { top: 0; }
+
+    /* ── LAYOUT ──────────────────────────────────────────────── */
+    .wrapper { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── HEADER ──────────────────────────────────────────────── */
+    .site-header {
+      background: var(--primaire); color: #fff;
+      padding: 0 28px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.3);
+    }
+    .site-header .logo { font-size: 1.1rem; font-weight: 700; color: #fff; text-decoration: none; }
+    .site-header nav ul { display: flex; gap: 6px; list-style: none; }
+    .site-header nav a {
+      color: rgba(255,255,255,.85); text-decoration: none;
+      padding: 6px 12px; border-radius: var(--r); font-size: .88rem;
+      transition: background .18s;
+    }
+    .site-header nav a:hover { background: rgba(255,255,255,.12); }
+
+    /* ── HERO ────────────────────────────────────────────────── */
+    .hero {
+      background: linear-gradient(135deg, var(--primaire) 0%, #16213e 100%);
+      color: #fff; padding: 64px 28px; text-align: center;
+    }
+    .hero h1 { font-size: 2.2rem; margin-bottom: 12px; }
+    .hero p  { font-size: 1.05rem; color: rgba(255,255,255,.75); max-width: 600px; margin: 0 auto; }
+
+    /* ── CONTENU PRINCIPAL ───────────────────────────────────── */
+    main { padding: 48px 28px 80px; }
+
+    /* ── SECTIONS DE RÉFÉRENCE ───────────────────────────────── */
+    .ref-section {
+      background: #fff; border: 1px solid var(--bord);
+      border-radius: 10px; margin-bottom: 32px;
+      overflow: hidden;
+    }
+    .ref-section-header {
+      background: var(--primaire); color: #fff;
+      padding: 14px 22px;
+      display: flex; align-items: center; gap: 12px;
+    }
+    .ref-section-header .tag-cat {
+      font-family: monospace; font-size: .78rem;
+      background: rgba(255,255,255,.15);
+      padding: 3px 8px; border-radius: 20px;
+    }
+    .ref-section-header h2 { font-size: 1rem; font-weight: 600; }
+    .ref-section-body { padding: 22px; }
+
+    /* ── BLOCS BALISE ────────────────────────────────────────── */
+    .balise-bloc {
+      border: 1px solid var(--bord); border-radius: var(--r);
+      margin-bottom: 20px; overflow: hidden;
+    }
+    .balise-bloc:last-child { margin-bottom: 0; }
+    .balise-head {
+      background: #f0f4f8; padding: 10px 16px;
+      display: flex; align-items: center; gap: 10px;
+      border-bottom: 1px solid var(--bord);
+    }
+    .balise-tag {
+      font-family: 'Courier New', monospace; font-size: .85rem;
+      font-weight: 700; color: var(--rouge);
+      background: #fff3f3; padding: 3px 8px; border-radius: 4px;
+      border: 1px solid #fed7d7;
+    }
+    .balise-type {
+      font-size: .72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .05em; padding: 2px 8px; border-radius: 20px;
+    }
+    .type-structure { background: #ebf8ff; color: #2b6cb0; }
+    .type-texte     { background: #f0fff4; color: #276749; }
+    .type-liste     { background: #faf5ff; color: #6b46c1; }
+    .type-lien      { background: #fffbeb; color: #b7791f; }
+    .type-media     { background: #fff5f5; color: #c53030; }
+    .type-form      { background: #f0fff4; color: #276749; }
+    .type-tableau   { background: #ebf4ff; color: #2c5282; }
+    .type-script    { background: #1a1a2e; color: #22c55e; }
+    .type-meta      { background: #f7fafc; color: #4a5568; }
+    .type-special   { background: #fffaf0; color: #b7791f; }
+    .balise-body { padding: 14px 16px; font-size: .9rem; }
+    .balise-desc { color: var(--txt2); margin-bottom: 12px; line-height: 1.7; }
+    .balise-exemple { margin-top: 10px; }
+    .balise-exemple-label {
+      font-size: .72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .05em; color: var(--txt2); margin-bottom: 6px;
+    }
+    .demo-zone {
+      background: #f7fafc; border: 1px solid var(--bord);
+      border-radius: var(--r); padding: 14px 16px;
+    }
+    .attrs { margin-top: 10px; }
+    .attrs-label {
+      font-size: .72rem; font-weight: 700; text-transform: uppercase;
+      color: var(--txt2); margin-bottom: 6px;
+    }
+    .attr-item {
+      display: flex; gap: 8px; align-items: baseline;
+      margin-bottom: 4px; font-size: .85rem;
+    }
+    .attr-name {
+      font-family: monospace; color: var(--bleu);
+      font-weight: 700; white-space: nowrap;
+    }
+    .attr-desc { color: var(--txt2); }
+
+    /* ── TYPOGRAPHIE ─────────────────────────────────────────── */
+    .demo-zone h1 { font-size: 1.6rem; }
+    .demo-zone h2 { font-size: 1.35rem; }
+    .demo-zone h3 { font-size: 1.15rem; }
+    .demo-zone h4 { font-size: 1rem; }
+    .demo-zone h5 { font-size: .9rem; }
+    .demo-zone h6 { font-size: .8rem; color: var(--txt2); }
+
+    /* ── LISTES ──────────────────────────────────────────────── */
+    .demo-zone ul { padding-left: 20px; }
+    .demo-zone ol { padding-left: 20px; }
+    .demo-zone dl dt { font-weight: 700; }
+    .demo-zone dl dd { padding-left: 16px; color: var(--txt2); }
+
+    /* ── TABLEAUX ────────────────────────────────────────────── */
+    .demo-zone table { border-collapse: collapse; width: 100%; font-size: .88rem; }
+    .demo-zone th, .demo-zone td {
+      border: 1px solid var(--bord); padding: 8px 12px; text-align: left;
+    }
+    .demo-zone thead th { background: var(--primaire); color: #fff; }
+    .demo-zone tbody tr:nth-child(even) { background: #f7fafc; }
+    .demo-zone tfoot td { background: #f0f4f8; font-weight: 700; }
+
+    /* ── FORMULAIRE ──────────────────────────────────────────── */
+    .demo-zone form { display: flex; flex-direction: column; gap: 12px; }
+    .demo-zone label { font-size: .88rem; font-weight: 600; display: block; margin-bottom: 4px; }
+    .demo-zone input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
+    .demo-zone select, .demo-zone textarea {
+      width: 100%; padding: 8px 12px; border: 1px solid var(--bord);
+      border-radius: var(--r); font-size: .9rem; font-family: inherit;
+    }
+    .demo-zone input:focus, .demo-zone select:focus, .demo-zone textarea:focus {
+      outline: 2px solid var(--accent); border-color: var(--accent);
+    }
+    .demo-zone fieldset { border: 1px solid var(--bord); border-radius: var(--r); padding: 12px 14px; }
+    .demo-zone legend { font-weight: 700; font-size: .88rem; padding: 0 6px; }
+    .demo-zone .radio-group, .demo-zone .check-group {
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .demo-zone .radio-group label, .demo-zone .check-group label {
+      display: flex; align-items: center; gap: 8px; font-weight: 400;
+    }
+    .demo-zone button[type="submit"] {
+      background: var(--accent); color: #fff; border: none;
+      padding: 10px 20px; border-radius: var(--r); cursor: pointer;
+      font-size: .9rem; font-weight: 700; align-self: flex-start;
+    }
+    .demo-zone meter, .demo-zone progress { width: 100%; }
+
+    /* ── MÉDIAS ──────────────────────────────────────────────── */
+    .demo-zone img { max-width: 100%; border-radius: var(--r); }
+    .demo-zone figure { text-align: center; }
+    .demo-zone figcaption { font-size: .82rem; color: var(--txt2); margin-top: 6px; }
+    .demo-zone video, .demo-zone audio { width: 100%; }
+
+    /* ── CITATION ────────────────────────────────────────────── */
+    .demo-zone blockquote {
+      border-left: 4px solid var(--accent);
+      padding: 10px 16px; margin: 0;
+      background: #f0fff4; border-radius: 0 var(--r) var(--r) 0;
+      font-style: italic;
+    }
+    .demo-zone blockquote cite {
+      display: block; font-size: .82rem; color: var(--txt2);
+      margin-top: 6px; font-style: normal;
+    }
+
+    /* ── CODE ────────────────────────────────────────────────── */
+    .demo-zone code {
+      font-family: 'Courier New', monospace;
+      background: #1a1a2e; color: #22c55e;
+      padding: 2px 6px; border-radius: 3px; font-size: .85rem;
+    }
+    .demo-zone pre {
+      background: #1a1a2e; color: #e8e8f0;
+      padding: 14px; border-radius: var(--r); overflow-x: auto;
+    }
+    .demo-zone pre code { background: none; color: #22c55e; padding: 0; }
+    .demo-zone kbd {
+      background: #e2e8f0; border: 1px solid #a0aec0;
+      border-radius: 3px; padding: 1px 5px;
+      font-family: monospace; font-size: .85rem;
+    }
+    .demo-zone samp { font-family: monospace; color: var(--bleu); }
+    .demo-zone var { font-style: italic; color: var(--violet); }
+
+    /* ── TEXTE INLINE ────────────────────────────────────────── */
+    .demo-zone mark { background: #fef08a; padding: 1px 3px; border-radius: 2px; }
+    .demo-zone del  { color: var(--rouge); }
+    .demo-zone ins  { color: var(--accent); text-decoration: underline; }
+    .demo-zone abbr { text-decoration: underline dotted; cursor: help; }
+    .demo-zone small { font-size: .8rem; color: var(--txt2); }
+    .demo-zone sub, .demo-zone sup { font-size: .7rem; }
+    .demo-zone time { font-weight: 600; color: var(--bleu); }
+    .demo-zone s    { color: var(--txt2); }
+    .demo-zone u    { text-decoration: underline; }
+    .demo-zone bdi  { unicode-bidi: isolate; }
+
+    /* ── DETAILS / SUMMARY ───────────────────────────────────── */
+    .demo-zone details {
+      border: 1px solid var(--bord); border-radius: var(--r); overflow: hidden;
+    }
+    .demo-zone summary {
+      padding: 10px 14px; cursor: pointer; font-weight: 600;
+      background: #f0f4f8; list-style: none;
+    }
+    .demo-zone summary::before { content: '▶ '; }
+    .demo-zone details[open] summary::before { content: '▼ '; }
+    .demo-zone details p { padding: 12px 14px; }
+
+    /* ── ADDRESS ─────────────────────────────────────────────── */
+    .demo-zone address { font-style: normal; color: var(--txt2); }
+
+    /* ── DIALOG ──────────────────────────────────────────────── */
+    .demo-zone dialog {
+      border: 1px solid var(--bord); border-radius: 10px;
+      padding: 24px; max-width: 400px;
+      box-shadow: 0 8px 32px rgba(0,0,0,.15);
+    }
+    .demo-zone dialog h3 { margin-bottom: 8px; }
+    .dialog-btn {
+      background: var(--primaire); color: #fff; border: none;
+      padding: 8px 16px; border-radius: var(--r); cursor: pointer; font-size: .88rem;
+    }
+    .dialog-close {
+      background: #e2e8f0; color: var(--txt); border: none;
+      padding: 8px 16px; border-radius: var(--r); cursor: pointer; font-size: .88rem;
+      margin-top: 12px;
+    }
+
+    /* ── CANVAS ──────────────────────────────────────────────── */
+    .demo-zone canvas {
+      border: 1px solid var(--bord); border-radius: var(--r); display: block;
+    }
+
+    /* ── ASIDE ───────────────────────────────────────────────── */
+    .aside-demo {
+      background: #fffbeb; border-left: 4px solid var(--ambre);
+      border-radius: 0 var(--r) var(--r) 0; padding: 12px 16px;
+    }
+
+    /* ── SECTION + ARTICLE ───────────────────────────────────── */
+    .article-demo {
+      border: 1px solid var(--bord); border-radius: var(--r); padding: 14px;
+    }
+    .article-demo header { margin-bottom: 8px; }
+    .article-demo footer { margin-top: 8px; font-size: .82rem; color: var(--txt2); }
+
+    /* ── NAV ─────────────────────────────────────────────────── */
+    .nav-demo { background: #f0f4f8; border-radius: var(--r); padding: 12px 16px; }
+    .nav-demo ul { display: flex; gap: 8px; list-style: none; flex-wrap: wrap; }
+    .nav-demo a {
+      color: var(--bleu); text-decoration: none;
+      padding: 4px 10px; border-radius: 20px; background: #fff;
+      border: 1px solid var(--bord); font-size: .88rem;
+    }
+    .nav-demo a[aria-current="page"] { background: var(--primaire); color: #fff; border-color: var(--primaire); }
+    .breadcrumb { font-size: .88rem; color: var(--txt2); }
+    .breadcrumb a { color: var(--bleu); }
+    .breadcrumb span { margin: 0 6px; }
+
+    /* ── FOOTER ──────────────────────────────────────────────── */
+    .site-footer {
+      background: var(--primaire); color: rgba(255,255,255,.7);
+      text-align: center; padding: 32px 24px; font-size: .85rem;
+    }
+    .site-footer a { color: rgba(255,255,255,.8); }
+
+    /* ── RESPONSIVE ──────────────────────────────────────────── */
+    @media (max-width: 768px) {
+      .hero h1 { font-size: 1.5rem; }
+      .site-header nav { display: none; }
+      main { padding: 24px 16px 60px; }
+    }
+  </style>
+
   <!--
     <base>
     ───────
@@ -395,8 +728,8 @@
     - Une navigation principale (<nav>)
     - Des boutons d'action (recherche, connexion)
   -->
-  <a href="/" class="logo" aria-label="IntA11Y - Solutions — Accueil">
-    🎓 IntA11Y - Solutions
+  <a href="/" class="logo" aria-label="IntA11Y - Solutions— Accueil">
+    🎓 École du Web
   </a>
 
   <!--
@@ -426,6 +759,9 @@
       <li><a href="#listes">Listes</a></li>
       <li><a href="#formulaires">Formulaires</a></li>
       <li><a href="#medias">Médias</a></li>
+      <li><a href="#accessibilite">Accessibilité</a></li>
+      <li><a href="./accessibilite-handicaps.html" style="background:rgba(34,197,94,.18);color:#fff;font-weight:600;border-radius:var(--r);padding:6px 12px;">♿ Guides</a></li>
+      <li><a href="./patterns.html" style="background:rgba(34,197,94,.2);color:#fff;font-weight:600;border-radius:var(--r);padding:6px 12px;">🎨 Patterns</a></li>
     </ul>
   </nav>
 </header>
@@ -444,6 +780,11 @@
   -->
   <h1>Référence des balises HTML5</h1>
   <p>Toutes les balises sémantiques HTML5, commentées et expliquées pour les intégrateurs débutants.</p>
+  <p style="margin-top:16px;">
+    <a href="./patterns.html" style="display:inline-flex;align-items:center;gap:8px;background:rgba(34,197,94,.2);color:#fff;text-decoration:none;padding:9px 20px;border-radius:6px;font-size:.92rem;border:1px solid rgba(34,197,94,.4);font-weight:600;">
+      <span aria-hidden="true">🎨</span> Voir les Design Patterns →
+    </a>
+  </p>
 </div>
 
 <!--
@@ -751,9 +1092,9 @@
                 <div class="balise-exemple-label">Rendu</div>
                 <div class="demo-zone">
                   <address>
-                    <strong>IntA11Y - Solutions</strong><br>
+                    <strong>École du Web</strong><br>
                     123 rue du Code, 75001 Paris<br>
-                    <a href="mailto:contact@ecole.fr">contact@ecole.fr</a><br>
+                    <a href="/cdn-cgi/l/email-protection#0a6965647e6b697e4a6f6965666f246c78"><span class="__cf_email__" data-cfemail="32515d5c465351467257515d5e571c5440">[email&#160;protected]</span></a><br>
                     <a href="tel:+33123456789">01 23 45 67 89</a>
                   </address>
                 </div>
@@ -1267,7 +1608,7 @@ console.log(saluer("Alice"));</code></pre>
                   <p><a href="https://example.com" target="_blank" rel="noopener noreferrer">Nouvel onglet (avec sécurité)</a></p>
                   <p><a href="/page.html">Lien interne relatif</a></p>
                   <p><a href="#titre-liens">Ancre (même page)</a></p>
-                  <p><a href="mailto:contact@example.com">Email</a></p>
+                  <p><a href="/cdn-cgi/l/email-protection#7c1f1312081d1f083c19041d110c1019521f1311">Email</a></p>
                   <p><a href="tel:+33123456789">Téléphone : 01 23 45 67 89</a></p>
                   <p><a href="sms:+33612345678">SMS</a></p>
                   <p><a href="/document.pdf" download="mon-document.pdf">Télécharger le PDF</a></p>
@@ -1473,7 +1814,7 @@ console.log(saluer("Alice"));</code></pre>
                   <canvas id="demo-canvas" width="300" height="100" aria-label="Dessin de démonstration Canvas">
                     Votre navigateur ne supporte pas Canvas.
                   </canvas>
-                  <script>
+                  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
                     (function() {
                       var c = document.getElementById('demo-canvas');
                       if (!c) return;
@@ -2580,6 +2921,1222 @@ console.log(saluer("Alice"));</code></pre>
       </div>
     </section>
 
+
+    <!-- ════════════════════════════════════════════════════════════════
+         SECTION 10 : ACCESSIBILITÉ — WCAG, RGAA ET ARIA
+         ════════════════════════════════════════════════════════════════ -->
+    <section id="accessibilite" aria-labelledby="titre-a11y">
+      <h2 id="titre-a11y" style="font-size:1.3rem; margin: 32px 0 16px; padding-top: 16px; border-top: 2px solid var(--bord);">
+        ♿ Accessibilité — WCAG, RGAA &amp; ARIA
+      </h2>
+
+      <!-- ─────────────────────────────────────────────────────────────
+           BLOC 1 : C'EST QUOI L'ACCESSIBILITÉ ?
+           ───────────────────────────────────────────────────────────── -->
+      <div class="ref-section">
+        <div class="ref-section-header">
+          <span class="tag-cat">Fondamentaux</span>
+          <h2>Qu'est-ce que l'accessibilité web ?</h2>
+        </div>
+        <div class="ref-section-body">
+
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Définition</span>
+              <span class="balise-type type-meta">Concept</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                L'accessibilité web (<abbr title="Accessibility">a11y</abbr>) consiste à concevoir
+                des sites et applications utilisables par <strong>toutes les personnes</strong>,
+                quelles que soient leurs capacités physiques, cognitives ou technologiques.
+              </p>
+              <div class="demo-zone" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;margin-top:8px;">
+                <div style="background:#f0fff4;border:1px solid #9ae6b4;border-radius:var(--r);padding:12px;">
+                  <strong style="color:#276749;">👁️ Visuelles</strong>
+                  <ul style="padding-left:16px;font-size:.83rem;color:var(--txt2);margin-top:6px;">
+                    <li>Cécité (lecteur d'écran)</li>
+                    <li>Malvoyance (zoom, contraste)</li>
+                    <li>Daltonisme (couleur seule insuffisante)</li>
+                  </ul>
+                </div>
+                <div style="background:#ebf8ff;border:1px solid #90cdf4;border-radius:var(--r);padding:12px;">
+                  <strong style="color:#2b6cb0;">👂 Auditives</strong>
+                  <ul style="padding-left:16px;font-size:.83rem;color:var(--txt2);margin-top:6px;">
+                    <li>Surdité (sous-titres)</li>
+                    <li>Malentendance (transcription)</li>
+                  </ul>
+                </div>
+                <div style="background:#fffbeb;border:1px solid #f6e05e;border-radius:var(--r);padding:12px;">
+                  <strong style="color:#b7791f;">🖐️ Motrices</strong>
+                  <ul style="padding-left:16px;font-size:.83rem;color:var(--txt2);margin-top:6px;">
+                    <li>Clavier seul (pas de souris)</li>
+                    <li>Commande vocale</li>
+                    <li>Tremblement (cibles larges)</li>
+                  </ul>
+                </div>
+                <div style="background:#faf5ff;border:1px solid #d6bcfa;border-radius:var(--r);padding:12px;">
+                  <strong style="color:#6b46c1;">🧠 Cognitives</strong>
+                  <ul style="padding-left:16px;font-size:.83rem;color:var(--txt2);margin-top:6px;">
+                    <li>Dyslexie (police adaptée)</li>
+                    <li>TDAH (clarté, structure)</li>
+                    <li>Épilepsie (animations)</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- WCAG -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">WCAG — Web Content Accessibility Guidelines</span>
+              <span class="balise-type type-meta">Standard international</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Recommandations du <abbr title="World Wide Web Consortium">W3C</abbr> pour
+                l'accessibilité des contenus web. Version actuelle : <strong>WCAG 2.2</strong> (2023).
+                Organisées autour de <strong>4 principes</strong> (POUR) :
+              </p>
+              <div class="demo-zone" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:12px;">
+                <div style="border-left:4px solid var(--vert);padding:10px 14px;background:#f0fff4;border-radius:0 var(--r) var(--r) 0;">
+                  <strong style="color:var(--vert);">P — Perceptible</strong>
+                  <p style="font-size:.83rem;color:var(--txt2);margin-top:4px;">Le contenu doit être présentable de façon perceptible par les sens. Textes alternatifs, sous-titres, contrastes suffisants.</p>
+                </div>
+                <div style="border-left:4px solid var(--bleu);padding:10px 14px;background:#ebf8ff;border-radius:0 var(--r) var(--r) 0;">
+                  <strong style="color:var(--bleu);">O — Utilisable</strong>
+                  <p style="font-size:.83rem;color:var(--txt2);margin-top:4px;">Les composants d'interface et la navigation doivent être utilisables. Navigation clavier, pas de clignotement dangereux.</p>
+                </div>
+                <div style="border-left:4px solid var(--ambre);padding:10px 14px;background:#fffbeb;border-radius:0 var(--r) var(--r) 0;">
+                  <strong style="color:var(--ambre);">U — Compréhensible</strong>
+                  <p style="font-size:.83rem;color:var(--txt2);margin-top:4px;">Le contenu et l'interface doivent être compréhensibles. Langue déclarée, formulaires explicites, comportement prévisible.</p>
+                </div>
+                <div style="border-left:4px solid var(--rouge);padding:10px 14px;background:#fff5f5;border-radius:0 var(--r) var(--r) 0;">
+                  <strong style="color:var(--rouge);">R — Robuste</strong>
+                  <p style="font-size:.83rem;color:var(--txt2);margin-top:4px;">Le contenu doit être interprétable par les technologies d'assistance. HTML valide, ARIA correct, compatibilité navigateurs.</p>
+                </div>
+              </div>
+              <div style="margin-top:14px;">
+                <p style="font-size:.88rem;color:var(--txt2);margin-bottom:8px;"><strong>3 niveaux de conformité :</strong></p>
+                <div class="attrs">
+                  <div class="attr-item"><span class="attr-name" style="color:var(--vert);">A (minimum)</span><span class="attr-desc">→ Critères de base. Sans eux, certains utilisateurs ne peuvent PAS accéder au contenu.</span></div>
+                  <div class="attr-item"><span class="attr-name" style="color:var(--ambre);">AA (recommandé)</span><span class="attr-desc">→ Niveau visé par la loi française (RGAA) et la plupart des obligations légales mondiales.</span></div>
+                  <div class="attr-item"><span class="attr-name" style="color:var(--rouge);">AAA (excellence)</span><span class="attr-desc">→ Niveau le plus élevé. Difficile à atteindre sur l'ensemble d'un site. Objectif pour certains contenus.</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- RGAA -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">RGAA — Référentiel Général d'Amélioration de l'Accessibilité</span>
+              <span class="balise-type type-meta">Référentiel français</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Déclinaison française des WCAG 2.1 AA, publiée par la DINUM.
+                Version actuelle : <strong>RGAA 4.1</strong> (2021).
+                <strong>Obligatoire</strong> en France pour : services publics,
+                établissements publics, entreprises de +250M€ de CA.
+                Basé sur des tests techniques précis organisés en <strong>13 thématiques</strong>.
+              </p>
+              <div class="demo-zone" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:8px;font-size:.82rem;">
+                <div style="background:#f7fafc;border:1px solid var(--bord);border-radius:4px;padding:8px;"><strong>1.</strong> Images</div>
+                <div style="background:#f7fafc;border:1px solid var(--bord);border-radius:4px;padding:8px;"><strong>2.</strong> Cadres</div>
+                <div style="background:#f7fafc;border:1px solid var(--bord);border-radius:4px;padding:8px;"><strong>3.</strong> Couleurs</div>
+                <div style="background:#f7fafc;border:1px solid var(--bord);border-radius:4px;padding:8px;"><strong>4.</strong> Multimédia</div>
+                <div style="background:#f7fafc;border:1px solid var(--bord);border-radius:4px;padding:8px;"><strong>5.</strong> Tableaux</div>
+                <div style="background:#f7fafc;border:1px solid var(--bord);border-radius:4px;padding:8px;"><strong>6.</strong> Liens</div>
+                <div style="background:#f7fafc;border:1px solid var(--bord);border-radius:4px;padding:8px;"><strong>7.</strong> Scripts</div>
+                <div style="background:#f7fafc;border:1px solid var(--bord);border-radius:4px;padding:8px;"><strong>8.</strong> Éléments obligatoires</div>
+                <div style="background:#f7fafc;border:1px solid var(--bord);border-radius:4px;padding:8px;"><strong>9.</strong> Structuration</div>
+                <div style="background:#f7fafc;border:1px solid var(--bord);border-radius:4px;padding:8px;"><strong>10.</strong> Présentation</div>
+                <div style="background:#f7fafc;border:1px solid var(--bord);border-radius:4px;padding:8px;"><strong>11.</strong> Formulaires</div>
+                <div style="background:#f7fafc;border:1px solid var(--bord);border-radius:4px;padding:8px;"><strong>12.</strong> Navigation</div>
+                <div style="background:#f7fafc;border:1px solid var(--bord);border-radius:4px;padding:8px;"><strong>13.</strong> Consultation</div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ─────────────────────────────────────────────────────────────
+           BLOC 2 : WCAG — CRITÈRES ESSENTIELS
+           ───────────────────────────────────────────────────────────── -->
+      <div class="ref-section">
+        <div class="ref-section-header">
+          <span class="tag-cat">WCAG 2.2</span>
+          <h2>Critères essentiels à connaître</h2>
+        </div>
+        <div class="ref-section-body">
+
+          <!-- Critères Perceptible -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Principe 1 — Perceptible</span>
+              <span class="balise-type type-texte">WCAG</span>
+            </div>
+            <div class="balise-body">
+              <div class="attrs">
+                <div class="attrs-label">1.1 — Alternatives textuelles</div>
+                <div class="attr-item"><span class="attr-name">1.1.1 — A</span><span class="attr-desc">Tout contenu non textuel (image, icône, graphique) doit avoir une alternative textuelle. <code>alt="description"</code> sur &lt;img&gt;. <code>aria-label</code> sur &lt;svg&gt;. <code>alt=""</code> si décoratif.</span></div>
+
+                <div class="attrs-label" style="margin-top:10px;">1.2 — Médias temporels</div>
+                <div class="attr-item"><span class="attr-name">1.2.1 — A</span><span class="attr-desc">Audio/vidéo pré-enregistré : sous-titres ou transcription textuelle.</span></div>
+                <div class="attr-item"><span class="attr-name">1.2.2 — A</span><span class="attr-desc">Sous-titres pour toutes les vidéos pré-enregistrées. <code>&lt;track kind="captions"&gt;</code></span></div>
+                <div class="attr-item"><span class="attr-name">1.2.3 — A</span><span class="attr-desc">Audiodescription ou alternative textuelle pour les vidéos.</span></div>
+                <div class="attr-item"><span class="attr-name">1.2.5 — AA</span><span class="attr-desc">Audiodescription pour toutes les vidéos pré-enregistrées. <code>&lt;track kind="descriptions"&gt;</code></span></div>
+
+                <div class="attrs-label" style="margin-top:10px;">1.3 — Adaptabilité</div>
+                <div class="attr-item"><span class="attr-name">1.3.1 — A</span><span class="attr-desc">Information et relations : la structure est transmissible via le code (titres, listes, tableaux, formulaires). HTML sémantique + ARIA.</span></div>
+                <div class="attr-item"><span class="attr-name">1.3.2 — A</span><span class="attr-desc">Ordre séquentiel : l'ordre de lecture du DOM correspond à l'ordre visuel.</span></div>
+                <div class="attr-item"><span class="attr-name">1.3.3 — A</span><span class="attr-desc">Caractéristiques sensorielles : les instructions ne reposent pas uniquement sur la forme, couleur ou position ("cliquez sur le bouton rouge à droite" ← insuffisant).</span></div>
+                <div class="attr-item"><span class="attr-name">1.3.4 — AA</span><span class="attr-desc">Orientation : le contenu n'est pas limité à une orientation (portrait/paysage). Ne pas bloquer l'orientation.</span></div>
+                <div class="attr-item"><span class="attr-name">1.3.5 — AA</span><span class="attr-desc">Identification de l'objet de saisie : utiliser <code>autocomplete</code> avec les valeurs standardisées (name, email, tel...).</span></div>
+
+                <div class="attrs-label" style="margin-top:10px;">1.4 — Distinguable</div>
+                <div class="attr-item"><span class="attr-name">1.4.1 — A</span><span class="attr-desc">Utilisation de la couleur : la couleur seule ne suffit pas à transmettre une information. Toujours doubler d'un autre indicateur (icône, texte, motif).</span></div>
+                <div class="attr-item"><span class="attr-name">1.4.2 — A</span><span class="attr-desc">Contrôle du son : tout son automatique > 3s doit pouvoir être coupé.</span></div>
+                <div class="attr-item"><span class="attr-name">1.4.3 — AA</span><span class="attr-desc">Contraste du texte : ratio minimum <strong>4.5:1</strong> pour texte normal, <strong>3:1</strong> pour grand texte (&gt;18pt ou &gt;14pt gras).</span></div>
+                <div class="attr-item"><span class="attr-name">1.4.4 — AA</span><span class="attr-desc">Redimensionnement du texte : texte redimensionnable jusqu'à 200% sans perte de contenu. Utiliser rem/em, pas px fixe.</span></div>
+                <div class="attr-item"><span class="attr-name">1.4.5 — AA</span><span class="attr-desc">Images de texte : ne pas utiliser d'images pour afficher du texte (sauf logotypes).</span></div>
+                <div class="attr-item"><span class="attr-name">1.4.10 — AA</span><span class="attr-desc">Reflow : à 400% de zoom, le contenu doit rester lisible sans scroll horizontal (responsive).</span></div>
+                <div class="attr-item"><span class="attr-name">1.4.11 — AA</span><span class="attr-desc">Contraste des composants non textuels : ratio <strong>3:1</strong> pour les bordures d'input, icônes fonctionnelles, graphiques.</span></div>
+                <div class="attr-item"><span class="attr-name">1.4.12 — AA</span><span class="attr-desc">Espacement du texte : le contenu reste lisible si on applique : line-height ≥1.5, letter-spacing ≥0.12em, word-spacing ≥0.16em. Ne pas bloquer ces propriétés.</span></div>
+                <div class="attr-item"><span class="attr-name">1.4.13 — AA</span><span class="attr-desc">Contenu au survol/focus : les tooltips et popups doivent être ignorables, survolables, et persistants.</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Critères Utilisable -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Principe 2 — Utilisable</span>
+              <span class="balise-type type-texte">WCAG</span>
+            </div>
+            <div class="balise-body">
+              <div class="attrs">
+                <div class="attrs-label">2.1 — Accessibilité au clavier</div>
+                <div class="attr-item"><span class="attr-name">2.1.1 — A</span><span class="attr-desc">Toutes les fonctionnalités sont accessibles au clavier (Tab, Entrée, Espace, flèches, Échap).</span></div>
+                <div class="attr-item"><span class="attr-name">2.1.2 — A</span><span class="attr-desc">Pas de piège clavier : le focus peut toujours quitter un composant (modales : Échap, focus trap documenté).</span></div>
+                <div class="attr-item"><span class="attr-name">2.1.4 — A</span><span class="attr-desc">Raccourcis clavier d'un seul caractère : doivent pouvoir être désactivés ou reconfigurés.</span></div>
+
+                <div class="attrs-label" style="margin-top:10px;">2.2 — Délais suffisants</div>
+                <div class="attr-item"><span class="attr-name">2.2.1 — A</span><span class="attr-desc">Délais : tout délai doit pouvoir être désactivé, ajusté (×10) ou prolongé (×20).</span></div>
+                <div class="attr-item"><span class="attr-name">2.2.2 — A</span><span class="attr-desc">Pause, stop, masquer : tout contenu animé, clignotant ou défilant doit pouvoir être mis en pause.</span></div>
+
+                <div class="attrs-label" style="margin-top:10px;">2.3 — Crises et réactions physiques</div>
+                <div class="attr-item"><span class="attr-name">2.3.1 — A</span><span class="attr-desc">Pas plus de 3 flashs par seconde (risque d'épilepsie photosensible).</span></div>
+                <div class="attr-item"><span class="attr-name">2.3.3 — AAA</span><span class="attr-desc">prefers-reduced-motion CSS : respecter le paramètre système qui demande de réduire les animations.</span></div>
+
+                <div class="attrs-label" style="margin-top:10px;">2.4 — Navigation</div>
+                <div class="attr-item"><span class="attr-name">2.4.1 — A</span><span class="attr-desc">Bypass blocks : skip link pour sauter la navigation répétitive. <code>&lt;a href="#main"&gt;Aller au contenu&lt;/a&gt;</code></span></div>
+                <div class="attr-item"><span class="attr-name">2.4.2 — A</span><span class="attr-desc">Titre de page : <code>&lt;title&gt;</code> descriptif et unique pour chaque page.</span></div>
+                <div class="attr-item"><span class="attr-name">2.4.3 — A</span><span class="attr-desc">Ordre de focus : l'ordre de tabulation est logique et préserve le sens. Éviter tabindex &gt; 0.</span></div>
+                <div class="attr-item"><span class="attr-name">2.4.4 — A</span><span class="attr-desc">Objet d'un lien dans son contexte : chaque lien a un texte compréhensible. Pas de "cliquez ici" seul.</span></div>
+                <div class="attr-item"><span class="attr-name">2.4.6 — AA</span><span class="attr-desc">En-têtes et étiquettes : titres et labels des formulaires sont descriptifs et utiles.</span></div>
+                <div class="attr-item"><span class="attr-name">2.4.7 — AA</span><span class="attr-desc">Focus visible : le composant qui a le focus clavier est TOUJOURS visuellement identifiable. <code>:focus-visible { outline: 3px solid ... }</code></span></div>
+                <div class="attr-item"><span class="attr-name">2.4.11 — AA</span><span class="attr-desc">Focus non obscurci : quand un composant reçoit le focus, il n'est pas entièrement masqué (sticky header...).</span></div>
+                <div class="attr-item"><span class="attr-name">2.4.12 — AAA</span><span class="attr-desc">Focus non obscurci (renforcé) : le composant focusé n'est pas du tout masqué.</span></div>
+
+                <div class="attrs-label" style="margin-top:10px;">2.5 — Modalités d'entrée</div>
+                <div class="attr-item"><span class="attr-name">2.5.3 — A</span><span class="attr-desc">Étiquette dans le nom : le nom accessible contient le texte visible (aria-label inclut le texte du bouton).</span></div>
+                <div class="attr-item"><span class="attr-name">2.5.4 — A</span><span class="attr-desc">Activation par le mouvement : fonctionnalités activables par geste ou mouvement ont une alternative.</span></div>
+                <div class="attr-item"><span class="attr-name">2.5.5 — AA</span><span class="attr-desc">Taille de la cible : zone cliquable minimum recommandée de <strong>44×44 px</strong>. <code>min-height: 44px; min-width: 44px</code></span></div>
+                <div class="attr-item"><span class="attr-name">2.5.7 — AA</span><span class="attr-desc">Mouvements de glissement : toute action nécessitant un glissement peut être réalisée autrement.</span></div>
+                <div class="attr-item"><span class="attr-name">2.5.8 — AA</span><span class="attr-desc">Taille de la cible (minimum) : taille cible ≥ 24×24 px (critère plus strict que 2.5.5 introduit en WCAG 2.2).</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Critères Compréhensible -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Principe 3 — Compréhensible</span>
+              <span class="balise-type type-texte">WCAG</span>
+            </div>
+            <div class="balise-body">
+              <div class="attrs">
+                <div class="attrs-label">3.1 — Lisible</div>
+                <div class="attr-item"><span class="attr-name">3.1.1 — A</span><span class="attr-desc">Langue de la page : <code>&lt;html lang="fr"&gt;</code> obligatoire. Permet aux synthèses vocales de choisir la bonne voix.</span></div>
+                <div class="attr-item"><span class="attr-name">3.1.2 — AA</span><span class="attr-desc">Langue d'un passage : <code>&lt;span lang="en"&gt;Hello world&lt;/span&gt;</code> pour les passages dans une autre langue.</span></div>
+
+                <div class="attrs-label" style="margin-top:10px;">3.2 — Prévisible</div>
+                <div class="attr-item"><span class="attr-name">3.2.1 — A</span><span class="attr-desc">Pas de changement de contexte au focus : recevoir le focus ne soumet pas un formulaire ou ne change pas la page.</span></div>
+                <div class="attr-item"><span class="attr-name">3.2.2 — A</span><span class="attr-desc">Pas de changement de contexte à la saisie : changer un champ ne déclenche pas une action inattendue sans avertissement.</span></div>
+                <div class="attr-item"><span class="attr-name">3.2.3 — AA</span><span class="attr-desc">Navigation cohérente : les composants répétés (nav, recherche...) sont dans le même ordre relatif sur toutes les pages.</span></div>
+                <div class="attr-item"><span class="attr-name">3.2.4 — AA</span><span class="attr-desc">Identification cohérente : les composants avec la même fonction sont identifiés de façon cohérente.</span></div>
+                <div class="attr-item"><span class="attr-name">3.2.6 — A</span><span class="attr-desc">Aide à la navigation cohérente : les mécanismes d'aide (contact, FAQ...) apparaissent dans le même ordre.</span></div>
+
+                <div class="attrs-label" style="margin-top:10px;">3.3 — Assistance à la saisie</div>
+                <div class="attr-item"><span class="attr-name">3.3.1 — A</span><span class="attr-desc">Identification des erreurs : les erreurs sont détectées et décrites à l'utilisateur par du texte (pas seulement rouge). <code>aria-invalid="true"</code> + message d'erreur.</span></div>
+                <div class="attr-item"><span class="attr-name">3.3.2 — A</span><span class="attr-desc">Étiquettes et instructions : les champs de formulaire ont des labels clairs et les formats attendus sont indiqués.</span></div>
+                <div class="attr-item"><span class="attr-name">3.3.3 — AA</span><span class="attr-desc">Suggestion après une erreur : quand possible, suggérer comment corriger l'erreur.</span></div>
+                <div class="attr-item"><span class="attr-name">3.3.4 — AA</span><span class="attr-desc">Prévention des erreurs : pour les soumissions importantes (commandes, données personnelles), permettre de réviser, corriger, confirmer ou annuler.</span></div>
+                <div class="attr-item"><span class="attr-name">3.3.7 — A</span><span class="attr-desc">Redondance de l'authentification : pas de test cognitif (CAPTCHA) pour se connecter, sauf alternative fournie.</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Critères Robuste -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Principe 4 — Robuste</span>
+              <span class="balise-type type-texte">WCAG</span>
+            </div>
+            <div class="balise-body">
+              <div class="attrs">
+                <div class="attrs-label">4.1 — Compatible</div>
+                <div class="attr-item"><span class="attr-name">4.1.1 — A</span><span class="attr-desc">HTML valide : pas d'erreurs de parsing. IDs uniques. Balises correctement imbriquées et fermées. Passer le validateur W3C.</span></div>
+                <div class="attr-item"><span class="attr-name">4.1.2 — A</span><span class="attr-desc">Nom, rôle, valeur : tous les composants d'interface ont un nom, un rôle et une valeur accessibles et modifiables programmatiquement. C'est le critère qui justifie tout ARIA.</span></div>
+                <div class="attr-item"><span class="attr-name">4.1.3 — AA</span><span class="attr-desc">Messages d'état : les messages importants (succès, erreur, chargement) sont annoncés sans recevoir le focus. <code>role="alert"</code> ou <code>aria-live</code>.</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ─────────────────────────────────────────────────────────────
+           BLOC 3 : ARIA — ATTRIBUTS COMPLETS
+           ───────────────────────────────────────────────────────────── -->
+      <div class="ref-section">
+        <div class="ref-section-header">
+          <span class="tag-cat">ARIA</span>
+          <h2>WAI-ARIA — Accessible Rich Internet Applications</h2>
+        </div>
+        <div class="ref-section-body">
+
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Qu'est-ce que ARIA ?</span>
+              <span class="balise-type type-meta">Concept</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                ARIA est un ensemble d'<strong>attributs HTML supplémentaires</strong> qui donnent
+                des informations sémantiques aux technologies d'assistance (lecteurs d'écran,
+                commande vocale) quand le HTML natif ne suffit pas.
+              </p>
+              <div class="demo-zone" style="background:#fff3f3;border:1px solid #fed7d7;border-radius:var(--r);padding:12px;margin-top:8px;">
+                <strong style="color:var(--rouge);">⚠️ Règle d'or ARIA — "No ARIA is better than bad ARIA"</strong>
+                <ol style="padding-left:18px;font-size:.85rem;margin-top:8px;color:var(--txt2);">
+                  <li style="margin-bottom:4px;"><strong>Utiliser d'abord le HTML sémantique natif.</strong> Un <code>&lt;button&gt;</code> est préférable à <code>&lt;div role="button"&gt;</code>.</li>
+                  <li style="margin-bottom:4px;"><strong>Ne pas changer le rôle natif</strong> sans raison. Mettre <code>role="button"</code> sur un &lt;a&gt; est rarement justifié.</li>
+                  <li style="margin-bottom:4px;"><strong>Tout widget ARIA interactif doit être utilisable au clavier.</strong> Si vous ajoutez <code>role="button"</code>, gérer Entrée et Espace en JS.</li>
+                  <li style="margin-bottom:4px;"><strong>Les éléments visibles interactifs doivent avoir un nom accessible.</strong></li>
+                  <li><strong>Tester avec de vrais lecteurs d'écran</strong> (NVDA, JAWS, VoiceOver, TalkBack).</li>
+                </ol>
+              </div>
+            </div>
+          </div>
+
+          <!-- Roles ARIA -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">role="..." — Rôles ARIA</span>
+              <span class="balise-type type-meta">ARIA</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Définit la <strong>nature sémantique</strong> d'un élément pour les technologies d'assistance.
+                Les balises HTML ont déjà des rôles implicites (voir tableau ci-dessous).
+                N'utiliser <code>role</code> que quand le HTML natif est insuffisant.
+              </p>
+
+              <p style="font-weight:700;font-size:.85rem;margin:12px 0 6px;">Rôles implicites des balises HTML (ne pas les redéfinir)</p>
+              <div class="demo-zone" style="overflow-x:auto;">
+                <table>
+                  <thead>
+                    <tr>
+                      <th scope="col">Balise HTML</th>
+                      <th scope="col">Rôle ARIA implicite</th>
+                      <th scope="col">Condition</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr><td><code>&lt;header&gt;</code></td><td>banner</td><td>Enfant direct de &lt;body&gt;</td></tr>
+                    <tr><td><code>&lt;footer&gt;</code></td><td>contentinfo</td><td>Enfant direct de &lt;body&gt;</td></tr>
+                    <tr><td><code>&lt;main&gt;</code></td><td>main</td><td>Toujours</td></tr>
+                    <tr><td><code>&lt;nav&gt;</code></td><td>navigation</td><td>Toujours</td></tr>
+                    <tr><td><code>&lt;aside&gt;</code></td><td>complementary</td><td>Toujours</td></tr>
+                    <tr><td><code>&lt;section&gt;</code></td><td>region</td><td>Si aria-labelledby ou aria-label</td></tr>
+                    <tr><td><code>&lt;article&gt;</code></td><td>article</td><td>Toujours</td></tr>
+                    <tr><td><code>&lt;form&gt;</code></td><td>form</td><td>Si aria-label ou aria-labelledby</td></tr>
+                    <tr><td><code>&lt;button&gt;</code></td><td>button</td><td>Toujours</td></tr>
+                    <tr><td><code>&lt;a href&gt;</code></td><td>link</td><td>Avec href</td></tr>
+                    <tr><td><code>&lt;a&gt;</code> (sans href)</td><td>generic</td><td>Sans href</td></tr>
+                    <tr><td><code>&lt;h1&gt;–&lt;h6&gt;</code></td><td>heading</td><td>Toujours</td></tr>
+                    <tr><td><code>&lt;ul&gt;, &lt;ol&gt;</code></td><td>list</td><td>Toujours</td></tr>
+                    <tr><td><code>&lt;li&gt;</code></td><td>listitem</td><td>Toujours</td></tr>
+                    <tr><td><code>&lt;img&gt;</code></td><td>img</td><td>Avec alt non vide</td></tr>
+                    <tr><td><code>&lt;img alt=""&gt;</code></td><td>presentation</td><td>alt vide = décoratif</td></tr>
+                    <tr><td><code>&lt;table&gt;</code></td><td>table</td><td>Toujours</td></tr>
+                    <tr><td><code>&lt;input type="text"&gt;</code></td><td>textbox</td><td>Toujours</td></tr>
+                    <tr><td><code>&lt;input type="checkbox"&gt;</code></td><td>checkbox</td><td>Toujours</td></tr>
+                    <tr><td><code>&lt;input type="radio"&gt;</code></td><td>radio</td><td>Toujours</td></tr>
+                    <tr><td><code>&lt;select&gt;</code></td><td>combobox / listbox</td><td>Selon contexte</td></tr>
+                    <tr><td><code>&lt;dialog&gt;</code></td><td>dialog</td><td>Toujours</td></tr>
+                    <tr><td><code>&lt;details&gt;</code></td><td>group</td><td>Toujours</td></tr>
+                    <tr><td><code>&lt;summary&gt;</code></td><td>button</td><td>Toujours</td></tr>
+                    <tr><td><code>&lt;div&gt;, &lt;span&gt;</code></td><td>generic</td><td>Aucun rôle sémantique</td></tr>
+                  </tbody>
+                </table>
+              </div>
+
+              <p style="font-weight:700;font-size:.85rem;margin:16px 0 6px;">Rôles ARIA à utiliser manuellement (sur des &lt;div&gt; ou éléments non natifs)</p>
+              <div class="attrs">
+                <div class="attrs-label">Landmarks (points de repère de navigation)</div>
+                <div class="attr-item"><span class="attr-name">role="banner"</span><span class="attr-desc">→ En-tête de site (sur &lt;div&gt; si &lt;header&gt; impossible)</span></div>
+                <div class="attr-item"><span class="attr-name">role="navigation"</span><span class="attr-desc">→ Navigation (sur &lt;div&gt; si &lt;nav&gt; impossible)</span></div>
+                <div class="attr-item"><span class="attr-name">role="main"</span><span class="attr-desc">→ Contenu principal (sur &lt;div&gt; si &lt;main&gt; impossible)</span></div>
+                <div class="attr-item"><span class="attr-name">role="complementary"</span><span class="attr-desc">→ Contenu secondaire (sur &lt;div&gt; si &lt;aside&gt; impossible)</span></div>
+                <div class="attr-item"><span class="attr-name">role="contentinfo"</span><span class="attr-desc">→ Pied de page (sur &lt;div&gt; si &lt;footer&gt; impossible)</span></div>
+                <div class="attr-item"><span class="attr-name">role="search"</span><span class="attr-desc">→ Formulaire/zone de recherche (n'a pas de balise HTML native)</span></div>
+                <div class="attr-item"><span class="attr-name">role="region"</span><span class="attr-desc">→ Section nommée (avec aria-label ou aria-labelledby)</span></div>
+                <div class="attr-item"><span class="attr-name">role="form"</span><span class="attr-desc">→ Formulaire nommé (sur &lt;div&gt; si &lt;form&gt; impossible)</span></div>
+
+                <div class="attrs-label" style="margin-top:10px;">Widgets interactifs</div>
+                <div class="attr-item"><span class="attr-name">role="button"</span><span class="attr-desc">→ Bouton (préférer &lt;button&gt;). Doit gérer clic + Entrée + Espace en JS.</span></div>
+                <div class="attr-item"><span class="attr-name">role="link"</span><span class="attr-desc">→ Lien (préférer &lt;a href&gt;). Doit gérer clic + Entrée en JS.</span></div>
+                <div class="attr-item"><span class="attr-name">role="checkbox"</span><span class="attr-desc">→ Case à cocher (préférer &lt;input type="checkbox"&gt;).</span></div>
+                <div class="attr-item"><span class="attr-name">role="radio"</span><span class="attr-desc">→ Bouton radio (préférer &lt;input type="radio"&gt;).</span></div>
+                <div class="attr-item"><span class="attr-name">role="combobox"</span><span class="attr-desc">→ Champ de saisie avec liste de suggestions (autocomplete custom).</span></div>
+                <div class="attr-item"><span class="attr-name">role="listbox"</span><span class="attr-desc">→ Liste d'options sélectionnables (select custom).</span></div>
+                <div class="attr-item"><span class="attr-name">role="option"</span><span class="attr-desc">→ Option dans un listbox ou combobox.</span></div>
+                <div class="attr-item"><span class="attr-name">role="menubar"</span><span class="attr-desc">→ Barre de menu horizontale (type menu application).</span></div>
+                <div class="attr-item"><span class="attr-name">role="menu"</span><span class="attr-desc">→ Menu déroulant (liste de commandes).</span></div>
+                <div class="attr-item"><span class="attr-name">role="menuitem"</span><span class="attr-desc">→ Élément de menu.</span></div>
+                <div class="attr-item"><span class="attr-name">role="menuitemcheckbox"</span><span class="attr-desc">→ Élément de menu avec état coché.</span></div>
+                <div class="attr-item"><span class="attr-name">role="menuitemradio"</span><span class="attr-desc">→ Élément de menu avec sélection exclusive.</span></div>
+                <div class="attr-item"><span class="attr-name">role="tab"</span><span class="attr-desc">→ Onglet dans un système d'onglets.</span></div>
+                <div class="attr-item"><span class="attr-name">role="tablist"</span><span class="attr-desc">→ Conteneur des onglets.</span></div>
+                <div class="attr-item"><span class="attr-name">role="tabpanel"</span><span class="attr-desc">→ Panneau de contenu associé à un onglet.</span></div>
+                <div class="attr-item"><span class="attr-name">role="slider"</span><span class="attr-desc">→ Curseur de valeur (préférer &lt;input type="range"&gt;).</span></div>
+                <div class="attr-item"><span class="attr-name">role="spinbutton"</span><span class="attr-desc">→ Champ numérique avec flèches (préférer &lt;input type="number"&gt;).</span></div>
+                <div class="attr-item"><span class="attr-name">role="switch"</span><span class="attr-desc">→ Interrupteur on/off (comme aria-pressed mais sémantique "switch").</span></div>
+                <div class="attr-item"><span class="attr-name">role="tree"</span><span class="attr-desc">→ Arborescence (treeview, explorer de fichiers).</span></div>
+                <div class="attr-item"><span class="attr-name">role="treeitem"</span><span class="attr-desc">→ Nœud dans une arborescence.</span></div>
+                <div class="attr-item"><span class="attr-name">role="grid"</span><span class="attr-desc">→ Grille interactive (tableau avec cellules éditables/sélectionnables).</span></div>
+                <div class="attr-item"><span class="attr-name">role="gridcell"</span><span class="attr-desc">→ Cellule dans un grid.</span></div>
+                <div class="attr-item"><span class="attr-name">role="scrollbar"</span><span class="attr-desc">→ Barre de défilement custom.</span></div>
+                <div class="attr-item"><span class="attr-name">role="separator"</span><span class="attr-desc">→ Séparateur (focusable si interactif, sinon préférer &lt;hr&gt;).</span></div>
+                <div class="attr-item"><span class="attr-name">role="toolbar"</span><span class="attr-desc">→ Barre d'outils (groupe de boutons liés).</span></div>
+                <div class="attr-item"><span class="attr-name">role="tooltip"</span><span class="attr-desc">→ Infobulle. Associé au déclencheur via aria-describedby.</span></div>
+
+                <div class="attrs-label" style="margin-top:10px;">Zones de contenu</div>
+                <div class="attr-item"><span class="attr-name">role="alert"</span><span class="attr-desc">→ Message urgent annoncé immédiatement par les lecteurs d'écran (erreur, message critique). Équivalent aria-live="assertive" + aria-atomic="true".</span></div>
+                <div class="attr-item"><span class="attr-name">role="status"</span><span class="attr-desc">→ Message d'état non urgent (confirmation, info). Équivalent aria-live="polite".</span></div>
+                <div class="attr-item"><span class="attr-name">role="log"</span><span class="attr-desc">→ Zone de log (chat, historique). Nouvelles entrées annoncées poliment.</span></div>
+                <div class="attr-item"><span class="attr-name">role="marquee"</span><span class="attr-desc">→ Contenu défilant en temps réel (cours de bourse). Rarement annoncé.</span></div>
+                <div class="attr-item"><span class="attr-name">role="timer"</span><span class="attr-desc">→ Minuteur ou horloge. Annoncé périodiquement.</span></div>
+                <div class="attr-item"><span class="attr-name">role="progressbar"</span><span class="attr-desc">→ Barre de progression (préférer &lt;progress&gt;).</span></div>
+                <div class="attr-item"><span class="attr-name">role="dialog"</span><span class="attr-desc">→ Boîte de dialogue modale (préférer &lt;dialog&gt;).</span></div>
+                <div class="attr-item"><span class="attr-name">role="alertdialog"</span><span class="attr-desc">→ Modale urgente (erreur critique, confirmation destructive). Focus forcé dessus.</span></div>
+
+                <div class="attrs-label" style="margin-top:10px;">Document / Structure</div>
+                <div class="attr-item"><span class="attr-name">role="heading"</span><span class="attr-desc">→ Titre. Toujours avec aria-level="1" à "6". Préférer &lt;h1&gt;-&lt;h6&gt;.</span></div>
+                <div class="attr-item"><span class="attr-name">role="list"</span><span class="attr-desc">→ Liste. Utiliser si list-style:none retire le rôle natif sur &lt;ul&gt;.</span></div>
+                <div class="attr-item"><span class="attr-name">role="listitem"</span><span class="attr-desc">→ Élément de liste. Avec role="list" parent.</span></div>
+                <div class="attr-item"><span class="attr-name">role="img"</span><span class="attr-desc">→ Image (groupe d'éléments représentant une image, ex: SVG complexe ou icône font).</span></div>
+                <div class="attr-item"><span class="attr-name">role="figure"</span><span class="attr-desc">→ Contenu illustratif (préférer &lt;figure&gt;).</span></div>
+                <div class="attr-item"><span class="attr-name">role="group"</span><span class="attr-desc">→ Groupe d'éléments liés sans landmark (préférer &lt;fieldset&gt; pour les formulaires).</span></div>
+                <div class="attr-item"><span class="attr-name">role="definition"</span><span class="attr-desc">→ Définition d'un terme (avec role="term" sur le terme).</span></div>
+                <div class="attr-item"><span class="attr-name">role="term"</span><span class="attr-desc">→ Terme à définir (comme &lt;dt&gt;).</span></div>
+                <div class="attr-item"><span class="attr-name">role="blockquote"</span><span class="attr-desc">→ Citation longue (préférer &lt;blockquote&gt;).</span></div>
+                <div class="attr-item"><span class="attr-name">role="code"</span><span class="attr-desc">→ Extrait de code (préférer &lt;code&gt;).</span></div>
+                <div class="attr-item"><span class="attr-name">role="math"</span><span class="attr-desc">→ Expression mathématique (avec MathML).</span></div>
+                <div class="attr-item"><span class="attr-name">role="note"</span><span class="attr-desc">→ Note ou parenthèse dans le document.</span></div>
+                <div class="attr-item"><span class="attr-name">role="presentation"</span><span class="attr-desc">→ L'élément est purement décoratif, son rôle est supprimé. Synonyme de role="none".</span></div>
+                <div class="attr-item"><span class="attr-name">role="none"</span><span class="attr-desc">→ Supprime le rôle sémantique natif de l'élément. Utiliser avec précaution.</span></div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Propriétés ARIA -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">aria-* — Propriétés et états</span>
+              <span class="balise-type type-meta">ARIA</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Les attributs <code>aria-*</code> se divisent en deux catégories :
+                <strong>propriétés</strong> (valeurs stables, rarement modifiées) et
+                <strong>états</strong> (valeurs changeant dynamiquement via JavaScript).
+              </p>
+
+              <div class="attrs">
+                <div class="attrs-label">Nommage accessible (nom de l'élément)</div>
+                <div class="attr-item"><span class="attr-name">aria-label="Fermer"</span><span class="attr-desc">→ Nom textuel direct. Remplace le contenu visible pour les lecteurs d'écran. Sur bouton avec icône seule, sur input sans label visible.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-labelledby="id-titre"</span><span class="attr-desc">→ Nom via un autre élément (pointe vers son id). Plus fort que aria-label. Sur dialog, section, fieldset, form. Peut référencer plusieurs ids : "id1 id2".</span></div>
+                <div class="attr-item"><span class="attr-name">aria-describedby="id-msg"</span><span class="attr-desc">→ Description complémentaire via un autre élément. Sur input (message d'aide/erreur), dialog (description sous le titre). Annoncé après le nom.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-description="texte"</span><span class="attr-desc">→ Description textuelle directe (alternative à aria-describedby sans créer d'élément DOM).</span></div>
+                <div class="attr-item"><span class="attr-name">aria-details="id"</span><span class="attr-desc">→ Lien vers une description étendue (glossaire, graphique complexe, instructions longues).</span></div>
+
+                <div class="attrs-label" style="margin-top:10px;">Visibilité et masquage</div>
+                <div class="attr-item"><span class="attr-name">aria-hidden="true"</span><span class="attr-desc">→ Masque l'élément et tous ses descendants des technologies d'assistance. Pour les décorations, icônes redondantes, contenus dupliqués.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-hidden="false"</span><span class="attr-desc">→ Restaure la visibilité (rarement utile, préférer retirer l'attribut).</span></div>
+
+                <div class="attrs-label" style="margin-top:10px;">États interactifs</div>
+                <div class="attr-item"><span class="attr-name">aria-expanded="true|false"</span><span class="attr-desc">→ État ouvert/fermé d'un accordéon, menu déroulant, liste de suggestions. Sur le bouton déclencheur. "true" = contenu visible.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-pressed="true|false|mixed"</span><span class="attr-desc">→ État d'un bouton bascule (toggle button). true = actif, false = inactif, mixed = état intermédiaire.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-checked="true|false|mixed"</span><span class="attr-desc">→ État d'une checkbox ou radio custom. mixed = case indéterminée (groupe partiellement coché).</span></div>
+                <div class="attr-item"><span class="attr-name">aria-selected="true|false"</span><span class="attr-desc">→ Élément sélectionné dans listbox, tabs, grid, treeview.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-current="page|step|location|date|time|true"</span><span class="attr-desc">→ Élément courant dans un ensemble. "page" = lien de la page active. "step" = étape courante d'un wizard.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-disabled="true|false"</span><span class="attr-desc">→ Composant désactivé mais toujours focusable (différent de disabled HTML qui retire du tabindex). Pour indiquer l'état sans retirer la possibilité de focus.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-busy="true|false"</span><span class="attr-desc">→ Zone en cours de chargement. "true" = les lecteurs d'écran attendent que le chargement soit terminé avant d'annoncer les changements.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-grabbed="true|false"</span><span class="attr-desc">→ Élément en cours de glissement (drag and drop). Déprécié en ARIA 1.1, utiliser aria-grabbed + aria-dropeffect avec précaution.</span></div>
+
+                <div class="attrs-label" style="margin-top:10px;">Contraintes et validation de formulaire</div>
+                <div class="attr-item"><span class="attr-name">aria-required="true"</span><span class="attr-desc">→ Champ obligatoire (en complément de required HTML). Annoncé "obligatoire" par les lecteurs d'écran.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-invalid="true|false|grammar|spelling"</span><span class="attr-desc">→ Champ invalide. "true" = erreur générique. "grammar" = erreur grammaticale. "spelling" = faute d'orthographe. Associer à un message d'erreur via aria-describedby.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-readonly="true"</span><span class="attr-desc">→ Champ en lecture seule (en complément de readonly HTML).</span></div>
+                <div class="attr-item"><span class="attr-name">aria-multiselectable="true"</span><span class="attr-desc">→ Plusieurs éléments peuvent être sélectionnés dans un listbox ou grid.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-multiline="true"</span><span class="attr-desc">→ Champ de texte multiligne (sur role="textbox").</span></div>
+
+                <div class="attrs-label" style="margin-top:10px;">Valeurs et plages</div>
+                <div class="attr-item"><span class="attr-name">aria-valuenow="50"</span><span class="attr-desc">→ Valeur actuelle d'un slider, progressbar, spinbutton.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-valuemin="0"</span><span class="attr-desc">→ Valeur minimale.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-valuemax="100"</span><span class="attr-desc">→ Valeur maximale.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-valuetext="Moyen"</span><span class="attr-desc">→ Texte lisible de la valeur (quand le nombre seul n'est pas suffisant. Ex: aria-valuenow="2" aria-valuetext="Mardi").</span></div>
+
+                <div class="attrs-label" style="margin-top:10px;">Structure et relations</div>
+                <div class="attr-item"><span class="attr-name">aria-controls="id-contenu"</span><span class="attr-desc">→ Indique quel élément ce widget contrôle (bouton burger → nav, bouton tab → tabpanel).</span></div>
+                <div class="attr-item"><span class="attr-name">aria-owns="id1 id2"</span><span class="attr-desc">→ Déclare des enfants qui ne sont pas dans le DOM (éléments rendus hors du parent pour des raisons CSS/z-index).</span></div>
+                <div class="attr-item"><span class="attr-name">aria-flowto="id"</span><span class="attr-desc">→ Ordre de lecture alternatif (quand l'ordre DOM ne correspond pas à l'ordre logique).</span></div>
+                <div class="attr-item"><span class="attr-name">aria-level="2"</span><span class="attr-desc">→ Niveau hiérarchique. Sur role="heading" : niveau du titre (1-6). Sur role="treeitem" : niveau dans l'arborescence.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-setsize="5"</span><span class="attr-desc">→ Nombre total d'éléments dans le groupe (quand non évident). Sur les onglets, options, items de liste paginée.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-posinset="2"</span><span class="attr-desc">→ Position de l'élément dans son groupe (avec aria-setsize). "Élément 2 sur 5".</span></div>
+                <div class="attr-item"><span class="attr-name">aria-colcount / aria-rowcount</span><span class="attr-desc">→ Nombre total de colonnes/lignes dans un grid ou tableau (quand le DOM n'en affiche qu'une partie).</span></div>
+                <div class="attr-item"><span class="attr-name">aria-colindex / aria-rowindex</span><span class="attr-desc">→ Index de la colonne/ligne dans le tableau complet (tableaux virtualisés).</span></div>
+                <div class="attr-item"><span class="attr-name">aria-colspan / aria-rowspan</span><span class="attr-desc">→ Nombre de colonnes/lignes que couvre une cellule (dans un grid ARIA).</span></div>
+                <div class="attr-item"><span class="attr-name">aria-sort="ascending|descending|none|other"</span><span class="attr-desc">→ Tri d'une colonne de tableau. Sur le &lt;th&gt; de la colonne triée.</span></div>
+
+                <div class="attrs-label" style="margin-top:10px;">Zones de mise à jour dynamique (Live Regions)</div>
+                <div class="attr-item"><span class="attr-name">aria-live="polite"</span><span class="attr-desc">→ Annonce les mises à jour quand le lecteur d'écran a terminé sa lecture en cours. Pour les notifications non urgentes (succès, mise à jour de données).</span></div>
+                <div class="attr-item"><span class="attr-name">aria-live="assertive"</span><span class="attr-desc">→ Annonce immédiatement, en interrompant la lecture en cours. Pour les alertes urgentes, messages d'erreur critiques. Utiliser avec parcimonie.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-live="off"</span><span class="attr-desc">→ Désactive les annonces (défaut). Utile pour réactiver dynamiquement.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-atomic="true"</span><span class="attr-desc">→ Annonce TOUT le contenu de la zone (même ce qui n'a pas changé) à chaque mise à jour. Plutôt que seulement la partie modifiée.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-atomic="false"</span><span class="attr-desc">→ Annonce uniquement les parties modifiées (défaut).</span></div>
+                <div class="attr-item"><span class="attr-name">aria-relevant="additions removals text"</span><span class="attr-desc">→ Quels types de changements déclencher des annonces. "additions" = ajouts, "removals" = suppressions, "text" = modifications de texte. Défaut : "additions text".</span></div>
+
+                <div class="attrs-label" style="margin-top:10px;">Keyboard shortcuts et aide</div>
+                <div class="attr-item"><span class="attr-name">aria-keyshortcuts="Alt+Shift+A"</span><span class="attr-desc">→ Raccourci clavier associé au composant. Annoncé par les lecteurs d'écran.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-roledescription="Carrousel"</span><span class="attr-desc">→ Description du rôle en langage naturel (remplace le rôle technique par un terme métier). Ex: role="group" + aria-roledescription="Diapositive".</span></div>
+                <div class="attr-item"><span class="attr-name">aria-placeholder="JJ/MM/AAAA"</span><span class="attr-desc">→ Indication courte sur le format attendu (sur role="textbox" custom). Préférer &lt;input placeholder&gt;.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-errormessage="id-erreur"</span><span class="attr-desc">→ Pointe vers l'élément contenant le message d'erreur détaillé. Utiliser avec aria-invalid="true".</span></div>
+                <div class="attr-item"><span class="attr-name">aria-modal="true"</span><span class="attr-desc">→ Indique aux lecteurs d'écran que le reste de la page est inerte pendant que la modale est ouverte. Sur role="dialog".</span></div>
+                <div class="attr-item"><span class="attr-name">aria-haspopup="menu|listbox|tree|grid|dialog|true"</span><span class="attr-desc">→ Le composant peut ouvrir un popup. "true" ou "menu" = menu. Annoncé "a un sous-menu" ou "ouvre une liste".</span></div>
+                <div class="attr-item"><span class="attr-name">aria-autocomplete="none|list|inline|both"</span><span class="attr-desc">→ Comportement d'autocomplétion d'un combobox ou textbox. "list" = liste de suggestions, "inline" = complétion dans le champ, "both" = les deux.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-activedescendant="id-focused-item"</span><span class="attr-desc">→ ID de l'élément focusé dans un widget composite (listbox, combobox, grid). Le focus DOM reste sur le conteneur mais aria indique l'item actif.</span></div>
+                <div class="attr-item"><span class="attr-name">aria-colheader / aria-rowheader</span><span class="attr-desc">→ Indique que la cellule est un en-tête de colonne ou de ligne (dans un grid ARIA).</span></div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ─────────────────────────────────────────────────────────────
+           BLOC 4 : PATTERNS ARIA CONCRETS
+           ───────────────────────────────────────────────────────────── -->
+      <div class="ref-section">
+        <div class="ref-section-header">
+          <span class="tag-cat">Patterns</span>
+          <h2>Patterns ARIA courants avec code</h2>
+        </div>
+        <div class="ref-section-body">
+
+          <!-- Skip link -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Pattern : Skip Link (Lien d'évitement)</span>
+              <span class="balise-type type-form">WCAG 2.4.1 — A</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Premier élément focusable de la page. Invisible jusqu'au focus clavier.
+                Permet de sauter la navigation principale pour aller directement au contenu.
+                <strong>Obligatoire</strong> pour tout site avec une navigation répétitive.
+              </p>
+              <div class="demo-zone">
+                <pre><code>&lt;!-- En PREMIER dans le body --&gt;
+&lt;a href="#contenu-principal" class="skip-link"&gt;
+  Aller au contenu principal
+&lt;/a&gt;
+
+&lt;!-- CSS --&gt;
+.skip-link {
+  position: absolute;
+  top: -100px;           /* Hors écran par défaut */
+  left: 16px;
+  z-index: 9999;
+  background: #1a1a2e;
+  color: #fff;
+  padding: 10px 18px;
+  text-decoration: none;
+  transition: top .2s;
+}
+.skip-link:focus {
+  top: 0;                /* Visible au focus */
+}</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Bouton avec icône -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Pattern : Bouton icône accessible</span>
+              <span class="balise-type type-form">WCAG 4.1.2 — A</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Un bouton avec seulement une icône doit avoir un nom accessible.
+                Sans texte visible, les lecteurs d'écran ne savent pas à quoi il sert.
+              </p>
+              <div class="demo-zone">
+                <pre><code>&lt;!-- ❌ MAUVAIS : aucun nom accessible --&gt;
+&lt;button type="button"&gt;✕&lt;/button&gt;
+
+&lt;!-- ✅ CORRECT : aria-label donne le nom --&gt;
+&lt;button type="button" aria-label="Fermer la fenêtre"&gt;
+  &lt;span aria-hidden="true"&gt;✕&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;!-- ✅ AUSSI CORRECT : texte masqué visuellement --&gt;
+&lt;button type="button"&gt;
+  &lt;svg aria-hidden="true" focusable="false"&gt;...&lt;/svg&gt;
+  &lt;span class="visually-hidden"&gt;Fermer la fenêtre&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;!-- CSS visually-hidden (meilleure pratique) --&gt;
+.visually-hidden {
+  position: absolute;
+  width: 1px; height: 1px;
+  overflow: hidden;
+  clip: rect(0,0,0,0);
+  white-space: nowrap;
+}</code></pre>
+              </div>
+              <div class="balise-exemple" style="margin-top:12px;">
+                <div class="balise-exemple-label">Rendu</div>
+                <div class="demo-zone" style="display:flex;gap:12px;align-items:center;">
+                  <div>
+                    <p style="font-size:.8rem;color:var(--rouge);margin-bottom:4px;">❌ Sans aria-label</p>
+                    <button type="button" style="border:1px solid var(--bord);border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:1rem;">✕</button>
+                  </div>
+                  <div>
+                    <p style="font-size:.8rem;color:var(--vert);margin-bottom:4px;">✅ Avec aria-label</p>
+                    <button type="button" aria-label="Fermer la fenêtre" style="border:1px solid var(--bord);border-radius:50%;width:36px;height:36px;cursor:pointer;font-size:1rem;"><span aria-hidden="true">✕</span></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Toggle button -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Pattern : Bouton bascule (Toggle)</span>
+              <span class="balise-type type-form">WCAG 4.1.2 — A</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Un bouton qui s'active/désactive doit communiquer son état via
+                <code>aria-pressed</code>. Le CSS cible cet attribut directement.
+              </p>
+              <div class="demo-zone">
+                <pre><code>&lt;button type="button"
+        aria-pressed="false"
+        id="btn-theme"&gt;
+  Mode sombre
+&lt;/button&gt;
+
+/* CSS : cibler l'état ARIA directement */
+[aria-pressed="true"] {
+  background: #1a1a2e;
+  color: white;
+}
+
+// JavaScript
+var btn = document.getElementById('btn-theme');
+btn.addEventListener('click', function() {
+  var etat = this.getAttribute('aria-pressed') === 'true';
+  this.setAttribute('aria-pressed', String(!etat));
+  // Mettre à jour l'aria-label aussi
+  this.setAttribute('aria-label',
+    !etat ? 'Désactiver le mode sombre'
+           : 'Activer le mode sombre');
+});</code></pre>
+              </div>
+              <div class="balise-exemple" style="margin-top:12px;">
+                <div class="balise-exemple-label">Rendu interactif</div>
+                <div class="demo-zone">
+                  <button type="button"
+                    id="demo-toggle"
+                    aria-pressed="false"
+                    style="padding:8px 16px;border:2px solid var(--bord);border-radius:var(--r);cursor:pointer;font-size:.9rem;transition:all .2s;"
+                    onclick="
+                      var etat = this.getAttribute('aria-pressed')==='true';
+                      this.setAttribute('aria-pressed',String(!etat));
+                      this.style.background = !etat ? 'var(--primaire)' : '';
+                      this.style.color = !etat ? '#fff' : '';
+                      this.textContent = !etat ? '🌙 Mode sombre (actif)' : '🌙 Mode sombre (inactif)';
+                    ">
+                    🌙 Mode sombre (inactif)
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Menu burger -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Pattern : Menu burger accessible</span>
+              <span class="balise-type type-form">WCAG 2.1.1 + 4.1.2</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Le bouton burger contrôle la visibilité du menu.
+                <code>aria-expanded</code> + <code>aria-controls</code> communiquent
+                l'état et la relation aux technologies d'assistance.
+              </p>
+              <div class="demo-zone">
+                <pre><code>&lt;button type="button"
+        id="burger"
+        aria-controls="main-nav"
+        aria-expanded="false"
+        aria-label="Ouvrir le menu de navigation"&gt;
+  &lt;span aria-hidden="true"&gt;☰&lt;/span&gt;
+&lt;/button&gt;
+
+&lt;nav id="main-nav" hidden&gt;
+  &lt;!-- liens --&gt;
+&lt;/nav&gt;
+
+// JavaScript
+var burger = document.getElementById('burger');
+var nav = document.getElementById('main-nav');
+
+burger.addEventListener('click', function() {
+  var ouvert = this.getAttribute('aria-expanded') === 'true';
+  this.setAttribute('aria-expanded', String(!ouvert));
+  this.setAttribute('aria-label',
+    ouvert ? 'Ouvrir le menu' : 'Fermer le menu');
+  if (ouvert) {
+    nav.setAttribute('hidden', '');
+  } else {
+    nav.removeAttribute('hidden');
+  }
+});</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Formulaire accessible -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Pattern : Validation de formulaire accessible</span>
+              <span class="balise-type type-form">WCAG 3.3.1 + 3.3.3 — A/AA</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Les messages d'erreur doivent être annoncés par les lecteurs d'écran
+                et liés aux champs en erreur via <code>aria-describedby</code> + <code>aria-invalid</code>.
+              </p>
+              <div class="demo-zone">
+                <pre><code>&lt;!-- Champ valide --&gt;
+&lt;div&gt;
+  &lt;label for="email"&gt;
+    Email &lt;span aria-hidden="true"&gt;*&lt;/span&gt;
+    &lt;span class="visually-hidden"&gt;(obligatoire)&lt;/span&gt;
+  &lt;/label&gt;
+  &lt;input type="email"
+         id="email"
+         name="email"
+         required
+         aria-required="true"
+         aria-describedby="email-aide email-erreur"
+         aria-invalid="false"&gt;
+  &lt;small id="email-aide"&gt;Format : <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bdd3d2d0fdd8c5d8d0cdd1d893ded2d0">[email&#160;protected]</a>&lt;/small&gt;
+  &lt;span id="email-erreur"
+        role="alert"
+        aria-live="assertive"
+        hidden&gt;
+    ❌ Email invalide. Vérifiez le format.
+  &lt;/span&gt;
+&lt;/div&gt;
+
+// Afficher l'erreur
+function afficherErreur(inputId, msgId) {
+  var input = document.getElementById(inputId);
+  var msg = document.getElementById(msgId);
+  input.setAttribute('aria-invalid', 'true');
+  msg.removeAttribute('hidden');
+  // role="alert" déclenche l'annonce automatique
+}
+
+// Effacer l'erreur
+function effacerErreur(inputId, msgId) {
+  var input = document.getElementById(inputId);
+  var msg = document.getElementById(msgId);
+  input.setAttribute('aria-invalid', 'false');
+  msg.setAttribute('hidden', '');
+}</code></pre>
+              </div>
+              <div class="balise-exemple" style="margin-top:12px;">
+                <div class="balise-exemple-label">Rendu interactif</div>
+                <div class="demo-zone">
+                  <form novalidate style="gap:8px;" aria-label="Démo validation accessible" onsubmit="return false;">
+                    <label for="demo-email">Email <span aria-hidden="true" style="color:var(--rouge)">*</span></label>
+                    <input type="email" id="demo-email" name="email"
+                           aria-required="true"
+                           aria-invalid="false"
+                           aria-describedby="demo-email-aide demo-email-err"
+                           placeholder="vous@exemple.com">
+                    <small id="demo-email-aide" style="color:var(--txt2);">Format attendu : <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ef818082af8b80828e86818ac18c8082">[email&#160;protected]</a></small>
+                    <span id="demo-email-err" role="alert" hidden
+                          style="color:var(--rouge);font-size:.85rem;display:flex;align-items:center;gap:4px;">
+                      ❌ Adresse email invalide. Vérifiez le format.
+                    </span>
+                    <div style="display:flex;gap:8px;">
+                      <button type="button" style="background:var(--rouge);color:#fff;border:none;padding:8px 14px;border-radius:var(--r);cursor:pointer;font-size:.85rem;"
+                        onclick="
+                          var i = document.getElementById('demo-email');
+                          var e = document.getElementById('demo-email-err');
+                          i.setAttribute('aria-invalid','true');
+                          i.style.borderColor='var(--rouge)';
+                          i.style.outline='2px solid var(--rouge)';
+                          e.removeAttribute('hidden');
+                        ">Simuler erreur</button>
+                      <button type="button" style="background:var(--vert);color:#fff;border:none;padding:8px 14px;border-radius:var(--r);cursor:pointer;font-size:.85rem;"
+                        onclick="
+                          var i = document.getElementById('demo-email');
+                          var e = document.getElementById('demo-email-err');
+                          i.setAttribute('aria-invalid','false');
+                          i.style.borderColor='';
+                          i.style.outline='';
+                          e.setAttribute('hidden','');
+                        ">Effacer erreur</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Modale accessible -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Pattern : Modale accessible (Focus Trap)</span>
+              <span class="balise-type type-form">WCAG 2.1.2 + 2.4.3 — A</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Une modale accessible doit : piéger le focus à l'intérieur (focus trap),
+                se fermer avec Échap, remettre le focus sur l'élément déclencheur à la fermeture,
+                et bloquer la navigation dans le reste de la page.
+              </p>
+              <div class="demo-zone">
+                <pre><code>&lt;button id="open-modal" type="button"
+        aria-haspopup="dialog"&gt;
+  Ouvrir la modale
+&lt;/button&gt;
+
+&lt;div id="modale"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="modal-titre"
+     aria-describedby="modal-desc"
+     hidden&gt;
+  &lt;div class="modal-box"&gt;
+    &lt;h2 id="modal-titre"&gt;Titre de la modale&lt;/h2&gt;
+    &lt;p id="modal-desc"&gt;Description du contenu.&lt;/p&gt;
+    &lt;button id="close-modal" type="button"
+            aria-label="Fermer la modale"&gt;✕&lt;/button&gt;
+  &lt;/div&gt;
+&lt;/div&gt;
+
+// JavaScript — Focus Trap
+var trigger, modal, closeBtn;
+
+function ouvrir() {
+  trigger = document.activeElement;      // Mémoriser le déclencheur
+  modal.removeAttribute('hidden');
+  document.body.style.overflow = 'hidden';
+  closeBtn.focus();                      // Focus sur le premier élément
+  document.addEventListener('keydown', trapFocus);
+}
+
+function fermer() {
+  modal.setAttribute('hidden', '');
+  document.body.style.overflow = '';
+  document.removeEventListener('keydown', trapFocus);
+  trigger.focus();                       // Restaurer le focus
+}
+
+function trapFocus(e) {
+  if (e.key === 'Escape') { fermer(); return; }
+  if (e.key !== 'Tab') return;
+
+  var focusables = modal.querySelectorAll(
+    'a[href], button, input, [tabindex]:not([tabindex="-1"])'
+  );
+  var first = focusables[0];
+  var last  = focusables[focusables.length - 1];
+
+  if (e.shiftKey && document.activeElement === first) {
+    e.preventDefault();
+    last.focus();
+  } else if (!e.shiftKey && document.activeElement === last) {
+    e.preventDefault();
+    first.focus();
+  }
+}</code></pre>
+              </div>
+            </div>
+          </div>
+
+          <!-- Live region -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Pattern : Live Region (zone de mise à jour)</span>
+              <span class="balise-type type-form">WCAG 4.1.3 — AA</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Les contenus qui se mettent à jour dynamiquement (notifications, résultats
+                de recherche, messages de statut) doivent être annoncés par les lecteurs
+                d'écran sans que le focus soit déplacé.
+              </p>
+              <div class="demo-zone">
+                <pre><code>&lt;!-- role="alert" : annonce immédiate (assertive) --&gt;
+&lt;div role="alert" aria-live="assertive" aria-atomic="true"&gt;
+  &lt;!-- Vide au départ, rempli par JS en cas d'erreur critique --&gt;
+&lt;/div&gt;
+
+&lt;!-- role="status" : annonce différée (polite) --&gt;
+&lt;div role="status" aria-live="polite" aria-atomic="true"&gt;
+  &lt;!-- Confirmations, informations, résultats --&gt;
+&lt;/div&gt;
+
+&lt;!-- Exemple : notification de succès --&gt;
+&lt;div id="notif"
+     aria-live="polite"
+     aria-atomic="true"
+     class="visually-hidden"&gt;
+&lt;/div&gt;
+
+// JS : injecter le message APRÈS que la zone est dans le DOM
+function notifier(message) {
+  var zone = document.getElementById('notif');
+  zone.textContent = '';           // Vider d'abord
+  setTimeout(function() {
+    zone.textContent = message;    // Remplir ensuite
+    // Le lecteur annonce : "Formulaire envoyé avec succès"
+  }, 100);
+}</code></pre>
+              </div>
+              <div class="balise-exemple" style="margin-top:12px;">
+                <div class="balise-exemple-label">Rendu interactif (vérifier avec un lecteur d'écran)</div>
+                <div class="demo-zone">
+                  <div id="demo-live-region"
+                       aria-live="polite"
+                       aria-atomic="true"
+                       style="min-height:36px;padding:8px 12px;border:1px dashed var(--bord);border-radius:var(--r);font-size:.88rem;color:var(--txt2);">
+                    Zone de notification (vide)
+                  </div>
+                  <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
+                    <button type="button" style="background:var(--vert);color:#fff;border:none;padding:8px 14px;border-radius:var(--r);cursor:pointer;font-size:.85rem;"
+                      onclick="
+                        var z = document.getElementById('demo-live-region');
+                        z.style.borderColor='var(--vert)';z.style.color='var(--vert)';
+                        z.textContent='';
+                        setTimeout(function(){z.textContent='✅ Formulaire envoyé avec succès !';},100);
+                      ">Succès</button>
+                    <button type="button" style="background:var(--rouge);color:#fff;border:none;padding:8px 14px;border-radius:var(--r);cursor:pointer;font-size:.85rem;"
+                      onclick="
+                        var z = document.getElementById('demo-live-region');
+                        z.style.borderColor='var(--rouge)';z.style.color='var(--rouge)';
+                        z.textContent='';
+                        setTimeout(function(){z.textContent='❌ Erreur : connexion impossible. Réessayez.';},100);
+                      ">Erreur</button>
+                    <button type="button" style="background:var(--ambre);color:#fff;border:none;padding:8px 14px;border-radius:var(--r);cursor:pointer;font-size:.85rem;"
+                      onclick="
+                        var z = document.getElementById('demo-live-region');
+                        z.style.borderColor='var(--ambre)';z.style.color='var(--ambre)';
+                        z.textContent='';
+                        setTimeout(function(){z.textContent='⏳ Chargement en cours…';},100);
+                      ">Chargement</button>
+                    <button type="button" style="background:#e2e8f0;border:none;padding:8px 14px;border-radius:var(--r);cursor:pointer;font-size:.85rem;"
+                      onclick="
+                        var z = document.getElementById('demo-live-region');
+                        z.style.borderColor='var(--bord)';z.style.color='var(--txt2)';
+                        z.textContent='Zone de notification (vide)';
+                      ">Réinitialiser</button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Onglets accessibles -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Pattern : Onglets accessibles (Tabs)</span>
+              <span class="balise-type type-form">WCAG 2.1.1 + 4.1.2</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Le pattern tabs utilise <code>role="tablist"</code>, <code>role="tab"</code>,
+                <code>role="tabpanel"</code> et les flèches clavier pour naviguer entre onglets.
+              </p>
+              <div class="demo-zone">
+                <pre><code>&lt;div role="tablist" aria-label="Onglets de cours"&gt;
+  &lt;button role="tab"
+          id="tab-html"
+          aria-controls="panel-html"
+          aria-selected="true"
+          tabindex="0"&gt;HTML&lt;/button&gt;
+  &lt;button role="tab"
+          id="tab-css"
+          aria-controls="panel-css"
+          aria-selected="false"
+          tabindex="-1"&gt;CSS&lt;/button&gt;
+&lt;/div&gt;
+
+&lt;div role="tabpanel"
+     id="panel-html"
+     aria-labelledby="tab-html"&gt;
+  Contenu du panel HTML
+&lt;/div&gt;
+&lt;div role="tabpanel"
+     id="panel-css"
+     aria-labelledby="tab-css"
+     hidden&gt;
+  Contenu du panel CSS
+&lt;/div&gt;
+
+&lt;!-- Navigation clavier : flèche gauche/droite entre tabs
+     tabindex="-1" sur les tabs non sélectionnés
+     tabindex="0" sur le tab actif --&gt;</code></pre>
+              </div>
+              <div class="balise-exemple" style="margin-top:12px;">
+                <div class="balise-exemple-label">Rendu interactif (flèches ← → pour naviguer)</div>
+                <div class="demo-zone">
+                  <div role="tablist" aria-label="Onglets de démonstration" style="display:flex;gap:4px;border-bottom:2px solid var(--bord);margin-bottom:12px;">
+                    <button role="tab" id="t1" aria-controls="p1" aria-selected="true" tabindex="0"
+                      style="padding:8px 16px;border:none;border-bottom:3px solid var(--primaire);background:none;font-weight:700;cursor:pointer;font-size:.88rem;color:var(--primaire);"
+                      onclick="activerOnglet('t1','p1')" onkeydown="navOnglets(event)">HTML</button>
+                    <button role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1"
+                      style="padding:8px 16px;border:none;border-bottom:3px solid transparent;background:none;cursor:pointer;font-size:.88rem;color:var(--txt2);"
+                      onclick="activerOnglet('t2','p2')" onkeydown="navOnglets(event)">CSS</button>
+                    <button role="tab" id="t3" aria-controls="p3" aria-selected="false" tabindex="-1"
+                      style="padding:8px 16px;border:none;border-bottom:3px solid transparent;background:none;cursor:pointer;font-size:.88rem;color:var(--txt2);"
+                      onclick="activerOnglet('t3','p3')" onkeydown="navOnglets(event)">JavaScript</button>
+                  </div>
+                  <div id="p1" role="tabpanel" aria-labelledby="t1" style="font-size:.9rem;"><strong>HTML</strong> — HyperText Markup Language. La structure de la page.</div>
+                  <div id="p2" role="tabpanel" aria-labelledby="t2" hidden style="font-size:.9rem;"><strong>CSS</strong> — Cascading Style Sheets. La présentation visuelle.</div>
+                  <div id="p3" role="tabpanel" aria-labelledby="t3" hidden style="font-size:.9rem;"><strong>JavaScript</strong> — L'interactivité et la logique côté client.</div>
+                  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+                  function activerOnglet(tabId, panelId) {
+                    ['t1','t2','t3'].forEach(function(id) {
+                      var tab = document.getElementById(id);
+                      var panel = document.getElementById(id.replace('t','p'));
+                      var actif = id === tabId;
+                      tab.setAttribute('aria-selected', String(actif));
+                      tab.setAttribute('tabindex', actif ? '0' : '-1');
+                      tab.style.fontWeight = actif ? '700' : '400';
+                      tab.style.color = actif ? 'var(--primaire)' : 'var(--txt2)';
+                      tab.style.borderBottom = actif ? '3px solid var(--primaire)' : '3px solid transparent';
+                      if (actif) { panel.removeAttribute('hidden'); }
+                      else { panel.setAttribute('hidden',''); }
+                    });
+                    document.getElementById(tabId).focus();
+                  }
+                  function navOnglets(e) {
+                    var tabs = ['t1','t2','t3'];
+                    var idx = tabs.indexOf(e.target.id);
+                    if (e.key==='ArrowRight') { e.preventDefault(); activerOnglet(tabs[(idx+1)%3], 'p'+(((idx+1)%3)+1)); }
+                    if (e.key==='ArrowLeft')  { e.preventDefault(); activerOnglet(tabs[(idx+2)%3], 'p'+(((idx+2)%3)+1)); }
+                    if (e.key==='Home')        { e.preventDefault(); activerOnglet(tabs[0],'p1'); }
+                    if (e.key==='End')         { e.preventDefault(); activerOnglet(tabs[2],'p3'); }
+                  }
+                  </script>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Contraste -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Pattern : Contraste des couleurs</span>
+              <span class="balise-type type-form">WCAG 1.4.3 + 1.4.11 — AA</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Le ratio de contraste est calculé entre la couleur du texte et son arrière-plan.
+              </p>
+              <div class="demo-zone" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px;">
+                <div>
+                  <p style="font-size:.75rem;font-weight:700;color:var(--txt2);margin-bottom:6px;">✅ PASSE — 16.1:1 (AAA)</p>
+                  <div style="background:#fff;border:1px solid var(--bord);padding:10px;border-radius:var(--r);color:#1a1a2e;font-size:.9rem;">#1a1a2e sur #ffffff</div>
+                </div>
+                <div>
+                  <p style="font-size:.75rem;font-weight:700;color:var(--txt2);margin-bottom:6px;">✅ PASSE — 5.1:1 (AA)</p>
+                  <div style="background:#fff;border:1px solid var(--bord);padding:10px;border-radius:var(--r);color:#b91c1c;font-size:.9rem;">#b91c1c sur #ffffff</div>
+                </div>
+                <div>
+                  <p style="font-size:.75rem;font-weight:700;color:var(--txt2);margin-bottom:6px;">✅ PASSE — 4.6:1 (AA)</p>
+                  <div style="background:#fff;border:1px solid var(--bord);padding:10px;border-radius:var(--r);color:#b45309;font-size:.9rem;">#b45309 sur #ffffff</div>
+                </div>
+                <div>
+                  <p style="font-size:.75rem;font-weight:700;color:var(--rouge);margin-bottom:6px;">❌ ÉCHOUE — 2.5:1 (insuffisant)</p>
+                  <div style="background:#fff;border:1px solid var(--bord);padding:10px;border-radius:var(--r);color:#22c55e;font-size:.9rem;">#22c55e sur #ffffff</div>
+                </div>
+                <div>
+                  <p style="font-size:.75rem;font-weight:700;color:var(--rouge);margin-bottom:6px;">❌ ÉCHOUE — 2.8:1 (insuffisant)</p>
+                  <div style="background:#fff;border:1px solid var(--bord);padding:10px;border-radius:var(--r);color:#f59e0b;font-size:.9rem;">#f59e0b sur #ffffff</div>
+                </div>
+                <div>
+                  <p style="font-size:.75rem;font-weight:700;color:var(--txt2);margin-bottom:6px;">✅ PASSE — 5.2:1 (AA en dark)</p>
+                  <div style="background:#1c1c30;border:1px solid var(--bord);padding:10px;border-radius:var(--r);color:#22c55e;font-size:.9rem;">#22c55e sur #1c1c30</div>
+                </div>
+              </div>
+              <p style="font-size:.82rem;color:var(--txt2);margin-top:10px;">
+                Outils de vérification : <a href="https://webaim.org/resources/contrastchecker/" target="_blank" rel="noopener noreferrer">WebAIM Contrast Checker</a>,
+                <a href="https://www.tpgi.com/color-contrast-checker/" target="_blank" rel="noopener noreferrer">Colour Contrast Analyser</a>,
+                extensions navigateur : axe, WAVE, Accessibility Insights.
+              </p>
+            </div>
+          </div>
+
+          <!-- Focus visible -->
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Pattern : Focus visible</span>
+              <span class="balise-type type-form">WCAG 2.4.7 — AA</span>
+            </div>
+            <div class="balise-body">
+              <p class="balise-desc">
+                Tout élément interactif doit avoir un indicateur de focus visible
+                pour les utilisateurs clavier. Utiliser <code>:focus-visible</code>
+                (focus clavier uniquement, pas souris) plutôt que <code>:focus</code>.
+              </p>
+              <div class="demo-zone">
+                <pre><code>/* ❌ MAUVAIS — supprime tout focus */
+* { outline: none; }
+a:focus { outline: none; }
+
+/* ✅ CORRECT — focus clavier visible, souris invisible */
+:focus-visible {
+  outline: 3px solid #005fcc;
+  outline-offset: 3px;
+  border-radius: 3px;
+}
+:focus:not(:focus-visible) {
+  outline: none;   /* Retire l'outline pour les clics souris */
+}
+
+/* Focus personnalisé avec box-shadow (contourne les overflow:hidden) */
+:focus-visible {
+  outline: none;
+  box-shadow: 0 0 0 3px #fff, 0 0 0 5px #005fcc;
+}</code></pre>
+              </div>
+              <div class="balise-exemple" style="margin-top:12px;">
+                <div class="balise-exemple-label">Rendu (Tab pour voir le focus)</div>
+                <div class="demo-zone" style="display:flex;gap:10px;flex-wrap:wrap;">
+                  <a href="#" style="padding:8px 14px;background:#f0f4f8;border-radius:var(--r);color:var(--bleu);text-decoration:none;font-size:.88rem;">Lien (Tab me)</a>
+                  <button type="button" style="padding:8px 14px;background:var(--primaire);color:#fff;border:none;border-radius:var(--r);cursor:pointer;font-size:.88rem;">Bouton (Tab me)</button>
+                  <input type="text" placeholder="Input (Tab me)" style="padding:8px 12px;border:1px solid var(--bord);border-radius:var(--r);font-size:.88rem;width:150px;">
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <!-- ─────────────────────────────────────────────────────────────
+           BLOC 5 : OUTILS ET RESSOURCES
+           ───────────────────────────────────────────────────────────── -->
+      <div class="ref-section">
+        <div class="ref-section-header">
+          <span class="tag-cat">Outils</span>
+          <h2>Outils de test et ressources</h2>
+        </div>
+        <div class="ref-section-body">
+          <div class="balise-bloc">
+            <div class="balise-head">
+              <span class="balise-tag">Comment tester l'accessibilité</span>
+              <span class="balise-type type-meta">Outils</span>
+            </div>
+            <div class="balise-body">
+              <div class="demo-zone" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;">
+
+                <div style="border:1px solid var(--bord);border-radius:var(--r);padding:14px;">
+                  <h3 style="font-size:.9rem;font-weight:700;margin-bottom:8px;">🔌 Extensions navigateur</h3>
+                  <ul style="padding-left:16px;font-size:.83rem;color:var(--txt2);">
+                    <li><strong>axe DevTools</strong> — Le plus complet, gratuit</li>
+                    <li><strong>WAVE</strong> — Visualisation des erreurs</li>
+                    <li><strong>Accessibility Insights</strong> — Microsoft</li>
+                    <li><strong>Lighthouse</strong> — Intégré Chrome DevTools</li>
+                    <li><strong>Color Contrast Analyzer</strong> — TPGI</li>
+                  </ul>
+                </div>
+
+                <div style="border:1px solid var(--bord);border-radius:var(--r);padding:14px;">
+                  <h3 style="font-size:.9rem;font-weight:700;margin-bottom:8px;">📢 Lecteurs d'écran</h3>
+                  <ul style="padding-left:16px;font-size:.83rem;color:var(--txt2);">
+                    <li><strong>NVDA</strong> — Windows, gratuit (le + utilisé)</li>
+                    <li><strong>JAWS</strong> — Windows, payant (professionnel)</li>
+                    <li><strong>VoiceOver</strong> — macOS/iOS, intégré</li>
+                    <li><strong>TalkBack</strong> — Android, intégré</li>
+                    <li><strong>Orca</strong> — Linux, gratuit</li>
+                  </ul>
+                </div>
+
+                <div style="border:1px solid var(--bord);border-radius:var(--r);padding:14px;">
+                  <h3 style="font-size:.9rem;font-weight:700;margin-bottom:8px;">🌐 Outils en ligne</h3>
+                  <ul style="padding-left:16px;font-size:.83rem;color:var(--txt2);">
+                    <li><strong>validator.w3.org</strong> — Validation HTML</li>
+                    <li><strong>webaim.org/contrast</strong> — Contraste</li>
+                    <li><strong>accessibilityinsights.io</strong> — Audit</li>
+                    <li><strong>whocanuse.com</strong> — Simulation daltonisme</li>
+                    <li><strong>rgaa.numerique.gouv.fr</strong> — Référentiel RGAA</li>
+                  </ul>
+                </div>
+
+                <div style="border:1px solid var(--bord);border-radius:var(--r);padding:14px;">
+                  <h3 style="font-size:.9rem;font-weight:700;margin-bottom:8px;">✅ Checklist rapide</h3>
+                  <ul style="padding-left:16px;font-size:.83rem;color:var(--txt2);">
+                    <li>Naviguer au clavier (Tab, Entrée, Échap)</li>
+                    <li>Tester avec NVDA + Chrome</li>
+                    <li>Zoomer à 200% et 400%</li>
+                    <li>Tester en mode contraste élevé</li>
+                    <li>Couper JavaScript et tester</li>
+                    <li>Passer axe ou WAVE</li>
+                    <li>Valider le HTML (W3C)</li>
+                  </ul>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+
   </div><!-- fin .wrapper -->
 </main>
 
@@ -2593,7 +4150,7 @@ console.log(saluer("Alice"));</code></pre>
   Pas besoin de role="contentinfo" (redondant).
 -->
 <footer class="site-footer">
-  <p>© IntA11Y - Solutions <span id="annee"></span> — Référence HTML5 pédagogique</p>
+  <p>© IntA11Y - Solutions<span id="annee"></span> — Référence HTML5 pédagogique</p>
   <nav aria-label="Liens légaux" style="margin-top:8px;">
     <ul style="list-style:none;display:flex;justify-content:center;gap:20px;flex-wrap:wrap;">
       <li><a href="#">Mentions légales</a></li>
@@ -2603,7 +4160,20 @@ console.log(saluer("Alice"));</code></pre>
   </nav>
 </footer>
 
-<script src="./app.js"></script>
+<!--
+  ════════════════════════════════════════════════════════════════════════
+  <script> à la fin du <body>
+  ════════════════════════════════════════════════════════════════════════
+  Placé ICI (en bas) pour deux raisons :
+  1. Le HTML est entièrement chargé et parsé → on peut manipuler le DOM
+  2. Pas de blocage du rendu de la page (le contenu s'affiche d'abord)
+-->
+<script>
+  // Année dynamique dans le footer
+  var spanAnnee = document.getElementById('annee');
+  if (spanAnnee) spanAnnee.textContent = new Date().getFullYear();
+</script>
+
 <!--
   ════════════════════════════════════════════════════════════════════════
   FIN DU FICHIER
@@ -2634,18 +4204,4 @@ console.log(saluer("Alice"));</code></pre>
           <p> <ul> <ol>     → Texte et listes
           <a>               → Liens
           <img>             → Images
-          <table>           → Données tabulaires
-          <form>            → Formulaires
-          <dialog>          → Modales
-          <details>         → Accordéon
-        </section>
-      </main>
-      <footer>              → Pied de page
-      <script>              → JavaScript (en bas)
-    </body>
-  </html>
-  ════════════════════════════════════════════════════════════════════════
--->
-
-</body>
-</html>
+      

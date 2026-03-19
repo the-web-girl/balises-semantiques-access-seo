@@ -1,0 +1,1851 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Accessibilité numérique par type de handicap — École du Web</title>
+  <meta name="description" content="Guides pratiques pour développeurs et intégrateurs : rendre sites, applications et PDF accessibles pour les troubles DYS, TDAH, TSA, handicap moteur, visuel et auditif. WCAG 2.2 et RGAA 4.1.">
+  <meta name="theme-color" content="#1a1a2e">
+  <style>
+    /* ══════════════════════════════════════════
+       DESIGN SYSTEM — Identique à index.html
+    ══════════════════════════════════════════ */
+    :root {
+      --primaire: #1a1a2e;
+      --accent:   #22c55e;
+      --fond:     #f8f9fa;
+      --card:     #ffffff;
+      --txt:      #1a1a2e;
+      --txt2:     #4a5568;
+      --bord:     #e2e8f0;
+      --rouge:    #e53e3e;
+      --bleu:     #3182ce;
+      --ambre:    #d69e2e;
+      --violet:   #805ad5;
+      --r:        6px;
+      --r-lg:     12px;
+      --shadow:   0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.07);
+
+      /* Couleurs thématiques par handicap */
+      --col-dys:    #2563eb;
+      --col-tdah:   #d97706;
+      --col-tsa:    #7c3aed;
+      --col-moteur: #059669;
+      --col-visuel: #dc2626;
+      --col-auditif:#0891b2;
+      --col-pdf:    #9333ea;
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--fond);
+      color: var(--txt);
+      line-height: 1.75;
+      font-size: 1rem;
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 3px;
+    }
+    :focus:not(:focus-visible) { outline: none; }
+
+    .skip {
+      position: absolute; top: -100px; left: 16px; z-index: 9999;
+      background: var(--primaire); color: #fff;
+      padding: 10px 18px; border-radius: 0 0 6px 6px;
+      text-decoration: none; font-weight: 700; transition: top .2s;
+    }
+    .skip:focus { top: 0; }
+
+    .visually-hidden {
+      position: absolute; width:1px; height:1px;
+      overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap;
+    }
+
+    /* ── HEADER ── */
+    .site-header {
+      background: var(--primaire); color: #fff;
+      padding: 0 28px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,.3);
+    }
+    .site-header .logo { font-size: 1.1rem; font-weight: 700; color: #fff; text-decoration: none; }
+    .site-header nav ul { display: flex; gap: 4px; list-style: none; }
+    .site-header nav a {
+      color: rgba(255,255,255,.85); text-decoration: none;
+      padding: 6px 12px; border-radius: var(--r); font-size: .85rem;
+      transition: background .18s; white-space: nowrap;
+    }
+    .site-header nav a:hover { background: rgba(255,255,255,.12); }
+    .site-header nav a.active { background: rgba(34,197,94,.25); color: #fff; font-weight: 600; }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--primaire) 0%, #16213e 100%);
+      color: #fff; padding: 64px 28px 56px; text-align: center;
+      position: relative; overflow: hidden;
+    }
+    .hero::before {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(ellipse at 70% 40%, rgba(34,197,94,.12), transparent 60%),
+                  radial-gradient(ellipse at 20% 70%, rgba(49,130,206,.1), transparent 50%);
+      pointer-events: none;
+    }
+    .hero-inner { position: relative; z-index: 1; }
+    .hero-badge {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(34,197,94,.18); border: 1px solid rgba(34,197,94,.35);
+      color: var(--accent); padding: 5px 14px; border-radius: 20px;
+      font-size: .78rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .06em; margin-bottom: 18px;
+    }
+    .hero h1 { font-size: 2.3rem; font-weight: 800; margin-bottom: 14px; line-height: 1.15; }
+    .hero p  { font-size: 1.05rem; color: rgba(255,255,255,.75); max-width: 600px; margin: 0 auto 24px; }
+    .hero-links { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
+    .hero-link {
+      display: inline-flex; align-items: center; gap: 7px;
+      background: rgba(255,255,255,.1); color: rgba(255,255,255,.9);
+      text-decoration: none; padding: 8px 18px; border-radius: var(--r);
+      font-size: .88rem; border: 1px solid rgba(255,255,255,.2);
+      transition: background .18s;
+    }
+    .hero-link:hover { background: rgba(255,255,255,.18); }
+
+    /* ── LAYOUT ── */
+    .page-wrapper { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── SOMMAIRE ── */
+    .sommaire {
+      background: var(--card); border: 1px solid var(--bord);
+      border-radius: var(--r-lg); padding: 28px; margin: 40px 0;
+      box-shadow: var(--shadow);
+    }
+    .sommaire-title {
+      font-size: .72rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--txt2); margin-bottom: 16px;
+    }
+    .sommaire-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+      gap: 10px;
+    }
+    .sommaire-item {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 14px; border-radius: var(--r);
+      text-decoration: none; color: var(--txt);
+      border: 1.5px solid var(--bord);
+      transition: border-color .18s, background .18s, transform .18s;
+      font-size: .88rem; font-weight: 600;
+    }
+    .sommaire-item:hover {
+      border-color: var(--accent);
+      background: rgba(34,197,94,.04);
+      transform: translateY(-1px);
+    }
+    .sommaire-emoji { font-size: 1.2rem; flex-shrink: 0; }
+
+    /* ── ARTICLES ── */
+    .article-section {
+      margin-bottom: 56px;
+      scroll-margin-top: 80px;
+    }
+
+    /* En-tête d'article */
+    .article-header {
+      border-radius: var(--r-lg) var(--r-lg) 0 0;
+      padding: 32px 36px 28px;
+      color: #fff;
+      position: relative;
+      overflow: hidden;
+    }
+    .article-header::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: rgba(0,0,0,.18);
+      pointer-events: none;
+    }
+    .article-header > * { position: relative; z-index: 1; }
+
+    .article-num {
+      display: inline-block;
+      font-size: .72rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .1em; background: rgba(255,255,255,.2);
+      padding: 3px 10px; border-radius: 20px; margin-bottom: 10px;
+    }
+    .article-title {
+      font-size: 1.65rem; font-weight: 800; line-height: 1.2;
+      margin-bottom: 8px;
+    }
+    .article-subtitle {
+      font-size: .95rem; color: rgba(255,255,255,.8);
+    }
+    .article-stats {
+      display: flex; gap: 20px; margin-top: 16px; flex-wrap: wrap;
+    }
+    .article-stat {
+      font-size: .78rem; color: rgba(255,255,255,.75);
+      display: flex; align-items: center; gap: 5px;
+    }
+
+    /* Corps d'article */
+    .article-body {
+      background: var(--card); border: 1px solid var(--bord);
+      border-top: none; border-radius: 0 0 var(--r-lg) var(--r-lg);
+      padding: 0 36px 36px;
+      box-shadow: var(--shadow);
+    }
+
+    /* Sections internes */
+    .section-block {
+      padding-top: 32px;
+    }
+    .section-block + .section-block {
+      border-top: 1px solid var(--bord);
+      margin-top: 28px;
+    }
+    .section-label {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .7rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--txt2);
+      background: #f0f4f8; padding: 3px 10px; border-radius: 20px;
+      margin-bottom: 10px;
+    }
+    .section-h {
+      font-size: 1.15rem; font-weight: 700;
+      margin-bottom: 12px; color: var(--txt);
+    }
+    .section-text {
+      font-size: .93rem; color: var(--txt2); line-height: 1.8;
+      margin-bottom: 14px;
+    }
+    .section-text:last-child { margin-bottom: 0; }
+    .section-text strong { color: var(--txt); }
+
+    /* Encart d'impact / témoignage */
+    .impact-box {
+      background: #f7fafc; border-left: 4px solid var(--bord);
+      border-radius: 0 var(--r) var(--r) 0;
+      padding: 16px 20px; margin: 18px 0;
+      font-size: .9rem; font-style: italic; color: var(--txt2);
+      line-height: 1.75;
+    }
+    .impact-box cite {
+      display: block; font-size: .78rem; font-style: normal;
+      font-weight: 700; color: var(--txt); margin-top: 8px;
+    }
+
+    /* Listes de bonnes pratiques */
+    .practices-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 14px;
+      margin: 18px 0;
+    }
+    .practice-card {
+      background: #f7fafc; border: 1px solid var(--bord);
+      border-radius: var(--r); padding: 16px;
+    }
+    .practice-card-title {
+      font-size: .85rem; font-weight: 700; margin-bottom: 8px;
+      display: flex; align-items: center; gap: 7px;
+    }
+    .practice-card ul {
+      list-style: none; padding: 0;
+      display: flex; flex-direction: column; gap: 5px;
+    }
+    .practice-card ul li {
+      font-size: .82rem; color: var(--txt2);
+      display: flex; align-items: flex-start; gap: 7px; line-height: 1.5;
+    }
+    .practice-card ul li::before {
+      content: '✓';
+      color: var(--accent); font-weight: 700; flex-shrink: 0;
+      margin-top: 1px;
+    }
+
+    /* Blocs de code */
+    .code-block {
+      background: var(--primaire); color: #e8e8f0;
+      border-radius: var(--r); padding: 18px 20px;
+      font-family: 'Courier New', monospace; font-size: .82rem;
+      line-height: 1.7; overflow-x: auto;
+      margin: 16px 0;
+    }
+    .code-comment { color: #6b7a99; }
+    .code-tag     { color: #93c5fd; }
+    .code-attr    { color: #86efac; }
+    .code-val     { color: #fcd34d; }
+    .code-str     { color: #fca5a5; }
+
+    /* Critères WCAG/RGAA */
+    .criteria-list {
+      display: flex; flex-direction: column; gap: 8px; margin: 16px 0;
+    }
+    .criterion {
+      background: var(--card); border: 1px solid var(--bord);
+      border-radius: var(--r); padding: 12px 16px;
+      display: flex; align-items: flex-start; gap: 12px;
+      font-size: .85rem;
+    }
+    .criterion-badge {
+      font-family: monospace; font-size: .75rem; font-weight: 700;
+      padding: 3px 8px; border-radius: 4px; flex-shrink: 0;
+      margin-top: 1px;
+    }
+    .badge-a   { background: #f0fff4; color: #276749; border: 1px solid #9ae6b4; }
+    .badge-aa  { background: #fffbeb; color: #b7791f; border: 1px solid #f6e05e; }
+    .badge-aaa { background: #fff5f5; color: #c53030; border: 1px solid #fed7d7; }
+    .criterion-text { color: var(--txt2); line-height: 1.55; }
+    .criterion-text strong { color: var(--txt); }
+
+    /* Encart outils */
+    .tools-box {
+      background: #f0f4f8; border-radius: var(--r);
+      padding: 18px 20px; margin: 16px 0;
+    }
+    .tools-box-title {
+      font-size: .78rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--txt2); margin-bottom: 12px;
+    }
+    .tools-list {
+      display: flex; flex-wrap: wrap; gap: 8px;
+    }
+    .tool-tag {
+      background: var(--card); border: 1px solid var(--bord);
+      border-radius: 20px; padding: 4px 12px;
+      font-size: .78rem; font-weight: 600; color: var(--txt);
+      text-decoration: none; transition: border-color .15s, color .15s;
+    }
+    .tool-tag:hover { border-color: var(--accent); color: var(--accent); }
+
+    /* Encart "À ne pas faire" */
+    .dont-box {
+      background: #fff5f5; border: 1px solid #fed7d7;
+      border-radius: var(--r); padding: 16px 20px; margin: 14px 0;
+    }
+    .dont-box-title {
+      font-size: .78rem; font-weight: 800; color: var(--rouge);
+      text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px;
+    }
+    .dont-box ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+    .dont-box ul li { font-size: .85rem; color: #c53030; display: flex; gap: 7px; align-items: flex-start; line-height: 1.5; }
+    .dont-box ul li::before { content: '✗'; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+    /* Encart "À faire" */
+    .do-box {
+      background: #f0fff4; border: 1px solid #9ae6b4;
+      border-radius: var(--r); padding: 16px 20px; margin: 14px 0;
+    }
+    .do-box-title {
+      font-size: .78rem; font-weight: 800; color: #276749;
+      text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px;
+    }
+    .do-box ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+    .do-box ul li { font-size: .85rem; color: #276749; display: flex; gap: 7px; align-items: flex-start; line-height: 1.5; }
+    .do-box ul li::before { content: '✓'; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
+
+    /* Résumé en carte */
+    .summary-card {
+      background: var(--primaire); color: #fff;
+      border-radius: var(--r); padding: 20px 24px; margin: 20px 0;
+    }
+    .summary-card-title { font-size: .78rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .06em; color: rgba(255,255,255,.6); margin-bottom: 12px; }
+    .summary-pills { display: flex; flex-wrap: wrap; gap: 8px; }
+    .summary-pill {
+      background: rgba(34,197,94,.2); border: 1px solid rgba(34,197,94,.4);
+      color: var(--accent); padding: 4px 12px; border-radius: 20px;
+      font-size: .78rem; font-weight: 700;
+    }
+
+    /* Sources */
+    .sources-box {
+      background: #f7fafc; border: 1px solid var(--bord);
+      border-radius: var(--r); padding: 16px 20px; margin-top: 24px;
+    }
+    .sources-title {
+      font-size: .72rem; font-weight: 800; text-transform: uppercase;
+      letter-spacing: .06em; color: var(--txt2); margin-bottom: 10px;
+    }
+    .sources-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 5px; }
+    .sources-list li { font-size: .78rem; color: var(--txt2); display: flex; gap: 6px; }
+    .sources-list a { color: var(--bleu); word-break: break-all; }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      background: var(--primaire); color: rgba(255,255,255,.7);
+      text-align: center; padding: 32px 20px; font-size: .85rem;
+      margin-top: 60px;
+    }
+    .site-footer a { color: rgba(255,255,255,.7); }
+    .site-footer ul { list-style: none; display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-top: 8px; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      .site-header nav { display: none; }
+      .hero h1 { font-size: 1.6rem; }
+      .article-header { padding: 22px 20px 18px; }
+      .article-body   { padding: 0 20px 24px; }
+      .practices-grid { grid-template-columns: 1fr; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
+    }
+  </style>
+</head>
+<body>
+
+<a href="#main-content" class="skip">Aller au contenu principal</a>
+
+<!-- ══════════════════════════════════
+     HEADER
+══════════════════════════════════ -->
+<header class="site-header">
+  <a href="./index.html" class="logo" aria-label="IntA11Y - Solutions— Accueil">🎓 École du Web</a>
+  <nav aria-label="Navigation principale">
+    <ul>
+      <li><a href="./index.html">Référence HTML5</a></li>
+      <li><a href="./patterns.html">Design Patterns</a></li>
+      <li><a href="./accessibilite-handicaps.html" aria-current="page" class="active">Accessibilité</a></li>
+    </ul>
+  </nav>
+</header>
+
+<!-- ══════════════════════════════════
+     HERO
+══════════════════════════════════ -->
+<div class="hero">
+  <div class="hero-inner">
+    <p class="hero-badge"><span aria-hidden="true">♿</span> Guide pédagogique</p>
+    <h1>Accessibilité numérique<br>par type de handicap</h1>
+    <p>Articles pratiques pour développeurs et intégrateurs novices : comprendre chaque handicap et appliquer les bonnes pratiques WCAG&nbsp;2.2 et RGAA&nbsp;4.1.</p>
+    <div class="hero-links">
+      <a href="./index.html"   class="hero-link"><span aria-hidden="true">←</span> Référence HTML5</a>
+      <a href="./patterns.html" class="hero-link"><span aria-hidden="true">←</span> Design Patterns</a>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════
+     CONTENU PRINCIPAL
+══════════════════════════════════ -->
+<main id="main-content" tabindex="-1">
+<div class="page-wrapper">
+
+  <!-- SOMMAIRE -->
+  <nav class="sommaire" aria-labelledby="sommaire-titre">
+    <p class="sommaire-title" id="sommaire-titre">Sommaire — 7 articles</p>
+    <div class="sommaire-grid">
+      <a href="#article-dys"     class="sommaire-item"><span class="sommaire-emoji" aria-hidden="true">📖</span> Troubles DYS</a>
+      <a href="#article-tdah"    class="sommaire-item"><span class="sommaire-emoji" aria-hidden="true">⚡</span> TDAH</a>
+      <a href="#article-tsa"     class="sommaire-item"><span class="sommaire-emoji" aria-hidden="true">🔷</span> TSA / Autisme</a>
+      <a href="#article-moteur"  class="sommaire-item"><span class="sommaire-emoji" aria-hidden="true">🖐️</span> Handicap moteur</a>
+      <a href="#article-visuel"  class="sommaire-item"><span class="sommaire-emoji" aria-hidden="true">👁️</span> Troubles visuels</a>
+      <a href="#article-auditif" class="sommaire-item"><span class="sommaire-emoji" aria-hidden="true">👂</span> Troubles auditifs</a>
+      <a href="#article-pdf"     class="sommaire-item"><span class="sommaire-emoji" aria-hidden="true">📄</span> Documents PDF</a>
+    </div>
+  </nav>
+
+  <!-- ════════════════════════════════
+       ARTICLE 1 — TROUBLES DYS
+  ════════════════════════════════ -->
+  <article class="article-section" id="article-dys" aria-labelledby="titre-dys">
+    <header class="article-header" style="background: linear-gradient(135deg, #1d4ed8, #1e40af);">
+      <span class="article-num">Article 01</span>
+      <h2 class="article-title" id="titre-dys">📖 Les troubles DYS</h2>
+      <p class="article-subtitle">Dyslexie, dysorthographie, dyscalculie, dyspraxie, dysphasie</p>
+      <div class="article-stats">
+        <span class="article-stat"><span aria-hidden="true">👥</span> 6 à 10 % de la population française</span>
+        <span class="article-stat"><span aria-hidden="true">⏱</span> Lecture : ~8 min</span>
+      </div>
+    </header>
+
+    <div class="article-body">
+
+      <!-- Comprendre -->
+      <div class="section-block">
+        <span class="section-label">Comprendre</span>
+        <h3 class="section-h">Qu'est-ce que les troubles DYS ?</h3>
+        <p class="section-text">
+          Les troubles DYS sont des troubles neurodéveloppementaux spécifiques des apprentissages. Ils touchent entre 6 et 10&nbsp;% de la population française selon le Gouvernement et n'ont aucun lien avec le niveau d'intelligence. Ce sont des handicaps <strong>invisibles</strong> — un utilisateur DYS peut paraître parfaitement à l'aise alors qu'il fournit un effort cognitif considérable pour lire votre page.
+        </p>
+        <div class="practices-grid">
+          <div class="practice-card">
+            <p class="practice-card-title">📖 Dyslexie</p>
+            <ul>
+              <li>Trouble de la <strong>lecture</strong> et du déchiffrage</li>
+              <li>Les lettres semblent se déplacer, se retourner, se confondre (b/d, p/q)</li>
+              <li>Lecture lente et fatigante</li>
+              <li>Impact sur la navigation web et les formulaires</li>
+            </ul>
+          </div>
+          <div class="practice-card">
+            <p class="practice-card-title">✏️ Dysorthographie</p>
+            <ul>
+              <li>Trouble de l'<strong>écriture orthographique</strong></li>
+              <li>Erreurs fréquentes dans les champs texte</li>
+              <li>Sensibilité aux corrections automatiques agressives</li>
+              <li>Stress face aux formulaires complexes</li>
+            </ul>
+          </div>
+          <div class="practice-card">
+            <p class="practice-card-title">🔢 Dyscalculie</p>
+            <ul>
+              <li>Trouble du <strong>calcul et du raisonnement logico-mathématique</strong></li>
+              <li>Difficulté à saisir des numéros (carte, téléphone, date)</li>
+              <li>Besoin de formats clairement indiqués</li>
+              <li>Messages d'erreur avec exemples concrets indispensables</li>
+            </ul>
+          </div>
+          <div class="practice-card">
+            <p class="practice-card-title">🧩 Dyspraxie / Dysphasie</p>
+            <ul>
+              <li><strong>Dyspraxie :</strong> trouble de la coordination motrice et visuo-spatiale</li>
+              <li>Difficulté à cliquer sur des éléments petits ou proches</li>
+              <li><strong>Dysphasie :</strong> trouble du langage oral et de sa compréhension</li>
+              <li>Vocabulaire complexe = barrière supplémentaire</li>
+            </ul>
+          </div>
+        </div>
+        <div class="impact-box">
+          "À 18h, après avoir lu des documents numériques toute la journée, j'ai l'impression que les lettres dansent devant mes yeux. Polices trop fines ou trop serrées, formulaires illisibles, menus confus… chaque clic devient un exercice de concentration épuisant."
+          <cite>— Marion Ranvier, directrice de la Contentsquare Foundation, dyslexique</cite>
+        </div>
+      </div>
+
+      <!-- Impacts sur la navigation -->
+      <div class="section-block">
+        <span class="section-label">Impacts concrets</span>
+        <h3 class="section-h">Qu'est-ce qui bloque un utilisateur DYS sur votre site ?</h3>
+        <div class="dont-box">
+          <p class="dont-box-title">✗ Ce qui pose problème</p>
+          <ul>
+            <li>Texte justifié — crée des "rivières blanches" visuelles qui perturbent la lecture</li>
+            <li>Police avec empattements (serif) — les lettres se confondent plus facilement</li>
+            <li>Lignes de plus de 80 caractères — fatigue oculaire et perte du fil</li>
+            <li>Fonds blancs pure (#fff) éblouissants — augmentent le flou visuel</li>
+            <li>Blocs de texte denses sans espacement ni hiérarchie</li>
+            <li>Texte en majuscules, en italique ou souligné en dehors des liens</li>
+            <li>Animations, textes défilants ou éléments mobiles — distracteurs</li>
+            <li>Placeholder comme seul label de champ — disparaît à la saisie</li>
+            <li>Messages d'erreur sans exemple de correction</li>
+            <li>Contenu uniquement en image (le texte ne peut pas être relu par un outil de lecture)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Bonnes pratiques HTML/CSS -->
+      <div class="section-block">
+        <span class="section-label">Code</span>
+        <h3 class="section-h">Bonnes pratiques HTML, CSS et JS</h3>
+
+        <p class="section-text"><strong>Typographie et espacement</strong> — Le WCAG 1.4.12 exige que le contenu reste lisible si l'utilisateur modifie l'espacement du texte. En pratique, utiliser des unités relatives et ne jamais bloquer ces propriétés CSS :</p>
+        <div class="code-block">
+<span class="code-comment">/* ✓ Espacement WCAG 1.4.12 — ne jamais bloquer */</span>
+body {
+  <span class="code-attr">font-family</span>: <span class="code-val">'Segoe UI', system-ui, sans-serif</span>; <span class="code-comment">/* Sans empattement */</span>
+  <span class="code-attr">font-size</span>: <span class="code-val">1rem</span>; <span class="code-comment">/* Base relative, respecte le zoom navigateur */</span>
+  <span class="code-attr">line-height</span>: <span class="code-val">1.6</span>;  <span class="code-comment">/* Min 1.5 recommandé (WCAG 1.4.12) */</span>
+  <span class="code-attr">letter-spacing</span>: <span class="code-val">0.05em</span>; <span class="code-comment">/* Min 0.12em WCAG, adaptation douce ici */</span>
+  <span class="code-attr">word-spacing</span>: <span class="code-val">0.1em</span>;
+  <span class="code-attr">color</span>: <span class="code-val">#1a1a2e</span>; <span class="code-comment">/* Pas de noir pur — légèrement adouci */</span>
+  <span class="code-attr">background</span>: <span class="code-val">#fafaf8</span>; <span class="code-comment">/* Fond ivoire — moins éblouissant que #fff */</span>
+}
+
+p {
+  <span class="code-attr">max-width</span>: <span class="code-val">70ch</span>; <span class="code-comment">/* 65-80 caractères max par ligne */</span>
+  <span class="code-attr">text-align</span>: <span class="code-val">left</span>;  <span class="code-comment">/* Jamais justify — crée des rivières */</span>
+  <span class="code-attr">margin-bottom</span>: <span class="code-val">1.2em</span>;
+}
+
+<span class="code-comment">/* Respecter prefers-reduced-motion (WCAG 2.3.3) */</span>
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    <span class="code-attr">animation-duration</span>: <span class="code-val">.01ms !important</span>;
+    <span class="code-attr">transition-duration</span>: <span class="code-val">.01ms !important</span>;
+  }
+}
+        </div>
+
+        <p class="section-text"><strong>Formulaires clairs</strong> — Un champ mal étiqueté est l'un des obstacles les plus fréquents pour les personnes dyslexiques et dyscalculiques :</p>
+        <div class="code-block">
+<span class="code-comment">&lt;!-- ✓ Label lié + format explicite + exemple d'erreur --&gt;</span>
+<span class="code-tag">&lt;div</span> <span class="code-attr">class</span>=<span class="code-val">"form-field"</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;label</span> <span class="code-attr">for</span>=<span class="code-val">"date-naissance"</span><span class="code-tag">&gt;</span>
+    Date de naissance <span class="code-tag">&lt;span</span> <span class="code-attr">class</span>=<span class="code-val">"format-hint"</span><span class="code-tag">&gt;</span>(JJ/MM/AAAA)<span class="code-tag">&lt;/span&gt;</span>
+  <span class="code-tag">&lt;/label&gt;</span>
+  <span class="code-tag">&lt;input</span>
+    <span class="code-attr">type</span>=<span class="code-val">"text"</span>
+    <span class="code-attr">id</span>=<span class="code-val">"date-naissance"</span>
+    <span class="code-attr">inputmode</span>=<span class="code-val">"numeric"</span>
+    <span class="code-attr">autocomplete</span>=<span class="code-val">"bday"</span>
+    <span class="code-attr">aria-describedby</span>=<span class="code-val">"date-aide date-erreur"</span>
+    <span class="code-attr">placeholder</span>=<span class="code-val">"01/06/1990"</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;span</span> <span class="code-attr">id</span>=<span class="code-val">"date-aide"</span> <span class="code-attr">class</span>=<span class="code-val">"hint"</span><span class="code-tag">&gt;</span>Format : jour/mois/année<span class="code-tag">&lt;/span&gt;</span>
+  <span class="code-tag">&lt;span</span> <span class="code-attr">id</span>=<span class="code-val">"date-erreur"</span> <span class="code-attr">role</span>=<span class="code-val">"alert"</span> <span class="code-attr">hidden</span><span class="code-tag">&gt;</span>
+    Format incorrect. Exemple valide : 01/06/1990
+  <span class="code-tag">&lt;/span&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span>
+        </div>
+
+        <p class="section-text"><strong>Option de lecture adaptée</strong> — Permettre à l'utilisateur de basculer vers une police DYS-friendly. Les polices comme Luciole ou OpenDyslexic n'aident qu'une partie des personnes dyslexiques, mais le choix est essentiel :</p>
+        <div class="code-block">
+<span class="code-comment">/* CSS : variable de police commutable via JS */</span>
+:root { <span class="code-attr">--police-lecture</span>: <span class="code-val">'Segoe UI', system-ui, sans-serif</span>; }
+[data-font="dys"] { <span class="code-attr">--police-lecture</span>: <span class="code-val">'Luciole', 'OpenDyslexic', sans-serif</span>; }
+body { <span class="code-attr">font-family</span>: <span class="code-val">var(--police-lecture)</span>; }
+
+<span class="code-comment">// JS : basculer la police</span>
+document.getElementById(<span class="code-str">'btn-police-dys'</span>).addEventListener(<span class="code-str">'click'</span>, function() {
+  var actif = document.documentElement.getAttribute(<span class="code-str">'data-font'</span>) === <span class="code-str">'dys'</span>;
+  document.documentElement.setAttribute(<span class="code-str">'data-font'</span>, actif ? <span class="code-str">''</span> : <span class="code-str">'dys'</span>);
+  localStorage.setItem(<span class="code-str">'police-dys'</span>, actif ? <span class="code-str">'non'</span> : <span class="code-str">'oui'</span>);
+});
+        </div>
+      </div>
+
+      <!-- Critères WCAG/RGAA -->
+      <div class="section-block">
+        <span class="section-label">WCAG 2.2 &amp; RGAA 4.1</span>
+        <h3 class="section-h">Critères clés applicables aux troubles DYS</h3>
+        <div class="criteria-list">
+          <div class="criterion">
+            <span class="criterion-badge badge-aa">WCAG 1.4.3 — AA</span>
+            <span class="criterion-text"><strong>Contraste du texte :</strong> ratio minimum 4,5:1 pour le texte normal, 3:1 pour le grand texte (&gt;18pt). Un fond ivoire (#fafaf8) avec texte foncé (#1a1a2e) offre un contraste de 16:1.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-aa">WCAG 1.4.12 — AA</span>
+            <span class="criterion-text"><strong>Espacement du texte :</strong> le contenu reste lisible si l'utilisateur applique line-height ≥ 1,5, letter-spacing ≥ 0,12em, word-spacing ≥ 0,16em. Ne jamais fixer ces valeurs en px absolus.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-aa">WCAG 1.4.10 — AA</span>
+            <span class="criterion-text"><strong>Reflow :</strong> à 400% de zoom (320px effectifs), le contenu reste lisible sans scroll horizontal. Indispensable pour les utilisateurs qui agrandissent pour mieux distinguer les lettres.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-a">WCAG 3.3.2 — A</span>
+            <span class="criterion-text"><strong>Labels et instructions :</strong> chaque champ de formulaire doit avoir un label visible ET son format doit être précisé (ex : date JJ/MM/AAAA). Le placeholder seul ne compte pas.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-aa">WCAG 3.3.3 — AA</span>
+            <span class="criterion-text"><strong>Suggestion après erreur :</strong> en cas de saisie incorrecte, suggérer la correction avec un exemple concret. Critique pour la dyscalculie et la dysorthographie.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-aa">RGAA 10.8</span>
+            <span class="criterion-text"><strong>Contenu caché accessible :</strong> les contenus masqués doivent être ignorés des technologies d'assistance. Pertinent pour les outils de lecture qui suivent l'ordre du DOM.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Récapitulatif -->
+      <div class="summary-card">
+        <p class="summary-card-title">Récapitulatif — À retenir pour les DYS</p>
+        <div class="summary-pills">
+          <span class="summary-pill">Police sans empattement</span>
+          <span class="summary-pill">Max 70ch par ligne</span>
+          <span class="summary-pill">Pas de texte justifié</span>
+          <span class="summary-pill">Fond ivoire, pas blanc pur</span>
+          <span class="summary-pill">Labels explicites</span>
+          <span class="summary-pill">Format des champs visible</span>
+          <span class="summary-pill">prefers-reduced-motion</span>
+          <span class="summary-pill">Option police DYS</span>
+          <span class="summary-pill">Line-height ≥ 1,5</span>
+        </div>
+      </div>
+
+      <!-- Sources -->
+      <div class="sources-box">
+        <p class="sources-title">Sources vérifiées</p>
+        <ul class="sources-list">
+          <li>→ <a href="https://www.info.gouv.fr/accessibilite/comprendre-les-handicaps-pour-ameliorer-laccessibilite/guide-sur-les-troubles-dys" target="_blank" rel="noopener noreferrer">Guide sur les troubles DYS — Gouvernement français (info.gouv.fr)</a></li>
+          <li>→ <a href="https://a11y-guidelines.orange.com/fr/handicap-cognitif/" target="_blank" rel="noopener noreferrer">Handicap cognitif — Recommandations accessibilité Orange (a11y-guidelines.orange.com)</a></li>
+          <li>→ <a href="https://blog.atalan.fr/laccessibilite-numerique-et-les-dys/" target="_blank" rel="noopener noreferrer">L'accessibilité numérique et les DYS — Atalan</a></li>
+          <li>→ <a href="https://www.w3.org/WAI/WCAG22/Understanding/text-spacing.html" target="_blank" rel="noopener noreferrer">WCAG 2.2 — Understanding 1.4.12 Text Spacing (W3C)</a></li>
+        </ul>
+      </div>
+
+    </div><!-- /article-body -->
+  </article>
+
+  <!-- ════════════════════════════════
+       ARTICLE 2 — TDAH
+  ════════════════════════════════ -->
+  <article class="article-section" id="article-tdah" aria-labelledby="titre-tdah">
+    <header class="article-header" style="background: linear-gradient(135deg, #b45309, #92400e);">
+      <span class="article-num">Article 02</span>
+      <h2 class="article-title" id="titre-tdah">⚡ Le TDAH</h2>
+      <p class="article-subtitle">Trouble du Déficit de l'Attention avec ou sans Hyperactivité</p>
+      <div class="article-stats">
+        <span class="article-stat"><span aria-hidden="true">👥</span> 5 à 7 % des enfants, 2 à 5 % des adultes</span>
+        <span class="article-stat"><span aria-hidden="true">⏱</span> Lecture : ~6 min</span>
+      </div>
+    </header>
+
+    <div class="article-body">
+
+      <div class="section-block">
+        <span class="section-label">Comprendre</span>
+        <h3 class="section-h">Qu'est-ce que le TDAH ?</h3>
+        <p class="section-text">
+          Le Trouble du Déficit de l'Attention avec ou sans Hyperactivité (TDAH) est un trouble neurodéveloppemental caractérisé par des difficultés de concentration, d'impulsivité et parfois d'hyperactivité. Sur le web, cela se traduit par une difficulté à maintenir l'attention sur un parcours complexe, une sensibilité extrême aux distracteurs visuels, et une frustration rapide face aux interfaces non intuitives.
+        </p>
+        <p class="section-text">
+          Le cerveau TDAH fonctionne différemment : il a besoin de <strong>stimulation et de clarté</strong> simultanément. Une interface surchargée est épuisante, mais une interface trop vide peut aussi nuire à l'engagement. L'enjeu est la <strong>juste densité</strong> d'information avec des repères visuels forts.
+        </p>
+
+        <div class="practices-grid">
+          <div class="practice-card">
+            <p class="practice-card-title">⚡ Difficultés d'attention</p>
+            <ul>
+              <li>Perd le fil dans les longs formulaires</li>
+              <li>Oublie où il en est dans un processus multi-étapes</li>
+              <li>Abandonne une tâche si elle prend trop de temps</li>
+              <li>Distrait par les animations et publicités</li>
+            </ul>
+          </div>
+          <div class="practice-card">
+            <p class="practice-card-title">🎯 Impulsivité et mémoire</p>
+            <ul>
+              <li>Clique sans lire les confirmations</li>
+              <li>Soumet des formulaires incomplets</li>
+              <li>Difficultés à mémoriser les étapes précédentes</li>
+              <li>Besoin de toujours voir où il en est (progression)</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <span class="section-label">Code</span>
+        <h3 class="section-h">Bonnes pratiques pour le TDAH</h3>
+
+        <div class="do-box">
+          <p class="do-box-title">✓ Ce qui aide concrètement</p>
+          <ul>
+            <li>Diviser les longs formulaires en étapes courtes avec une barre de progression visible</li>
+            <li>Sauvegarder automatiquement la progression (localStorage ou serveur)</li>
+            <li>Afficher clairement où l'utilisateur en est (étape 2/4)</li>
+            <li>Bouton "Continuer plus tard" pour les tâches longues</li>
+            <li>Espaces blancs généreux entre les sections</li>
+            <li>Titres et intertitres réguliers pour permettre de "retrouver le fil"</li>
+            <li>Alertes d'inactivité avec prolongation facile (WCAG 2.2.1)</li>
+            <li>Résumé visible des actions effectuées avant confirmation</li>
+          </ul>
+        </div>
+
+        <p class="section-text"><strong>Formulaire multi-étapes avec progression</strong> :</p>
+        <div class="code-block">
+<span class="code-comment">&lt;!-- ✓ Indicateur de progression accessible --&gt;</span>
+<span class="code-tag">&lt;nav</span> <span class="code-attr">aria-label</span>=<span class="code-val">"Progression du formulaire"</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;ol</span> <span class="code-attr">role</span>=<span class="code-val">"list"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;li</span> <span class="code-attr">aria-current</span>=<span class="code-val">"step"</span><span class="code-tag">&gt;</span>Étape 1 : Informations<span class="code-tag">&lt;/li&gt;</span>
+    <span class="code-tag">&lt;li&gt;</span>Étape 2 : Choix<span class="code-tag">&lt;/li&gt;</span>
+    <span class="code-tag">&lt;li</span> <span class="code-attr">aria-disabled</span>=<span class="code-val">"true"</span><span class="code-tag">&gt;</span>Étape 3 : Paiement<span class="code-tag">&lt;/li&gt;</span>
+  <span class="code-tag">&lt;/ol&gt;</span>
+<span class="code-tag">&lt;/nav&gt;</span>
+
+<span class="code-comment">&lt;!-- Barre visuelle --&gt;</span>
+<span class="code-tag">&lt;div</span> <span class="code-attr">role</span>=<span class="code-val">"progressbar"</span>
+     <span class="code-attr">aria-valuenow</span>=<span class="code-val">"33"</span>
+     <span class="code-attr">aria-valuemin</span>=<span class="code-val">"0"</span>
+     <span class="code-attr">aria-valuemax</span>=<span class="code-val">"100"</span>
+     <span class="code-attr">aria-valuetext</span>=<span class="code-val">"Étape 1 sur 3"</span>
+     <span class="code-attr">style</span>=<span class="code-val">"width:33%"</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/div&gt;</span>
+
+<span class="code-comment">&lt;!-- Sauvegarde automatique --&gt;</span>
+<span class="code-tag">&lt;div</span> <span class="code-attr">role</span>=<span class="code-val">"status"</span> <span class="code-attr">aria-live</span>=<span class="code-val">"polite"</span> <span class="code-attr">aria-atomic</span>=<span class="code-val">"true"</span><span class="code-tag">&gt;</span>
+  <span class="code-comment">&lt;!-- Injecté par JS quand la sauvegarde est effectuée --&gt;</span>
+  Brouillon sauvegardé à 14:32
+<span class="code-tag">&lt;/div&gt;</span>
+        </div>
+
+        <p class="section-text"><strong>Réduire les distracteurs</strong> — Supprimer ou mettre en pause tout ce qui bouge pendant une tâche critique :</p>
+        <div class="code-block">
+<span class="code-comment">/* ✓ Désactiver les animations si prefers-reduced-motion */</span>
+@media (prefers-reduced-motion: reduce) {
+  .banniere-pub, .carousel-auto, .notification-popup {
+    <span class="code-attr">animation</span>: <span class="code-val">none</span>;
+    <span class="code-attr">transition</span>: <span class="code-val">none</span>;
+  }
+}
+<span class="code-comment">/* ✓ Mettre en avant le contenu actif, atténuer le reste */</span>
+.formulaire-actif ~ .sidebar { <span class="code-attr">opacity</span>: <span class="code-val">0.4</span>; <span class="code-attr">pointer-events</span>: <span class="code-val">none</span>; }
+        </div>
+      </div>
+
+      <div class="section-block">
+        <span class="section-label">WCAG 2.2 &amp; RGAA 4.1</span>
+        <h3 class="section-h">Critères clés pour le TDAH</h3>
+        <div class="criteria-list">
+          <div class="criterion">
+            <span class="criterion-badge badge-a">WCAG 2.2.1 — A</span>
+            <span class="criterion-text"><strong>Durée suffisante :</strong> tout délai peut être désactivé, ajusté (×10) ou prolongé (×20). Un formulaire qui expire en 15 minutes sans avertissement est une barrière majeure pour le TDAH.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-a">WCAG 2.2.2 — A</span>
+            <span class="criterion-text"><strong>Pause / Stop / Masquer :</strong> tout contenu qui bouge, clignote ou défile doit pouvoir être mis en pause. Les animations auto-jouées sont particulièrement problématiques.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-aa">WCAG 3.2.3 — AA</span>
+            <span class="criterion-text"><strong>Navigation cohérente :</strong> la navigation et les composants répétés doivent apparaître dans le même ordre relatif sur toutes les pages. Réduit la charge cognitive de réorientation.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-aa">WCAG 3.3.4 — AA</span>
+            <span class="criterion-text"><strong>Prévention des erreurs :</strong> pour les soumissions importantes, permettre de vérifier, corriger, et confirmer avant envoi définitif. Compense l'impulsivité.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-card">
+        <p class="summary-card-title">Récapitulatif — À retenir pour le TDAH</p>
+        <div class="summary-pills">
+          <span class="summary-pill">Étapes courtes et numérotées</span>
+          <span class="summary-pill">Barre de progression</span>
+          <span class="summary-pill">Sauvegarde automatique</span>
+          <span class="summary-pill">Pas d'animations auto</span>
+          <span class="summary-pill">Alertes de délai</span>
+          <span class="summary-pill">Résumé avant confirmation</span>
+          <span class="summary-pill">Espaces blancs généreux</span>
+        </div>
+      </div>
+
+      <div class="sources-box">
+        <p class="sources-title">Sources vérifiées</p>
+        <ul class="sources-list">
+          <li>→ <a href="https://jujotte.fr/blog/nos-bonnes-pratiques-accessibilite-numerique/" target="_blank" rel="noopener noreferrer">Bonnes pratiques accessibilité — TDAH (jujotte.fr)</a></li>
+          <li>→ <a href="https://www.w3.org/WAI/WCAG22/Understanding/timing-adjustable.html" target="_blank" rel="noopener noreferrer">WCAG 2.2 — Understanding 2.2.1 Timing Adjustable (W3C)</a></li>
+          <li>→ <a href="https://www.w3.org/WAI/WCAG22/Understanding/pause-stop-hide.html" target="_blank" rel="noopener noreferrer">WCAG 2.2 — Understanding 2.2.2 Pause, Stop, Hide (W3C)</a></li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ════════════════════════════════
+       ARTICLE 3 — TSA / AUTISME
+  ════════════════════════════════ -->
+  <article class="article-section" id="article-tsa" aria-labelledby="titre-tsa">
+    <header class="article-header" style="background: linear-gradient(135deg, #6d28d9, #5b21b6);">
+      <span class="article-num">Article 03</span>
+      <h2 class="article-title" id="titre-tsa">🔷 TSA — Trouble du Spectre Autistique</h2>
+      <p class="article-subtitle">Un spectre large, des besoins spécifiques en matière de prévisibilité et de clarté</p>
+      <div class="article-stats">
+        <span class="article-stat"><span aria-hidden="true">👥</span> ~1 % de la population mondiale (OMS)</span>
+        <span class="article-stat"><span aria-hidden="true">⏱</span> Lecture : ~7 min</span>
+      </div>
+    </header>
+
+    <div class="article-body">
+
+      <div class="section-block">
+        <span class="section-label">Comprendre</span>
+        <h3 class="section-h">Qu'est-ce que le TSA ?</h3>
+        <p class="section-text">
+          Le Trouble du Spectre Autistique (TSA) est un handicap neurodéveloppemental, pas une maladie. Il se caractérise par des particularités dans la communication, l'interaction sociale, et une sensibilité sensorielle variable (hyper ou hyposensibilité). Le TSA est un <strong>spectre</strong> : les besoins varient énormément d'une personne à l'autre.
+        </p>
+        <p class="section-text">
+          Comme le souligne l'article de référence des <em>24 Jours de Web</em> (2023), basé sur des entretiens avec des personnes autistes travaillant dans le web : la majorité des critères WCAG et RGAA traitent des handicaps visuels, physiques et auditifs. <strong>L'autisme est encore sous-représenté dans les référentiels</strong>, mais de nombreux critères s'appliquent indirectement.
+        </p>
+        <div class="practices-grid">
+          <div class="practice-card">
+            <p class="practice-card-title">🔷 Particularités sensorielles</p>
+            <ul>
+              <li>Hypersensibilité aux stimuli visuels (couleurs vives, animations)</li>
+              <li>Hypersensibilité aux stimuli sonores (autoplay audio)</li>
+              <li>Certaines textures visuelles sont désagréables (patterns répétitifs)</li>
+              <li>Les contenus clignotants peuvent être très perturbants</li>
+            </ul>
+          </div>
+          <div class="practice-card">
+            <p class="practice-card-title">🔷 Besoin de prévisibilité</p>
+            <ul>
+              <li>Les changements de contexte non annoncés sont déstabilisants</li>
+              <li>Les métaphores, l'ironie, le second degré sont difficiles à décoder</li>
+              <li>Les instructions doivent être littérales et non ambiguës</li>
+              <li>Les comportements inattendus des interfaces créent de l'anxiété</li>
+            </ul>
+          </div>
+          <div class="practice-card">
+            <p class="practice-card-title">🔷 Lecture et traitement</p>
+            <ul>
+              <li>Temps de traitement de l'information souvent plus long</li>
+              <li>Besoin de relire plusieurs fois pour être certain de comprendre</li>
+              <li>Certaines personnes utilisent des lecteurs d'écran même avec une bonne vision</li>
+              <li>Les CAPTCHA textuels/visuels sont particulièrement difficiles</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <span class="section-label">Code</span>
+        <h3 class="section-h">Bonnes pratiques pour le TSA</h3>
+
+        <div class="dont-box">
+          <p class="dont-box-title">✗ Ce qui crée des barrières</p>
+          <ul>
+            <li>Sons ou vidéos qui se lancent automatiquement</li>
+            <li>Pop-ups inattendus qui interrompent la navigation</li>
+            <li>Comportements incohérents d'une page à l'autre (même bouton, résultats différents)</li>
+            <li>Texte qui utilise des métaphores sans les expliquer ("plongez dans notre univers")</li>
+            <li>CAPTCHA complexes ou basés sur la reconnaissance d'images subjectives</li>
+            <li>Erreurs de formulaire qui effacent tout ce qui a été saisi</li>
+            <li>Notifications intrusives et fréquentes</li>
+          </ul>
+        </div>
+
+        <div class="do-box">
+          <p class="do-box-title">✓ Ce qui aide</p>
+          <ul>
+            <li>Langage clair, direct, sans métaphore ni tournure ambiguë</li>
+            <li>Comportements prévisibles : un clic = une action, toujours la même</li>
+            <li>Pas de changement de contexte sans avertissement explicite</li>
+            <li>Conserver les données saisies en cas d'erreur de formulaire</li>
+            <li>Toujours proposer une alternative aux CAPTCHA visuels</li>
+            <li>Mode "pas de distracteurs" (pas d'animations, pas de notifications)</li>
+            <li>Instructions textuelles claires accompagnées d'exemples concrets</li>
+          </ul>
+        </div>
+
+        <p class="section-text"><strong>Éviter les changements de contexte non annoncés</strong> (WCAG 3.2.1 et 3.2.2) :</p>
+        <div class="code-block">
+<span class="code-comment">&lt;!-- ✗ Mauvais : navigation au changement de valeur --&gt;</span>
+<span class="code-tag">&lt;select</span> <span class="code-attr">onchange</span>=<span class="code-val">"window.location = this.value"</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;option</span> <span class="code-attr">value</span>=<span class="code-val">"/fr"</span><span class="code-tag">&gt;</span>Français<span class="code-tag">&lt;/option&gt;</span>
+<span class="code-tag">&lt;/select&gt;</span>
+
+<span class="code-comment">&lt;!-- ✓ Correct : bouton explicite pour confirmer l'action --&gt;</span>
+<span class="code-tag">&lt;form&gt;</span>
+  <span class="code-tag">&lt;label</span> <span class="code-attr">for</span>=<span class="code-val">"langue"</span><span class="code-tag">&gt;</span>Choisir la langue<span class="code-tag">&lt;/label&gt;</span>
+  <span class="code-tag">&lt;select</span> <span class="code-attr">id</span>=<span class="code-val">"langue"</span> <span class="code-attr">name</span>=<span class="code-val">"langue"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;option</span> <span class="code-attr">value</span>=<span class="code-val">"fr"</span><span class="code-tag">&gt;</span>Français<span class="code-tag">&lt;/option&gt;</span>
+    <span class="code-tag">&lt;option</span> <span class="code-attr">value</span>=<span class="code-val">"en"</span><span class="code-tag">&gt;</span>English<span class="code-tag">&lt;/option&gt;</span>
+  <span class="code-tag">&lt;/select&gt;</span>
+  <span class="code-tag">&lt;button</span> <span class="code-attr">type</span>=<span class="code-val">"submit"</span><span class="code-tag">&gt;</span>Appliquer la langue<span class="code-tag">&lt;/button&gt;</span>
+<span class="code-tag">&lt;/form&gt;</span>
+
+<span class="code-comment">&lt;!-- ✓ Empêcher l'autoplay (WCAG 1.4.2) --&gt;</span>
+<span class="code-tag">&lt;video</span> <span class="code-attr">controls</span> <span class="code-attr">preload</span>=<span class="code-val">"metadata"</span><span class="code-tag">&gt;</span>
+  <span class="code-comment">&lt;!-- Pas d'attribut "autoplay" --&gt;</span>
+  <span class="code-tag">&lt;source</span> <span class="code-attr">src</span>=<span class="code-val">"video.mp4"</span> <span class="code-attr">type</span>=<span class="code-val">"video/mp4"</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;/video&gt;</span>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <span class="section-label">WCAG 2.2 &amp; RGAA 4.1</span>
+        <h3 class="section-h">Critères clés pour le TSA</h3>
+        <div class="criteria-list">
+          <div class="criterion">
+            <span class="criterion-badge badge-a">WCAG 1.4.2 — A</span>
+            <span class="criterion-text"><strong>Contrôle du son :</strong> tout audio démarrant automatiquement et durant plus de 3 secondes doit pouvoir être coupé, mis en pause ou son volume réduit.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-a">WCAG 2.3.1 — A</span>
+            <span class="criterion-text"><strong>Pas plus de 3 flashs par seconde :</strong> critique pour les personnes photosensibles, mais aussi très perturbant pour certaines personnes autistes avec hypersensibilité visuelle.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-a">WCAG 3.2.1 — A</span>
+            <span class="criterion-text"><strong>Au focus :</strong> recevoir le focus ne doit pas provoquer un changement de contexte inattendu (navigation automatique, ouverture de modale, etc.).</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-a">WCAG 3.2.2 — A</span>
+            <span class="criterion-text"><strong>À la saisie :</strong> changer la valeur d'un champ ne doit pas déclencher automatiquement une action (navigation, rechargement de page).</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-a">WCAG 3.3.7 — A</span>
+            <span class="criterion-text"><strong>Authentification accessible :</strong> ne pas imposer de test cognitif (CAPTCHA) sans alternative. Les CAPTCHA visuels complexes sont particulièrement excluants pour le TSA.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-card">
+        <p class="summary-card-title">Récapitulatif — À retenir pour le TSA</p>
+        <div class="summary-pills">
+          <span class="summary-pill">Langage clair et direct</span>
+          <span class="summary-pill">Pas d'autoplay</span>
+          <span class="summary-pill">Comportements prévisibles</span>
+          <span class="summary-pill">Pas de changement de contexte</span>
+          <span class="summary-pill">Alternative au CAPTCHA</span>
+          <span class="summary-pill">Données conservées après erreur</span>
+          <span class="summary-pill">Pas de flashs</span>
+        </div>
+      </div>
+
+      <div class="sources-box">
+        <p class="sources-title">Sources vérifiées</p>
+        <ul class="sources-list">
+          <li>→ <a href="https://www.24joursdeweb.fr/2023/autisme-et-accessibilite-numerique-sur-les-sites-web-au-quotidien" target="_blank" rel="noopener noreferrer">Autisme et accessibilité numérique — 24 Jours de Web (2023)</a></li>
+          <li>→ <a href="https://www.w3.org/WAI/fundamentals/accessibility-intro/fr" target="_blank" rel="noopener noreferrer">Introduction à l'accessibilité du Web — W3C WAI (fr)</a></li>
+          <li>→ <a href="https://accessibilite.numerique.gouv.fr/" target="_blank" rel="noopener noreferrer">RGAA 4.1.2 — accessibilite.numerique.gouv.fr (DINUM)</a></li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ════════════════════════════════
+       ARTICLE 4 — HANDICAP MOTEUR
+  ════════════════════════════════ -->
+  <article class="article-section" id="article-moteur" aria-labelledby="titre-moteur">
+    <header class="article-header" style="background: linear-gradient(135deg, #047857, #065f46);">
+      <span class="article-num">Article 04</span>
+      <h2 class="article-title" id="titre-moteur">🖐️ Handicap moteur</h2>
+      <p class="article-subtitle">Tremblements, paralysie, amputation, maladies neuro-dégénératives</p>
+      <div class="article-stats">
+        <span class="article-stat"><span aria-hidden="true">👥</span> ~2,3 millions de personnes en France</span>
+        <span class="article-stat"><span aria-hidden="true">⏱</span> Lecture : ~8 min</span>
+      </div>
+    </header>
+
+    <div class="article-body">
+
+      <div class="section-block">
+        <span class="section-label">Comprendre</span>
+        <h3 class="section-h">Qu'est-ce que le handicap moteur dans le contexte numérique ?</h3>
+        <p class="section-text">
+          Le handicap moteur couvre un spectre très large : tremblements essentiels, Parkinson, sclérose en plaques, tétraplégie, paraplégie, hémiplégie, amputation, douleurs chroniques limitant les mouvements. Chaque situation conduit à des adaptations différentes pour accéder au numérique.
+        </p>
+        <p class="section-text">
+          Les technologies d'assistance utilisées sont variées : <strong>navigation au clavier seul</strong>, commande vocale (Dragon NaturallySpeaking), contacteurs à un seul bouton (switch access), trackball, joystick, système de suivi oculaire (eye tracking), ou souris alternative. <strong>Votre site doit fonctionner 100% sans souris.</strong>
+        </p>
+        <div class="practices-grid">
+          <div class="practice-card">
+            <p class="practice-card-title">⌨️ Navigation clavier</p>
+            <ul>
+              <li>Toutes les fonctionnalités accessibles avec Tab, Entrée, Échap, flèches</li>
+              <li>Focus visible à chaque élément interactif</li>
+              <li>Pas de piège clavier (modale sans fermeture au clavier)</li>
+              <li>Raccourcis clavier documentés</li>
+            </ul>
+          </div>
+          <div class="practice-card">
+            <p class="practice-card-title">🎯 Taille des cibles</p>
+            <ul>
+              <li>Minimum 44×44px pour tous les éléments cliquables</li>
+              <li>Espacement suffisant entre les boutons (pas de boutons collés)</li>
+              <li>Liens textuels larges plutôt qu'icônes minuscules</li>
+              <li>Zones de clic étendues aux libellés des checkboxes</li>
+            </ul>
+          </div>
+          <div class="practice-card">
+            <p class="practice-card-title">⏱️ Temps et délais</p>
+            <ul>
+              <li>Pas de double-clic obligatoire</li>
+              <li>Délais d'expiration ajustables (WCAG 2.2.1)</li>
+              <li>Pas de drag-and-drop sans alternative clavier</li>
+              <li>Gestes complexes évités ou avec alternative</li>
+            </ul>
+          </div>
+          <div class="practice-card">
+            <p class="practice-card-title">🖱️ Pointage</p>
+            <ul>
+              <li>Actions au relâchement du clic (pas au pressé) — WCAG 2.5.2</li>
+              <li>Éviter les survols nécessaires pour révéler des contenus</li>
+              <li>Les menus au survol ont une alternative au focus clavier</li>
+              <li>Pas de contenu qui disparaît au déplacement de la souris</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <span class="section-label">Code</span>
+        <h3 class="section-h">Implémentation technique : navigation clavier complète</h3>
+
+        <p class="section-text"><strong>Focus visible obligatoire</strong> — C'est le critère WCAG 2.4.7 (AA) le plus souvent cassé par les CSS :</p>
+        <div class="code-block">
+<span class="code-comment">/* ✗ L'erreur la plus fréquente — NE JAMAIS FAIRE */</span>
+* { <span class="code-attr">outline</span>: <span class="code-val">none</span>; }
+:focus { <span class="code-attr">outline</span>: <span class="code-val">none</span>; }
+
+<span class="code-comment">/* ✓ Focus visible uniquement pour la navigation clavier */</span>
+:focus-visible {
+  <span class="code-attr">outline</span>: <span class="code-val">3px solid #005fcc</span>;
+  <span class="code-attr">outline-offset</span>: <span class="code-val">3px</span>;
+  <span class="code-attr">border-radius</span>: <span class="code-val">3px</span>;
+  <span class="code-comment">/* ratio 7:1 sur fond blanc — dépasse les exigences WCAG 2.4.11 */</span>
+}
+:focus:not(:focus-visible) { <span class="code-attr">outline</span>: <span class="code-val">none</span>; }
+
+<span class="code-comment">/* ✓ Taille de cible minimale (WCAG 2.5.5 — AA) */</span>
+button, a, input, select, textarea, [role="button"] {
+  <span class="code-attr">min-height</span>: <span class="code-val">44px</span>;
+  <span class="code-attr">min-width</span>: <span class="code-val">44px</span>;
+}
+<span class="code-comment">/* Pour les boutons inline : étendre la zone de clic */</span>
+.btn-icon {
+  <span class="code-attr">padding</span>: <span class="code-val">10px</span>;
+  <span class="code-attr">display</span>: <span class="code-val">inline-flex</span>;
+  <span class="code-attr">align-items</span>: <span class="code-val">center</span>;
+}
+        </div>
+
+        <p class="section-text"><strong>Skip link (lien d'évitement)</strong> — WCAG 2.4.1 (A) : le premier élément focusable de toute page :</p>
+        <div class="code-block">
+<span class="code-comment">&lt;!-- Premier élément dans le body — WCAG 2.4.1 obligatoire --&gt;</span>
+<span class="code-tag">&lt;a</span> <span class="code-attr">href</span>=<span class="code-val">"#contenu-principal"</span> <span class="code-attr">class</span>=<span class="code-val">"skip-link"</span><span class="code-tag">&gt;</span>
+  Aller au contenu principal
+<span class="code-tag">&lt;/a&gt;</span>
+
+<span class="code-comment">/* Invisible sauf au focus clavier */</span>
+.skip-link {
+  <span class="code-attr">position</span>: <span class="code-val">absolute</span>;
+  <span class="code-attr">top</span>: <span class="code-val">-100px</span>; <span class="code-attr">left</span>: <span class="code-val">16px</span>; <span class="code-attr">z-index</span>: <span class="code-val">9999</span>;
+  <span class="code-attr">background</span>: <span class="code-val">#1a1a2e</span>; <span class="code-attr">color</span>: <span class="code-val">#fff</span>;
+  <span class="code-attr">padding</span>: <span class="code-val">10px 18px</span>; <span class="code-attr">border-radius</span>: <span class="code-val">0 0 6px 6px</span>;
+  <span class="code-attr">text-decoration</span>: <span class="code-val">none</span>; <span class="code-attr">transition</span>: <span class="code-val">top .2s</span>;
+}
+.skip-link:focus { <span class="code-attr">top</span>: <span class="code-val">0</span>; }
+        </div>
+
+        <p class="section-text"><strong>Action au relâchement du clic</strong> — WCAG 2.5.2 (A) : déclencher l'action à pointerup, pas à pointerdown, pour permettre d'annuler en glissant hors de la cible :</p>
+        <div class="code-block">
+<span class="code-comment">// ✗ Mauvais : action immédiate au pressé (mousedown)</span>
+bouton.addEventListener(<span class="code-str">"mousedown"</span>, supprimerFichier);
+
+<span class="code-comment">// ✓ Correct : action au relâchement (click = mouseup + même élément)</span>
+bouton.addEventListener(<span class="code-str">"click"</span>, supprimerFichier);
+<span class="code-comment">// Le HTML natif &lt;button&gt; fait déjà ça correctement</span>
+<span class="code-comment">// Ne PAS utiliser mousedown/pointerdown pour des actions destructives</span>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <span class="section-label">WCAG 2.2 &amp; RGAA 4.1</span>
+        <h3 class="section-h">Critères clés pour le handicap moteur</h3>
+        <div class="criteria-list">
+          <div class="criterion">
+            <span class="criterion-badge badge-a">WCAG 2.1.1 — A</span>
+            <span class="criterion-text"><strong>Clavier :</strong> toutes les fonctionnalités disponibles à la souris doivent l'être au clavier. Le critère le plus fondamental pour le handicap moteur.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-a">WCAG 2.1.2 — A</span>
+            <span class="criterion-text"><strong>Pas de piège clavier :</strong> l'utilisateur peut toujours sortir d'un composant au clavier. Les modales sans fermeture par Échap sont un piège classique.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-aa">WCAG 2.4.7 — AA</span>
+            <span class="criterion-text"><strong>Focus visible :</strong> tout composant qui reçoit le focus clavier doit avoir un indicateur visuel. La suppression de l'outline CSS est la violation la plus répandue.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-a">WCAG 2.5.2 — A</span>
+            <span class="criterion-text"><strong>Annulation du pointeur :</strong> pour les fonctions à un seul clic, l'action est déclenchée au relâchement (up-event) et peut être annulée en déplaçant le curseur hors de la cible.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-aa">WCAG 2.5.5 — AA</span>
+            <span class="criterion-text"><strong>Taille de la cible :</strong> chaque cible d'activation mesure au minimum 44×44 pixels CSS, ou dispose d'un espace équivalent autour d'elle.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-a">WCAG 2.4.1 — A</span>
+            <span class="criterion-text"><strong>Bypass blocks :</strong> un lien d'évitement permet de sauter la navigation répétée et d'accéder directement au contenu. Critique pour les utilisateurs de clavier.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-card">
+        <p class="summary-card-title">Récapitulatif — À retenir pour le handicap moteur</p>
+        <div class="summary-pills">
+          <span class="summary-pill">100% navigable au clavier</span>
+          <span class="summary-pill">Focus visible toujours</span>
+          <span class="summary-pill">Skip link en premier</span>
+          <span class="summary-pill">Cibles ≥ 44×44px</span>
+          <span class="summary-pill">Action au relâchement</span>
+          <span class="summary-pill">Délais ajustables</span>
+          <span class="summary-pill">Pas de piège clavier</span>
+          <span class="summary-pill">Alt aux gestes complexes</span>
+        </div>
+      </div>
+
+      <div class="sources-box">
+        <p class="sources-title">Sources vérifiées</p>
+        <ul class="sources-list">
+          <li>→ <a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/" target="_blank" rel="noopener noreferrer">RGAA 4.1.2 — Critères et tests — DINUM</a></li>
+          <li>→ <a href="https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html" target="_blank" rel="noopener noreferrer">WCAG 2.2 — Understanding 2.1.1 Keyboard (W3C)</a></li>
+          <li>→ <a href="https://www.w3.org/WAI/WCAG22/Understanding/target-size-minimum.html" target="_blank" rel="noopener noreferrer">WCAG 2.2 — Understanding 2.5.5 Target Size (W3C)</a></li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ════════════════════════════════
+       ARTICLE 5 — TROUBLES VISUELS
+  ════════════════════════════════ -->
+  <article class="article-section" id="article-visuel" aria-labelledby="titre-visuel">
+    <header class="article-header" style="background: linear-gradient(135deg, #b91c1c, #991b1b);">
+      <span class="article-num">Article 05</span>
+      <h2 class="article-title" id="titre-visuel">👁️ Troubles visuels</h2>
+      <p class="article-subtitle">Cécité, malvoyance, daltonisme, basse vision</p>
+      <div class="article-stats">
+        <span class="article-stat"><span aria-hidden="true">👥</span> ~1,7 million de malvoyants en France (Inserm)</span>
+        <span class="article-stat"><span aria-hidden="true">⏱</span> Lecture : ~10 min</span>
+      </div>
+    </header>
+
+    <div class="article-body">
+
+      <div class="section-block">
+        <span class="section-label">Comprendre</span>
+        <h3 class="section-h">Les différents troubles visuels</h3>
+        <div class="practices-grid">
+          <div class="practice-card">
+            <p class="practice-card-title">🔲 Cécité totale</p>
+            <ul>
+              <li>Utilise un lecteur d'écran (NVDA, JAWS, VoiceOver)</li>
+              <li>Navigation au clavier uniquement</li>
+              <li>Écoute le contenu linéairement ou saute de titre en titre</li>
+              <li>Les images sans alt text sont ignorées ou annoncées "image"</li>
+            </ul>
+          </div>
+          <div class="practice-card">
+            <p class="practice-card-title">👁️ Malvoyance / basse vision</p>
+            <ul>
+              <li>Zoom navigateur à 200%, 400% ou plus</li>
+              <li>Personnalisation des couleurs et polices</li>
+              <li>Lecteur d'écran parfois utilisé en complément</li>
+              <li>Loupe d'écran système (ZoomText, loupe Windows)</li>
+            </ul>
+          </div>
+          <div class="practice-card">
+            <p class="practice-card-title">🎨 Daltonisme</p>
+            <ul>
+              <li>8% des hommes, 0,5% des femmes</li>
+              <li>Types : deutéranopie (vert), protanopie (rouge), tritanopie (bleu)</li>
+              <li>Rouge/vert indistinguables pour la majorité</li>
+              <li>Toute information uniquement par la couleur est inaccessible</li>
+            </ul>
+          </div>
+          <div class="practice-card">
+            <p class="practice-card-title">☀️ Photophobie / sensibilité à la lumière</p>
+            <ul>
+              <li>Fonds très blancs douloureux</li>
+              <li>Mode sombre indispensable</li>
+              <li>prefers-color-scheme CSS à respecter</li>
+              <li>Contrastes trop élevés aussi problématiques</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <span class="section-label">Code — Lecteurs d'écran</span>
+        <h3 class="section-h">Rendre votre site compatible avec les lecteurs d'écran</h3>
+
+        <p class="section-text"><strong>Textes alternatifs des images</strong> — WCAG 1.1.1 (A), le critère le plus fondamental :</p>
+        <div class="code-block">
+<span class="code-comment">&lt;!-- ✓ Image informative : décrire l'information portée par l'image --&gt;</span>
+<span class="code-tag">&lt;img</span> <span class="code-attr">src</span>=<span class="code-val">"graphique-ventes.png"</span>
+     <span class="code-attr">alt</span>=<span class="code-val">"Graphique : les ventes ont augmenté de 40% en 2024 vs 2023"</span>
+     <span class="code-attr">width</span>=<span class="code-val">"600"</span> <span class="code-attr">height</span>=<span class="code-val">"300"</span><span class="code-tag">&gt;</span>
+
+<span class="code-comment">&lt;!-- ✓ Image décorative : alt vide pour être ignorée --&gt;</span>
+<span class="code-tag">&lt;img</span> <span class="code-attr">src</span>=<span class="code-val">"separateur.svg"</span>
+     <span class="code-attr">alt</span>=<span class="code-val">""</span>
+     <span class="code-attr">aria-hidden</span>=<span class="code-val">"true"</span><span class="code-tag">&gt;</span>
+
+<span class="code-comment">&lt;!-- ✓ Icône SVG fonctionnelle --&gt;</span>
+<span class="code-tag">&lt;button</span> <span class="code-attr">type</span>=<span class="code-val">"button"</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;svg</span> <span class="code-attr">aria-hidden</span>=<span class="code-val">"true"</span> <span class="code-attr">focusable</span>=<span class="code-val">"false"</span><span class="code-tag">&gt;</span>...icône...<span class="code-tag">&lt;/svg&gt;</span>
+  <span class="code-tag">&lt;span&gt;</span>Télécharger le PDF<span class="code-tag">&lt;/span&gt;</span>
+<span class="code-tag">&lt;/button&gt;</span>
+
+<span class="code-comment">&lt;!-- ✗ À éviter : texte dans image, illisible par lecteur d'écran --&gt;</span>
+<span class="code-tag">&lt;img</span> <span class="code-attr">src</span>=<span class="code-val">"bouton-contact.png"</span> <span class="code-attr">alt</span>=<span class="code-val">"Bouton Nous contacter"</span><span class="code-tag">&gt;</span>
+<span class="code-comment">&lt;!-- Utiliser du vrai HTML à la place --&gt;</span>
+        </div>
+
+        <p class="section-text"><strong>Structure sémantique</strong> — Les lecteurs d'écran naviguent par landmarks et titres :</p>
+        <div class="code-block">
+<span class="code-comment">&lt;!-- ✓ Structure de page complète avec landmarks --&gt;</span>
+<span class="code-tag">&lt;header&gt;</span><span class="code-comment">&lt;!-- role="banner" implicite --&gt;</span>
+  <span class="code-tag">&lt;nav</span> <span class="code-attr">aria-label</span>=<span class="code-val">"Navigation principale"</span><span class="code-tag">&gt;</span>...<span class="code-tag">&lt;/nav&gt;</span>
+<span class="code-tag">&lt;/header&gt;</span>
+<span class="code-tag">&lt;main</span> <span class="code-attr">id</span>=<span class="code-val">"contenu-principal"</span><span class="code-tag">&gt;</span><span class="code-comment">&lt;!-- role="main" implicite --&gt;</span>
+  <span class="code-tag">&lt;h1&gt;</span>Titre principal (un seul par page)<span class="code-tag">&lt;/h1&gt;</span>
+  <span class="code-tag">&lt;section</span> <span class="code-attr">aria-labelledby</span>=<span class="code-val">"titre-section"</span><span class="code-tag">&gt;</span>
+    <span class="code-tag">&lt;h2</span> <span class="code-attr">id</span>=<span class="code-val">"titre-section"</span><span class="code-tag">&gt;</span>Titre de section<span class="code-tag">&lt;/h2&gt;</span>
+  <span class="code-tag">&lt;/section&gt;</span>
+<span class="code-tag">&lt;/main&gt;</span>
+<span class="code-tag">&lt;aside</span> <span class="code-attr">aria-label</span>=<span class="code-val">"Informations complémentaires"</span><span class="code-tag">&gt;</span>...<span class="code-tag">&lt;/aside&gt;</span>
+<span class="code-tag">&lt;footer&gt;</span>...<span class="code-tag">&lt;/footer&gt;</span>
+        </div>
+
+        <p class="section-text"><strong>Mode sombre et prefers-color-scheme</strong> — Respecter le paramètre système :</p>
+        <div class="code-block">
+<span class="code-comment">/* ✓ Mode sombre automatique selon le système (WCAG 1.3.4) */</span>
+:root {
+  <span class="code-attr">--fond</span>: <span class="code-val">#ffffff</span>;
+  <span class="code-attr">--txt</span>:  <span class="code-val">#1a1a2e</span>;
+  <span class="code-attr">--bord</span>: <span class="code-val">#e2e8f0</span>;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    <span class="code-attr">--fond</span>: <span class="code-val">#0f0f1a</span>;
+    <span class="code-attr">--txt</span>:  <span class="code-val">#e8e8f0</span>;
+    <span class="code-attr">--bord</span>: <span class="code-val">#2d2d4e</span>;
+  }
+}
+<span class="code-comment">/* ✓ Aussi : mode sombre manuel via data-theme */</span>
+[data-theme="dark"] {
+  <span class="code-attr">--fond</span>: <span class="code-val">#0f0f1a</span>;
+  <span class="code-attr">--txt</span>:  <span class="code-val">#e8e8f0</span>;
+}
+        </div>
+
+        <p class="section-text"><strong>Daltonisme</strong> — Ne jamais transmettre une information uniquement par la couleur (WCAG 1.4.1) :</p>
+        <div class="code-block">
+<span class="code-comment">&lt;!-- ✗ Mauvais : erreur signalée uniquement par couleur rouge --&gt;</span>
+<span class="code-tag">&lt;input</span> <span class="code-attr">type</span>=<span class="code-val">"email"</span> <span class="code-attr">style</span>=<span class="code-val">"border-color:red"</span><span class="code-tag">&gt;</span>
+
+<span class="code-comment">&lt;!-- ✓ Correct : couleur + icône + texte --&gt;</span>
+<span class="code-tag">&lt;input</span> <span class="code-attr">type</span>=<span class="code-val">"email"</span>
+       <span class="code-attr">aria-invalid</span>=<span class="code-val">"true"</span>
+       <span class="code-attr">aria-describedby</span>=<span class="code-val">"email-err"</span><span class="code-tag">&gt;</span>
+<span class="code-tag">&lt;span</span> <span class="code-attr">id</span>=<span class="code-val">"email-err"</span> <span class="code-attr">role</span>=<span class="code-val">"alert"</span><span class="code-tag">&gt;</span>
+  ⚠ Format invalide — Ex : nom@domaine.com
+<span class="code-tag">&lt;/span&gt;</span>
+
+<span class="code-comment">/* Indicateur visuel multi-canal */</span>
+[aria-invalid="true"] {
+  <span class="code-attr">border-color</span>: <span class="code-val">#b91c1c</span>;
+  <span class="code-attr">box-shadow</span>: <span class="code-val">0 0 0 3px rgba(185,28,28,.2)</span>;
+  <span class="code-comment">/* + icône d'avertissement dans le label ou à côté du champ */</span>
+}
+        </div>
+      </div>
+
+      <div class="section-block">
+        <span class="section-label">WCAG 2.2 &amp; RGAA 4.1</span>
+        <h3 class="section-h">Critères clés pour les troubles visuels</h3>
+        <div class="criteria-list">
+          <div class="criterion">
+            <span class="criterion-badge badge-a">WCAG 1.1.1 — A</span>
+            <span class="criterion-text"><strong>Contenu non textuel :</strong> toute image, icône, graphique ou CAPTCHA a une alternative textuelle. Images décoratives : alt="" obligatoire.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-a">WCAG 1.4.1 — A</span>
+            <span class="criterion-text"><strong>Utilisation de la couleur :</strong> la couleur n'est pas le seul moyen de transmettre une information. Toujours doubler d'un texte, d'une icône ou d'un motif.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-aa">WCAG 1.4.3 — AA</span>
+            <span class="criterion-text"><strong>Contraste du texte :</strong> 4,5:1 minimum pour le texte normal, 3:1 pour le grand texte. Vérifier avec WebAIM Contrast Checker ou l'extension axe.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-aa">WCAG 1.4.4 — AA</span>
+            <span class="criterion-text"><strong>Redimensionnement du texte :</strong> le texte reste lisible jusqu'à 200% de zoom sans perte de contenu ni de fonctionnalité. Utiliser rem/em, jamais px pour les tailles de police.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-aa">WCAG 1.4.10 — AA</span>
+            <span class="criterion-text"><strong>Reflow :</strong> à 400% de zoom (320px CSS effectifs), le contenu ne nécessite pas de scroll dans les deux directions. Le responsive design résout généralement ce critère.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-aa">RGAA 1.1 à 1.9</span>
+            <span class="criterion-text"><strong>Images (thématique RGAA) :</strong> 9 critères couvrant les alternatives textuelles des images informatives, décoratives, captchas, images texte, et images légendées.</span>
+          </div>
+        </div>
+
+        <div class="tools-box">
+          <p class="tools-box-title">🛠️ Outils de test recommandés</p>
+          <div class="tools-list">
+            <span class="tool-tag">NVDA + Chrome (Windows)</span>
+            <span class="tool-tag">VoiceOver + Safari (macOS/iOS)</span>
+            <span class="tool-tag">TalkBack (Android)</span>
+            <span class="tool-tag">WebAIM Contrast Checker</span>
+            <span class="tool-tag">Colour Contrast Analyser</span>
+            <span class="tool-tag">Sim Daltonism (simulateur)</span>
+            <span class="tool-tag">axe DevTools</span>
+            <span class="tool-tag">Accessibility Insights</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-card">
+        <p class="summary-card-title">Récapitulatif — À retenir pour les troubles visuels</p>
+        <div class="summary-pills">
+          <span class="summary-pill">Alt text sur toutes les images</span>
+          <span class="summary-pill">Contraste ≥ 4,5:1</span>
+          <span class="summary-pill">Pas d'info par couleur seule</span>
+          <span class="summary-pill">Structure sémantique H1&gt;H2&gt;H3</span>
+          <span class="summary-pill">rem/em pour les polices</span>
+          <span class="summary-pill">Mode sombre (prefers-color-scheme)</span>
+          <span class="summary-pill">Landmarks ARIA</span>
+          <span class="summary-pill">Reflow 400% de zoom</span>
+        </div>
+      </div>
+
+      <div class="sources-box">
+        <p class="sources-title">Sources vérifiées</p>
+        <ul class="sources-list">
+          <li>→ <a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/" target="_blank" rel="noopener noreferrer">RGAA 4.1.2 — Thématique Images — DINUM</a></li>
+          <li>→ <a href="https://www.w3.org/WAI/WCAG22/Understanding/non-text-content.html" target="_blank" rel="noopener noreferrer">WCAG 2.2 — Understanding 1.1.1 Non-text Content (W3C)</a></li>
+          <li>→ <a href="https://webaim.org/resources/contrastchecker/" target="_blank" rel="noopener noreferrer">WebAIM Contrast Checker (outil en ligne gratuit)</a></li>
+          <li>→ <a href="https://a11y-guidelines.orange.com/fr/" target="_blank" rel="noopener noreferrer">Recommandations accessibilité Orange — a11y-guidelines.orange.com</a></li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ════════════════════════════════
+       ARTICLE 6 — TROUBLES AUDITIFS
+  ════════════════════════════════ -->
+  <article class="article-section" id="article-auditif" aria-labelledby="titre-auditif">
+    <header class="article-header" style="background: linear-gradient(135deg, #0e7490, #0c4a6e);">
+      <span class="article-num">Article 06</span>
+      <h2 class="article-title" id="titre-auditif">👂 Troubles auditifs</h2>
+      <p class="article-subtitle">Surdité, malentendance, acouphènes</p>
+      <div class="article-stats">
+        <span class="article-stat"><span aria-hidden="true">👥</span> ~5 millions de malentendants en France</span>
+        <span class="article-stat"><span aria-hidden="true">⏱</span> Lecture : ~6 min</span>
+      </div>
+    </header>
+
+    <div class="article-body">
+
+      <div class="section-block">
+        <span class="section-label">Comprendre</span>
+        <h3 class="section-h">L'impact du handicap auditif sur le web</h3>
+        <p class="section-text">
+          Les personnes sourdes ou malentendantes n'ont pas accès au contenu audio et vidéo sans adaptation. C'est le type de handicap qui touche le plus directement la consommation de <strong>contenus multimédia</strong>. Mais c'est aussi celui pour lequel les solutions techniques sont les plus directes et les plus efficaces à mettre en œuvre : sous-titres, transcriptions, et langage des signes.
+        </p>
+        <p class="section-text">
+          Une particularité importante : pour de nombreuses personnes sourdes de naissance, la langue des signes est leur langue maternelle. Le français écrit est pour elles une langue seconde. Il est donc essentiel que vos contenus textuels soient également clairs et simples.
+        </p>
+
+        <div class="practices-grid">
+          <div class="practice-card">
+            <p class="practice-card-title">🎬 Vidéos</p>
+            <ul>
+              <li>Sous-titres synchronisés (captions) sur toutes les vidéos</li>
+              <li>Distinguer sous-titres (traduction) et captions (dialogue + sons)</li>
+              <li>Format .vtt pour les pistes &lt;track&gt; HTML</li>
+              <li>Contrôle d'affichage des sous-titres</li>
+            </ul>
+          </div>
+          <div class="practice-card">
+            <p class="practice-card-title">🎙️ Audio seul</p>
+            <ul>
+              <li>Transcription textuelle complète (podcasts, messages vocaux)</li>
+              <li>Pas d'information exclusive en audio sans alternative</li>
+              <li>Niveau sonore contrôlable par l'utilisateur</li>
+            </ul>
+          </div>
+          <div class="practice-card">
+            <p class="practice-card-title">📢 Notifications et alertes</p>
+            <ul>
+              <li>Pas de notification uniquement sonore</li>
+              <li>Toujours accompagner d'un visuel (clignotant, badge, popup)</li>
+              <li>Vibration sur mobile en complément du son</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <span class="section-label">Code</span>
+        <h3 class="section-h">Implémentation des sous-titres et transcriptions</h3>
+
+        <p class="section-text"><strong>Élément &lt;video&gt; avec pistes de sous-titres</strong> — WCAG 1.2.2 (A) obligatoire pour toute vidéo :</p>
+        <div class="code-block">
+<span class="code-comment">&lt;!-- ✓ Vidéo avec sous-titres et audiodescription --&gt;</span>
+<span class="code-tag">&lt;video</span>
+  <span class="code-attr">controls</span>
+  <span class="code-attr">width</span>=<span class="code-val">"800"</span>
+  <span class="code-attr">height</span>=<span class="code-val">"450"</span>
+  <span class="code-attr">aria-label</span>=<span class="code-val">"Tutoriel : créer un formulaire HTML accessible"</span><span class="code-tag">&gt;</span>
+
+  <span class="code-comment">&lt;!-- Sources en plusieurs formats pour compatibilité --&gt;</span>
+  <span class="code-tag">&lt;source</span> <span class="code-attr">src</span>=<span class="code-val">"tuto.webm"</span> <span class="code-attr">type</span>=<span class="code-val">"video/webm"</span><span class="code-tag">&gt;</span>
+  <span class="code-tag">&lt;source</span> <span class="code-attr">src</span>=<span class="code-val">"tuto.mp4"</span>  <span class="code-attr">type</span>=<span class="code-val">"video/mp4"</span><span class="code-tag">&gt;</span>
+
+  <span class="code-comment">&lt;!-- Sous-titres = traduction du dialogue --&gt;</span>
+  <span class="code-tag">&lt;track</span> <span class="code-attr">kind</span>=<span class="code-val">"subtitles"</span>
+         <span class="code-attr">src</span>=<span class="code-val">"sous-titres-fr.vtt"</span>
+         <span class="code-attr">srclang</span>=<span class="code-val">"fr"</span>
+         <span class="code-attr">label</span>=<span class="code-val">"Français"</span>
+         <span class="code-attr">default</span><span class="code-tag">&gt;</span>
+
+  <span class="code-comment">&lt;!-- Captions = dialogue + sons (WCAG 1.2.2 — A) --&gt;</span>
+  <span class="code-tag">&lt;track</span> <span class="code-attr">kind</span>=<span class="code-val">"captions"</span>
+         <span class="code-attr">src</span>=<span class="code-val">"captions-fr.vtt"</span>
+         <span class="code-attr">srclang</span>=<span class="code-val">"fr"</span>
+         <span class="code-attr">label</span>=<span class="code-val">"Français (sourd/malentendant)"</span><span class="code-tag">&gt;</span>
+
+  <span class="code-comment">&lt;!-- Audiodescription (WCAG 1.2.5 — AA) --&gt;</span>
+  <span class="code-tag">&lt;track</span> <span class="code-attr">kind</span>=<span class="code-val">"descriptions"</span>
+         <span class="code-attr">src</span>=<span class="code-val">"audiodescription-fr.vtt"</span>
+         <span class="code-attr">srclang</span>=<span class="code-val">"fr"</span>
+         <span class="code-attr">label</span>=<span class="code-val">"Audiodescription"</span><span class="code-tag">&gt;</span>
+
+  <span class="code-comment">&lt;!-- Chapitres pour navigation (bonus UX) --&gt;</span>
+  <span class="code-tag">&lt;track</span> <span class="code-attr">kind</span>=<span class="code-val">"chapters"</span>
+         <span class="code-attr">src</span>=<span class="code-val">"chapitres.vtt"</span>
+         <span class="code-attr">srclang</span>=<span class="code-val">"fr"</span>
+         <span class="code-attr">label</span>=<span class="code-val">"Chapitres"</span><span class="code-tag">&gt;</span>
+
+  Votre navigateur ne supporte pas la balise video.
+<span class="code-tag">&lt;/video&gt;</span>
+
+<span class="code-comment">&lt;!-- ✓ Lien vers transcription complète --&gt;</span>
+<span class="code-tag">&lt;details&gt;</span>
+  <span class="code-tag">&lt;summary&gt;</span>Lire la transcription complète du tutoriel<span class="code-tag">&lt;/summary&gt;</span>
+  <span class="code-tag">&lt;div</span> <span class="code-attr">class</span>=<span class="code-val">"transcription"</span><span class="code-tag">&gt;</span>
+    <span class="code-comment">&lt;!-- Texte complet incluant description des sons importants --&gt;</span>
+    <span class="code-tag">&lt;p&gt;</span>[Musique de générique] Bienvenue dans ce tutoriel...<span class="code-tag">&lt;/p&gt;</span>
+  <span class="code-tag">&lt;/div&gt;</span>
+<span class="code-tag">&lt;/details&gt;</span>
+        </div>
+
+        <p class="section-text"><strong>Format WebVTT (.vtt)</strong> — Le format standard pour les sous-titres HTML :</p>
+        <div class="code-block">
+<span class="code-comment">WEBVTT</span>
+
+<span class="code-comment">00:00:01.000 --> 00:00:04.000</span>
+Bienvenue dans ce tutoriel HTML.
+
+<span class="code-comment">00:00:04.500 --> 00:00:08.000</span>
+Aujourd'hui nous allons créer un formulaire accessible.
+
+<span class="code-comment">00:00:08.500 --> 00:00:11.000</span>
+[Bruit de clavier] Commençons par écrire la balise form.
+
+<span class="code-comment">/* Les sons importants doivent être décrits entre crochets */</span>
+<span class="code-comment">/* pour les captions (sourds/malentendants) */</span>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <span class="section-label">WCAG 2.2 &amp; RGAA 4.1</span>
+        <h3 class="section-h">Critères clés pour les troubles auditifs</h3>
+        <div class="criteria-list">
+          <div class="criterion">
+            <span class="criterion-badge badge-a">WCAG 1.2.1 — A</span>
+            <span class="criterion-text"><strong>Contenu audio ou vidéo pré-enregistré :</strong> fournir une transcription textuelle ou une alternative pour les contenus audio-seulement et vidéo-seulement.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-a">WCAG 1.2.2 — A</span>
+            <span class="criterion-text"><strong>Sous-titres (pré-enregistrés) :</strong> toute vidéo pré-enregistrée avec du son doit avoir des sous-titres synchronisés. C'est la loi pour tous les sites publics français.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-a">WCAG 1.2.4 — AA</span>
+            <span class="criterion-text"><strong>Sous-titres (en direct) :</strong> les flux vidéo en temps réel (webinaires, événements live) doivent avoir des sous-titres en direct. Certains outils d'IA (Otter.ai, Azure Cognitive) le permettent.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-aa">WCAG 1.2.5 — AA</span>
+            <span class="criterion-text"><strong>Audiodescription :</strong> pour les vidéos dont le contenu visuel transmet des informations importantes non décrites à l'oral (graphiques, gestes, texte à l'écran).</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-a">WCAG 1.4.2 — A</span>
+            <span class="criterion-text"><strong>Contrôle du son :</strong> tout audio démarrant automatiquement plus de 3 secondes doit pouvoir être coupé ou pausé. Les lecteurs d'écran sont "noyés" par l'audio automatique.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-aa">RGAA 4.1 à 4.13</span>
+            <span class="criterion-text"><strong>Multimédia (thématique RGAA) :</strong> 13 critères couvrant transcriptions, sous-titres, audiodescriptions, contrôles des médias et accessibilité des lecteurs intégrés.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-card">
+        <p class="summary-card-title">Récapitulatif — À retenir pour les troubles auditifs</p>
+        <div class="summary-pills">
+          <span class="summary-pill">Sous-titres sur toutes les vidéos</span>
+          <span class="summary-pill">Transcription des podcasts</span>
+          <span class="summary-pill">Format WebVTT</span>
+          <span class="summary-pill">Pas d'info audio seulement</span>
+          <span class="summary-pill">Pas d'autoplay</span>
+          <span class="summary-pill">Notifications visuelles</span>
+          <span class="summary-pill">Audiodescription si nécessaire</span>
+        </div>
+      </div>
+
+      <div class="sources-box">
+        <p class="sources-title">Sources vérifiées</p>
+        <ul class="sources-list">
+          <li>→ <a href="https://accessibilite.numerique.gouv.fr/methode/criteres-et-tests/" target="_blank" rel="noopener noreferrer">RGAA 4.1.2 — Thématique Multimédia — DINUM</a></li>
+          <li>→ <a href="https://www.w3.org/WAI/WCAG22/Understanding/captions-prerecorded.html" target="_blank" rel="noopener noreferrer">WCAG 2.2 — Understanding 1.2.2 Captions (W3C)</a></li>
+          <li>→ <a href="https://www.w3.org/WAI/media/av/" target="_blank" rel="noopener noreferrer">Making Audio and Video Media Accessible — W3C WAI</a></li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- ════════════════════════════════
+       ARTICLE 7 — DOCUMENTS PDF
+  ════════════════════════════════ -->
+  <article class="article-section" id="article-pdf" aria-labelledby="titre-pdf">
+    <header class="article-header" style="background: linear-gradient(135deg, #7e22ce, #6b21a8);">
+      <span class="article-num">Article 07</span>
+      <h2 class="article-title" id="titre-pdf">📄 Rendre les PDF accessibles</h2>
+      <p class="article-subtitle">RGAA 4.1, PDF/UA (ISO 14289), bonnes pratiques Word, InDesign et Acrobat</p>
+      <div class="article-stats">
+        <span class="article-stat"><span aria-hidden="true">⚠️</span> Format le plus difficile à rendre accessible</span>
+        <span class="article-stat"><span aria-hidden="true">⏱</span> Lecture : ~9 min</span>
+      </div>
+    </header>
+
+    <div class="article-body">
+
+      <div class="section-block">
+        <span class="section-label">Comprendre</span>
+        <h3 class="section-h">Pourquoi les PDF posent-ils problème ?</h3>
+        <p class="section-text">
+          Le PDF est le format le plus répandu pour diffuser des documents en ligne. C'est aussi l'un des plus difficiles à rendre accessibles. Contrairement au HTML, le PDF n'a pas naturellement une structure sémantique : sans <strong>balisage</strong> (tags), un lecteur d'écran ne peut pas distinguer un titre d'un paragraphe, ni déterminer l'ordre de lecture dans un document multi-colonnes.
+        </p>
+        <p class="section-text">
+          Un PDF peut être dans l'un de ces états : <strong>non balisé</strong> (illisible par les lecteurs d'écran), <strong>scan image</strong> (strictement inaccessible sans OCR), <strong>balisé mais mal structuré</strong>, ou <strong>conforme PDF/UA</strong> (le seul niveau vraiment accessible). L'objectif est la conformité à la norme <strong>ISO 14289-1 (PDF/UA)</strong>, référencée par les WCAG.
+        </p>
+
+        <div class="dont-box">
+          <p class="dont-box-title">✗ Les erreurs les plus fréquentes dans les PDF</p>
+          <ul>
+            <li>PDF non balisé : exporté sans cocher "Créer un PDF balisé"</li>
+            <li>PDF issu d'un scan : c'est une image, pas du texte — nécessite une OCR</li>
+            <li>Ordre de lecture incorrect : le lecteur d'écran lit dans le mauvais ordre</li>
+            <li>Images sans texte alternatif</li>
+            <li>Tableaux sans en-têtes balisés (th)</li>
+            <li>Langue du document non définie dans les propriétés</li>
+            <li>Titre du document absent (les métadonnées sont vides)</li>
+            <li>Formulaires PDF non interactifs (champs non balisés)</li>
+            <li>Liens non étiquetés (l'URL brute n'est pas un texte de lien)</li>
+            <li>Utilisation d'espaces ou de sauts de ligne pour créer des colonnes (au lieu d'une vraie mise en page)</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="section-block">
+        <span class="section-label">Méthode</span>
+        <h3 class="section-h">Créer un PDF accessible — Méthode par outil</h3>
+
+        <p class="section-text"><strong>1. Depuis Microsoft Word</strong> — La méthode la plus simple pour les non-spécialistes :</p>
+        <div class="do-box">
+          <p class="do-box-title">✓ Checklist Word → PDF accessible</p>
+          <ul>
+            <li>Utiliser les <strong>styles de titre</strong> (Titre 1, Titre 2, Titre 3…) pour toute la structure — ne jamais simuler des titres en gras+grande taille</li>
+            <li>Ajouter un texte alternatif sur chaque image (clic droit → Format de l'image → Texte de remplacement)</li>
+            <li>Marquer les images décoratives comme décoratives (cocher "Marquer comme décoratif")</li>
+            <li>Utiliser de vrais styles de liste (pas de tirets manuels)</li>
+            <li>Remplir les propriétés du document : Fichier → Informations → Propriétés (Titre, Auteur)</li>
+            <li>Définir la langue : Révision → Langue → Définir la langue de vérification</li>
+            <li>Utiliser l'outil "Vérifier l'accessibilité" (onglet Révision)</li>
+            <li>Exporter en PDF : Fichier → Enregistrer sous → PDF → Options → cocher "Balises de structure du document pour l'accessibilité" et "PDF conforme ISO 19005-1 (PDF/A)"</li>
+          </ul>
+        </div>
+
+        <p class="section-text"><strong>2. Depuis Adobe InDesign</strong> — Pour les mises en page complexes :</p>
+        <div class="do-box">
+          <p class="do-box-title">✓ Checklist InDesign → PDF accessible</p>
+          <ul>
+            <li>Définir les styles de paragraphe avec balisage (panneau Styles → Export Tagging : H1, H2, p…)</li>
+            <li>Définir l'ordre des articles dans le panneau Articles (Window → Articles)</li>
+            <li>Ajouter les textes alternatifs sur les images (Object → Object Export Options → Alt Text)</li>
+            <li>Définir la langue du document (File → Document Setup → Language)</li>
+            <li>Exporter en PDF : File → Export → Adobe PDF (Print) → cocher "Tagged PDF" et "Hyperlinks"</li>
+            <li>Vérifier et corriger ensuite dans Adobe Acrobat Pro</li>
+          </ul>
+        </div>
+
+        <p class="section-text"><strong>3. Correction dans Adobe Acrobat Pro</strong> — Étape finale obligatoire :</p>
+        <div class="do-box">
+          <p class="do-box-title">✓ Vérifications Acrobat Pro</p>
+          <ul>
+            <li>Outils → Accessibilité → Vérification complète (génère un rapport PDF/UA)</li>
+            <li>Vérifier et corriger l'ordre de lecture : Outils → Accessibilité → Ordre de lecture</li>
+            <li>Ouvrir le panneau Balises (Tags) pour vérifier la hiérarchie H1 &gt; H2 &gt; P</li>
+            <li>Ajouter les textes alternatifs manquants via le panneau Balises</li>
+            <li>Définir la langue : Fichier → Propriétés → Avancé → Langue</li>
+            <li>Définir le titre : Fichier → Propriétés → Description → Titre</li>
+            <li>Valider avec PAC 2024 (PDF Accessibility Checker — gratuit, Windows)</li>
+          </ul>
+        </div>
+
+        <p class="section-text"><strong>Structure des balises dans un PDF balisé</strong> :</p>
+        <div class="code-block">
+<span class="code-comment">/* Arborescence des balises PDF/UA attendue */</span>
+&lt;Document&gt;
+  &lt;H1&gt; Titre principal du document &lt;/H1&gt;
+  &lt;P&gt;  Premier paragraphe d'introduction. &lt;/P&gt;
+
+  &lt;H2&gt; Section 1 &lt;/H2&gt;
+  &lt;P&gt;  Contenu de la section. &lt;/P&gt;
+
+  &lt;Figure&gt;
+    &lt;Alt&gt; Description de l'image informative &lt;/Alt&gt;
+  &lt;/Figure&gt;
+
+  &lt;Table&gt;
+    &lt;TR&gt;
+      &lt;TH scope="Column"&gt; En-tête colonne 1 &lt;/TH&gt;
+      &lt;TH scope="Column"&gt; En-tête colonne 2 &lt;/TH&gt;
+    &lt;/TR&gt;
+    &lt;TR&gt;
+      &lt;TD&gt; Donnée &lt;/TD&gt;
+      &lt;TD&gt; Donnée &lt;/TD&gt;
+    &lt;/TR&gt;
+  &lt;/Table&gt;
+
+  &lt;L&gt;  <span class="code-comment">/* Liste */</span>
+    &lt;LI&gt; Élément de liste &lt;/LI&gt;
+    &lt;LI&gt; Élément de liste &lt;/LI&gt;
+  &lt;/L&gt;
+
+  &lt;Link&gt; <span class="code-comment">/* Lien avec texte explicite */</span>
+    &lt;OBJR/&gt; En savoir plus sur l'accessibilité numérique
+  &lt;/Link&gt;
+&lt;/Document&gt;
+        </div>
+      </div>
+
+      <div class="section-block">
+        <span class="section-label">Checklist rapide</span>
+        <h3 class="section-h">Avant de publier un PDF en ligne</h3>
+        <div class="criteria-list">
+          <div class="criterion">
+            <span class="criterion-badge badge-a">RGAA 13.3</span>
+            <span class="criterion-text"><strong>Documents bureautiques accessibles :</strong> tout document PDF ou bureautique téléchargeable doit être accessible ou une version alternative accessible doit être proposée.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-a">PDF/UA</span>
+            <span class="criterion-text"><strong>Titre du document :</strong> les métadonnées "Titre" doivent être renseignées. Le nom de fichier ne suffit pas (un lecteur d'écran annonce le titre, pas le nom de fichier).</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-a">PDF/UA</span>
+            <span class="criterion-text"><strong>Langue définie :</strong> la langue principale doit être définie dans les propriétés pour que les synthèses vocales utilisent la bonne prononciation.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-a">PDF/UA</span>
+            <span class="criterion-text"><strong>Structure hiérarchique :</strong> H1 → H2 → H3 sans saut de niveau. Les signets (bookmarks) doivent correspondre aux titres pour la navigation.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-a">WCAG 1.4.3</span>
+            <span class="criterion-text"><strong>Contraste des couleurs :</strong> le contraste texte/fond doit atteindre 4,5:1. À vérifier avec Colour Contrast Analyser.</span>
+          </div>
+          <div class="criterion">
+            <span class="criterion-badge badge-a">PDF/UA</span>
+            <span class="criterion-text"><strong>Tableaux balisés :</strong> les en-têtes de colonnes et de lignes doivent être définis avec scope="Column" ou scope="Row" pour que les lecteurs d'écran les associent aux données.</span>
+          </div>
+        </div>
+
+        <div class="tools-box">
+          <p class="tools-box-title">🛠️ Outils de test pour les PDF</p>
+          <div class="tools-list">
+            <span class="tool-tag">PAC 2024 (gratuit, Windows)</span>
+            <span class="tool-tag">Adobe Acrobat Pro</span>
+            <span class="tool-tag">Accessibility Checker Word</span>
+            <span class="tool-tag">NVDA + Adobe Reader</span>
+            <span class="tool-tag">Colour Contrast Analyser</span>
+            <span class="tool-tag">RGAA Checker (en ligne)</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="summary-card">
+        <p class="summary-card-title">Récapitulatif — À retenir pour les PDF accessibles</p>
+        <div class="summary-pills">
+          <span class="summary-pill">Styles de titre (pas de mise en forme manuelle)</span>
+          <span class="summary-pill">PDF balisé (Tagged PDF)</span>
+          <span class="summary-pill">Alt text sur les images</span>
+          <span class="summary-pill">Titre dans les métadonnées</span>
+          <span class="summary-pill">Langue définie</span>
+          <span class="summary-pill">Tableaux avec en-têtes</span>
+          <span class="summary-pill">Ordre de lecture vérifié</span>
+          <span class="summary-pill">Validé avec PAC 2024</span>
+          <span class="summary-pill">Contraste ≥ 4,5:1</span>
+        </div>
+      </div>
+
+      <div class="sources-box">
+        <p class="sources-title">Sources vérifiées</p>
+        <ul class="sources-list">
+          <li>→ <a href="https://design.numerique.gouv.fr/outils/checklist-pdf/" target="_blank" rel="noopener noreferrer">Checklist PDF accessible — DesignGouv (DINUM)</a></li>
+          <li>→ <a href="https://accessibilite.public.lu/fr/news/2023-04-05-RAPDF.html" target="_blank" rel="noopener noreferrer">Référentiel d'accessibilité des documents PDF — Luxembourg (2023)</a></li>
+          <li>→ <a href="https://rgaa-checker.com/blog/audit-accessibilite-pdf" target="_blank" rel="noopener noreferrer">Comment auditer l'accessibilité d'un PDF — RGAA Checker</a></li>
+          <li>→ <a href="https://www.sefasinnovation.fr/document-pdf-conforme-rgaa-wcag" target="_blank" rel="noopener noreferrer">RGAA, WCAG — Comment rendre vos documents conformes (Sefas Innovation)</a></li>
+          <li>→ <a href="https://www.specinov.fr/bao/creer-pdf-accessible" target="_blank" rel="noopener noreferrer">Comment créer un PDF accessible — Spécinov</a></li>
+        </ul>
+      </div>
+    </div>
+  </article>
+
+  <!-- SECTION RESSOURCES GLOBALES -->
+  <section aria-labelledby="titre-ressources" style="margin-bottom:48px;">
+    <h2 id="titre-ressources" style="font-size:1.3rem;font-weight:700;margin-bottom:20px;padding-bottom:12px;border-bottom:2px solid var(--primaire);">
+      🔗 Ressources et références officielles
+    </h2>
+    <div style="display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:14px;">
+
+      <div style="background:var(--card);border:1px solid var(--bord);border-radius:var(--r);padding:16px;">
+        <h3 style="font-size:.9rem;font-weight:700;margin-bottom:10px;">Référentiels officiels</h3>
+        <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:7px;">
+          <li><a href="https://accessibilite.numerique.gouv.fr/" target="_blank" rel="noopener noreferrer" style="color:var(--bleu);font-size:.85rem;">RGAA 4.1.2 — accessibilite.numerique.gouv.fr</a></li>
+          <li><a href="https://www.w3.org/WAI/WCAG22/quickref/" target="_blank" rel="noopener noreferrer" style="color:var(--bleu);font-size:.85rem;">WCAG 2.2 Quick Reference — W3C</a></li>
+          <li><a href="https://www.w3.org/WAI/fundamentals/accessibility-intro/fr" target="_blank" rel="noopener noreferrer" style="color:var(--bleu);font-size:.85rem;">Introduction à l'accessibilité — W3C WAI (fr)</a></li>
+          <li><a href="https://design.numerique.gouv.fr/" target="_blank" rel="noopener noreferrer" style="color:var(--bleu);font-size:.85rem;">DesignGouv — DINUM</a></li>
+        </ul>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--bord);border-radius:var(--r);padding:16px;">
+        <h3 style="font-size:.9rem;font-weight:700;margin-bottom:10px;">Outils de test</h3>
+        <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:7px;">
+          <li><a href="https://wave.webaim.org/" target="_blank" rel="noopener noreferrer" style="color:var(--bleu);font-size:.85rem;">WAVE — WebAIM (extension navigateur)</a></li>
+          <li><a href="https://www.deque.com/axe/" target="_blank" rel="noopener noreferrer" style="color:var(--bleu);font-size:.85rem;">axe DevTools — Deque Systems</a></li>
+          <li><a href="https://webaim.org/resources/contrastchecker/" target="_blank" rel="noopener noreferrer" style="color:var(--bleu);font-size:.85rem;">Contrast Checker — WebAIM</a></li>
+          <li><a href="https://validator.w3.org/" target="_blank" rel="noopener noreferrer" style="color:var(--bleu);font-size:.85rem;">Validateur HTML — W3C</a></li>
+          <li><a href="https://www.nvaccess.org/" target="_blank" rel="noopener noreferrer" style="color:var(--bleu);font-size:.85rem;">NVDA — Lecteur d'écran gratuit (Windows)</a></li>
+        </ul>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--bord);border-radius:var(--r);padding:16px;">
+        <h3 style="font-size:.9rem;font-weight:700;margin-bottom:10px;">Ressources pédagogiques</h3>
+        <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:7px;">
+          <li><a href="https://a11y-guidelines.orange.com/fr/" target="_blank" rel="noopener noreferrer" style="color:var(--bleu);font-size:.85rem;">Recommandations accessibilité Orange</a></li>
+          <li><a href="https://blog.atalan.fr/" target="_blank" rel="noopener noreferrer" style="color:var(--bleu);font-size:.85rem;">Blog Atalan — Accessibilité numérique</a></li>
+          <li><a href="https://www.24joursdeweb.fr/" target="_blank" rel="noopener noreferrer" style="color:var(--bleu);font-size:.85rem;">24 Jours de Web — Articles accessibilité</a></li>
+          <li><a href="https://www.info.gouv.fr/accessibilite" target="_blank" rel="noopener noreferrer" style="color:var(--bleu);font-size:.85rem;">Guide accessibilité — Gouvernement français</a></li>
+        </ul>
+      </div>
+
+      <div style="background:var(--card);border:1px solid var(--bord);border-radius:var(--r);padding:16px;">
+        <h3 style="font-size:.9rem;font-weight:700;margin-bottom:10px;">Obligations légales France</h3>
+        <ul style="list-style:none;padding:0;display:flex;flex-direction:column;gap:7px;font-size:.82rem;color:var(--txt2);">
+          <li>Loi n°2005-102 du 11 février 2005 — Égalité des droits et des chances des personnes handicapées</li>
+          <li>Décret n°2019-768 du 24 juillet 2019 — Services numériques publics et privés (CA &gt; 250M€)</li>
+          <li>RGAA 4.1.2 — 106 critères obligatoires pour les organismes concernés</li>
+          <li>Directive européenne 2016/2102 — Accessibilité des sites du secteur public</li>
+          <li>European Accessibility Act (EAA) — Entrée en vigueur progressive à partir de 2025</li>
+        </ul>
+      </div>
+
+    </div>
+  </section>
+
+</div><!-- /.page-wrapper -->
+</main>
+
+<!-- ══════════════════════════════════
+     FOOTER
+══════════════════════════════════ -->
+<footer class="site-footer">
+  <p>© IntA11Y - Solutions<span id="yr-a"></span> — Articles accessibilité numérique</p>
+  <p style="font-size:.78rem;margin-top:6px;color:rgba(255,255,255,.5);">
+    Sources vérifiées : DINUM (accessibilite.numerique.gouv.fr), W3C WAI, Orange a11y-guidelines, 24 Jours de Web, DesignGouv — Dernière mise à jour mars 2026
+  </p>
+  <nav aria-label="Liens du site">
+    <ul>
+      <li><a href="./index.html">Référence HTML5</a></li>
+      <li><a href="./patterns.html">Design Patterns</a></li>
+      <li><a href="./accessibilite-handicaps.html">Accessibilité</a></li>
+    </ul>
+  </nav>
+</footer>
+
+<script>
+(function () {
+  // Année footer
+  var yr = document.getElementById("yr-a");
+  if (yr) yr.textContent = new Date().getFullYear();
+}());
+</script>
+</body>
+</html>
