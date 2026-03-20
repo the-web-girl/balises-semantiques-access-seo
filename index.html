@@ -2,7 +2,7 @@
 <!--
   ╔══════════════════════════════════════════════════════════════════════╗
   ║   RÉFÉRENCE COMPLÈTE DES BALISES SÉMANTIQUES HTML5                  ║
-  ║   Fichier pédagogique — IntA11Y - Solutions                               ║
+  ║   Fichier pédagogique — IntA11Y - Solutions                                ║
   ║   Toutes les balises HTML5 existantes, commentées et expliquées     ║
   ╠══════════════════════════════════════════════════════════════════════╣
   ║  PLAN DU FICHIER :                                                   ║
@@ -120,7 +120,7 @@
     Doit être unique et descriptif (pas juste "Page" ou "Index").
     Longueur recommandée : 50-60 caractères pour Google.
   -->
-  <title>Référence des balises HTML5 — École du Web</title>
+  <title>Référence des balises HTML5 — IntA11Y - Solutions</title>
 
   <!--
     <meta name="description">
@@ -150,7 +150,7 @@
     Identifie l'auteur du document.
     Utilisé par certains agrégateurs de contenu et outils SEO.
   -->
-  <meta name="author" content="École du Web">
+  <meta name="author" content="IntA11Y - Solutions">
 
   <!--
     <meta name="robots">
@@ -196,7 +196,7 @@
   <meta property="og:image" content="https://example.com/image-partage.jpg">
   <meta property="og:url" content="https://example.com/balises-html">
   <meta property="og:type" content="article">
-  <meta property="og:site_name" content="École du Web">
+  <meta property="og:site_name" content="IntA11Y - Solutions">
   <meta property="og:locale" content="fr_FR">
 
   <!--
@@ -230,7 +230,7 @@
     media → à quel média appliquer le CSS (screen, print, all...).
     Peut être répété autant de fois que nécessaire.
   -->
-  <link rel="stylesheet" href="./style.css" media="all">
+  <link rel="stylesheet" href="./styles/style.css" media="all">
 
   <!--
     <link rel="alternate">
@@ -268,7 +268,7 @@
     Permet d'installer la page comme une app native sur mobile/desktop.
     Contient : nom de l'app, icônes, couleurs, orientation, etc.
   -->
-  <link rel="manifest" href="/manifest.json">
+  <!-- <link rel="manifest" href="/manifest.json"> -->
 
   <!--
     <link rel="preconnect"> et <link rel="preload">
@@ -286,342 +286,11 @@
     prefetch → Charge en arrière-plan des ressources pour la PROCHAINE page.
                Priorité basse, après le chargement de la page courante.
   -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preload" href="/fonts/mafont.woff2" as="font" type="font/woff2" crossorigin>
-  <link rel="prefetch" href="/page-suivante.html">
-
-  <!--
-    <style>
-    ────────
-    CSS écrit directement dans le HTML (inline dans le <head>).
-    Utile pour : styles critiques (above-the-fold), styles spécifiques à une page,
-    prototypage rapide, emails HTML.
-    À éviter en production : préférer les fichiers .css externes (réutilisabilité,
-    cache navigateur, séparation des responsabilités).
-  -->
-  <style>
-    /* ── VARIABLES CSS ───────────────────────────────────────── */
-    :root {
-      --primaire: #1a1a2e;
-      --accent:   #22c55e;
-      --fond:     #f8f9fa;
-      --txt:      #1a1a2e;
-      --txt2:     #4a5568;
-      --bord:     #e2e8f0;
-      --rouge:    #e53e3e;
-      --bleu:     #3182ce;
-      --ambre:    #d69e2e;
-      --violet:   #805ad5;
-      --r:        6px;
-    }
-
-    /* ── RESET ───────────────────────────────────────────────── */
-    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: var(--fond);
-      color: var(--txt);
-      line-height: 1.7;
-    }
-
-    /* ── ACCESSIBILITÉ ───────────────────────────────────────── */
-    :focus-visible {
-      outline: 3px solid var(--accent);
-      outline-offset: 3px;
-      border-radius: 3px;
-    }
-    .skip {
-      position: absolute; top: -100px; left: 16px; z-index: 9999;
-      background: var(--primaire); color: #fff;
-      padding: 10px 18px; border-radius: 0 0 var(--r) var(--r);
-      text-decoration: none; font-weight: 700;
-      transition: top .2s;
-    }
-    .skip:focus { top: 0; }
-
-    /* ── LAYOUT ──────────────────────────────────────────────── */
-    .wrapper { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
-
-    /* ── HEADER ──────────────────────────────────────────────── */
-    .site-header {
-      background: var(--primaire); color: #fff;
-      padding: 0 28px; height: 64px;
-      display: flex; align-items: center; justify-content: space-between;
-      position: sticky; top: 0; z-index: 100;
-      box-shadow: 0 2px 8px rgba(0,0,0,.3);
-    }
-    .site-header .logo { font-size: 1.1rem; font-weight: 700; color: #fff; text-decoration: none; }
-    .site-header nav ul { display: flex; gap: 6px; list-style: none; }
-    .site-header nav a {
-      color: rgba(255,255,255,.85); text-decoration: none;
-      padding: 6px 12px; border-radius: var(--r); font-size: .88rem;
-      transition: background .18s;
-    }
-    .site-header nav a:hover { background: rgba(255,255,255,.12); }
-
-    /* ── HERO ────────────────────────────────────────────────── */
-    .hero {
-      background: linear-gradient(135deg, var(--primaire) 0%, #16213e 100%);
-      color: #fff; padding: 64px 28px; text-align: center;
-    }
-    .hero h1 { font-size: 2.2rem; margin-bottom: 12px; }
-    .hero p  { font-size: 1.05rem; color: rgba(255,255,255,.75); max-width: 600px; margin: 0 auto; }
-
-    /* ── CONTENU PRINCIPAL ───────────────────────────────────── */
-    main { padding: 48px 28px 80px; }
-
-    /* ── SECTIONS DE RÉFÉRENCE ───────────────────────────────── */
-    .ref-section {
-      background: #fff; border: 1px solid var(--bord);
-      border-radius: 10px; margin-bottom: 32px;
-      overflow: hidden;
-    }
-    .ref-section-header {
-      background: var(--primaire); color: #fff;
-      padding: 14px 22px;
-      display: flex; align-items: center; gap: 12px;
-    }
-    .ref-section-header .tag-cat {
-      font-family: monospace; font-size: .78rem;
-      background: rgba(255,255,255,.15);
-      padding: 3px 8px; border-radius: 20px;
-    }
-    .ref-section-header h2 { font-size: 1rem; font-weight: 600; }
-    .ref-section-body { padding: 22px; }
-
-    /* ── BLOCS BALISE ────────────────────────────────────────── */
-    .balise-bloc {
-      border: 1px solid var(--bord); border-radius: var(--r);
-      margin-bottom: 20px; overflow: hidden;
-    }
-    .balise-bloc:last-child { margin-bottom: 0; }
-    .balise-head {
-      background: #f0f4f8; padding: 10px 16px;
-      display: flex; align-items: center; gap: 10px;
-      border-bottom: 1px solid var(--bord);
-    }
-    .balise-tag {
-      font-family: 'Courier New', monospace; font-size: .85rem;
-      font-weight: 700; color: var(--rouge);
-      background: #fff3f3; padding: 3px 8px; border-radius: 4px;
-      border: 1px solid #fed7d7;
-    }
-    .balise-type {
-      font-size: .72rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: .05em; padding: 2px 8px; border-radius: 20px;
-    }
-    .type-structure { background: #ebf8ff; color: #2b6cb0; }
-    .type-texte     { background: #f0fff4; color: #276749; }
-    .type-liste     { background: #faf5ff; color: #6b46c1; }
-    .type-lien      { background: #fffbeb; color: #b7791f; }
-    .type-media     { background: #fff5f5; color: #c53030; }
-    .type-form      { background: #f0fff4; color: #276749; }
-    .type-tableau   { background: #ebf4ff; color: #2c5282; }
-    .type-script    { background: #1a1a2e; color: #22c55e; }
-    .type-meta      { background: #f7fafc; color: #4a5568; }
-    .type-special   { background: #fffaf0; color: #b7791f; }
-    .balise-body { padding: 14px 16px; font-size: .9rem; }
-    .balise-desc { color: var(--txt2); margin-bottom: 12px; line-height: 1.7; }
-    .balise-exemple { margin-top: 10px; }
-    .balise-exemple-label {
-      font-size: .72rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: .05em; color: var(--txt2); margin-bottom: 6px;
-    }
-    .demo-zone {
-      background: #f7fafc; border: 1px solid var(--bord);
-      border-radius: var(--r); padding: 14px 16px;
-    }
-    .attrs { margin-top: 10px; }
-    .attrs-label {
-      font-size: .72rem; font-weight: 700; text-transform: uppercase;
-      color: var(--txt2); margin-bottom: 6px;
-    }
-    .attr-item {
-      display: flex; gap: 8px; align-items: baseline;
-      margin-bottom: 4px; font-size: .85rem;
-    }
-    .attr-name {
-      font-family: monospace; color: var(--bleu);
-      font-weight: 700; white-space: nowrap;
-    }
-    .attr-desc { color: var(--txt2); }
-
-    /* ── TYPOGRAPHIE ─────────────────────────────────────────── */
-    .demo-zone h1 { font-size: 1.6rem; }
-    .demo-zone h2 { font-size: 1.35rem; }
-    .demo-zone h3 { font-size: 1.15rem; }
-    .demo-zone h4 { font-size: 1rem; }
-    .demo-zone h5 { font-size: .9rem; }
-    .demo-zone h6 { font-size: .8rem; color: var(--txt2); }
-
-    /* ── LISTES ──────────────────────────────────────────────── */
-    .demo-zone ul { padding-left: 20px; }
-    .demo-zone ol { padding-left: 20px; }
-    .demo-zone dl dt { font-weight: 700; }
-    .demo-zone dl dd { padding-left: 16px; color: var(--txt2); }
-
-    /* ── TABLEAUX ────────────────────────────────────────────── */
-    .demo-zone table { border-collapse: collapse; width: 100%; font-size: .88rem; }
-    .demo-zone th, .demo-zone td {
-      border: 1px solid var(--bord); padding: 8px 12px; text-align: left;
-    }
-    .demo-zone thead th { background: var(--primaire); color: #fff; }
-    .demo-zone tbody tr:nth-child(even) { background: #f7fafc; }
-    .demo-zone tfoot td { background: #f0f4f8; font-weight: 700; }
-
-    /* ── FORMULAIRE ──────────────────────────────────────────── */
-    .demo-zone form { display: flex; flex-direction: column; gap: 12px; }
-    .demo-zone label { font-size: .88rem; font-weight: 600; display: block; margin-bottom: 4px; }
-    .demo-zone input:not([type="checkbox"]):not([type="radio"]):not([type="range"]):not([type="color"]),
-    .demo-zone select, .demo-zone textarea {
-      width: 100%; padding: 8px 12px; border: 1px solid var(--bord);
-      border-radius: var(--r); font-size: .9rem; font-family: inherit;
-    }
-    .demo-zone input:focus, .demo-zone select:focus, .demo-zone textarea:focus {
-      outline: 2px solid var(--accent); border-color: var(--accent);
-    }
-    .demo-zone fieldset { border: 1px solid var(--bord); border-radius: var(--r); padding: 12px 14px; }
-    .demo-zone legend { font-weight: 700; font-size: .88rem; padding: 0 6px; }
-    .demo-zone .radio-group, .demo-zone .check-group {
-      display: flex; flex-direction: column; gap: 6px;
-    }
-    .demo-zone .radio-group label, .demo-zone .check-group label {
-      display: flex; align-items: center; gap: 8px; font-weight: 400;
-    }
-    .demo-zone button[type="submit"] {
-      background: var(--accent); color: #fff; border: none;
-      padding: 10px 20px; border-radius: var(--r); cursor: pointer;
-      font-size: .9rem; font-weight: 700; align-self: flex-start;
-    }
-    .demo-zone meter, .demo-zone progress { width: 100%; }
-
-    /* ── MÉDIAS ──────────────────────────────────────────────── */
-    .demo-zone img { max-width: 100%; border-radius: var(--r); }
-    .demo-zone figure { text-align: center; }
-    .demo-zone figcaption { font-size: .82rem; color: var(--txt2); margin-top: 6px; }
-    .demo-zone video, .demo-zone audio { width: 100%; }
-
-    /* ── CITATION ────────────────────────────────────────────── */
-    .demo-zone blockquote {
-      border-left: 4px solid var(--accent);
-      padding: 10px 16px; margin: 0;
-      background: #f0fff4; border-radius: 0 var(--r) var(--r) 0;
-      font-style: italic;
-    }
-    .demo-zone blockquote cite {
-      display: block; font-size: .82rem; color: var(--txt2);
-      margin-top: 6px; font-style: normal;
-    }
-
-    /* ── CODE ────────────────────────────────────────────────── */
-    .demo-zone code {
-      font-family: 'Courier New', monospace;
-      background: #1a1a2e; color: #22c55e;
-      padding: 2px 6px; border-radius: 3px; font-size: .85rem;
-    }
-    .demo-zone pre {
-      background: #1a1a2e; color: #e8e8f0;
-      padding: 14px; border-radius: var(--r); overflow-x: auto;
-    }
-    .demo-zone pre code { background: none; color: #22c55e; padding: 0; }
-    .demo-zone kbd {
-      background: #e2e8f0; border: 1px solid #a0aec0;
-      border-radius: 3px; padding: 1px 5px;
-      font-family: monospace; font-size: .85rem;
-    }
-    .demo-zone samp { font-family: monospace; color: var(--bleu); }
-    .demo-zone var { font-style: italic; color: var(--violet); }
-
-    /* ── TEXTE INLINE ────────────────────────────────────────── */
-    .demo-zone mark { background: #fef08a; padding: 1px 3px; border-radius: 2px; }
-    .demo-zone del  { color: var(--rouge); }
-    .demo-zone ins  { color: var(--accent); text-decoration: underline; }
-    .demo-zone abbr { text-decoration: underline dotted; cursor: help; }
-    .demo-zone small { font-size: .8rem; color: var(--txt2); }
-    .demo-zone sub, .demo-zone sup { font-size: .7rem; }
-    .demo-zone time { font-weight: 600; color: var(--bleu); }
-    .demo-zone s    { color: var(--txt2); }
-    .demo-zone u    { text-decoration: underline; }
-    .demo-zone bdi  { unicode-bidi: isolate; }
-
-    /* ── DETAILS / SUMMARY ───────────────────────────────────── */
-    .demo-zone details {
-      border: 1px solid var(--bord); border-radius: var(--r); overflow: hidden;
-    }
-    .demo-zone summary {
-      padding: 10px 14px; cursor: pointer; font-weight: 600;
-      background: #f0f4f8; list-style: none;
-    }
-    .demo-zone summary::before { content: '▶ '; }
-    .demo-zone details[open] summary::before { content: '▼ '; }
-    .demo-zone details p { padding: 12px 14px; }
-
-    /* ── ADDRESS ─────────────────────────────────────────────── */
-    .demo-zone address { font-style: normal; color: var(--txt2); }
-
-    /* ── DIALOG ──────────────────────────────────────────────── */
-    .demo-zone dialog {
-      border: 1px solid var(--bord); border-radius: 10px;
-      padding: 24px; max-width: 400px;
-      box-shadow: 0 8px 32px rgba(0,0,0,.15);
-    }
-    .demo-zone dialog h3 { margin-bottom: 8px; }
-    .dialog-btn {
-      background: var(--primaire); color: #fff; border: none;
-      padding: 8px 16px; border-radius: var(--r); cursor: pointer; font-size: .88rem;
-    }
-    .dialog-close {
-      background: #e2e8f0; color: var(--txt); border: none;
-      padding: 8px 16px; border-radius: var(--r); cursor: pointer; font-size: .88rem;
-      margin-top: 12px;
-    }
-
-    /* ── CANVAS ──────────────────────────────────────────────── */
-    .demo-zone canvas {
-      border: 1px solid var(--bord); border-radius: var(--r); display: block;
-    }
-
-    /* ── ASIDE ───────────────────────────────────────────────── */
-    .aside-demo {
-      background: #fffbeb; border-left: 4px solid var(--ambre);
-      border-radius: 0 var(--r) var(--r) 0; padding: 12px 16px;
-    }
-
-    /* ── SECTION + ARTICLE ───────────────────────────────────── */
-    .article-demo {
-      border: 1px solid var(--bord); border-radius: var(--r); padding: 14px;
-    }
-    .article-demo header { margin-bottom: 8px; }
-    .article-demo footer { margin-top: 8px; font-size: .82rem; color: var(--txt2); }
-
-    /* ── NAV ─────────────────────────────────────────────────── */
-    .nav-demo { background: #f0f4f8; border-radius: var(--r); padding: 12px 16px; }
-    .nav-demo ul { display: flex; gap: 8px; list-style: none; flex-wrap: wrap; }
-    .nav-demo a {
-      color: var(--bleu); text-decoration: none;
-      padding: 4px 10px; border-radius: 20px; background: #fff;
-      border: 1px solid var(--bord); font-size: .88rem;
-    }
-    .nav-demo a[aria-current="page"] { background: var(--primaire); color: #fff; border-color: var(--primaire); }
-    .breadcrumb { font-size: .88rem; color: var(--txt2); }
-    .breadcrumb a { color: var(--bleu); }
-    .breadcrumb span { margin: 0 6px; }
-
-    /* ── FOOTER ──────────────────────────────────────────────── */
-    .site-footer {
-      background: var(--primaire); color: rgba(255,255,255,.7);
-      text-align: center; padding: 32px 24px; font-size: .85rem;
-    }
-    .site-footer a { color: rgba(255,255,255,.8); }
-
-    /* ── RESPONSIVE ──────────────────────────────────────────── */
-    @media (max-width: 768px) {
-      .hero h1 { font-size: 1.5rem; }
-      .site-header nav { display: none; }
-      main { padding: 24px 16px 60px; }
-    }
-  </style>
+  <!-- <link rel="preconnect" href="https://fonts.googleapis.com"> -->
+  <!-- Commenté : aucune Google Font utilisée dans ce fichier -->
+  <link rel="preconnect" href="https://fastly.picsum.photos">
+  <!-- <link rel="preload" href="/fonts/mafont.woff2" as="font" type="font/woff2" crossorigin> -->
+  <!-- <link rel="prefetch" href="/page-suivante.html"> -->
 
   <!--
     <base>
@@ -654,7 +323,7 @@
     type="module" → Charge le script comme un module ES6 (import/export).
                     Toujours différé (comme defer). Scoped automatiquement.
   -->
-  <script src="/analytics.js" async></script>
+  <!-- <script src="/analytics.js" async></script> -->
   <!-- <script src="/app.js" defer></script> -->
   <!-- <script type="module" src="/modules/main.js"></script> -->
 
@@ -728,8 +397,8 @@
     - Une navigation principale (<nav>)
     - Des boutons d'action (recherche, connexion)
   -->
-  <a href="/" class="logo" aria-label="IntA11Y - Solutions— Accueil">
-    🎓 École du Web
+  <a href="/" class="logo" aria-label="IntA11Y - Solutions — Accueil">
+    🎓 IntA11Y - Solutions
   </a>
 
   <!--
@@ -764,7 +433,44 @@
       <li><a href="./patterns.html" style="background:rgba(34,197,94,.2);color:#fff;font-weight:600;border-radius:var(--r);padding:6px 12px;">🎨 Patterns</a></li>
     </ul>
   </nav>
+
+  <!--
+    Bouton burger — visible uniquement sur mobile (display:none en desktop).
+    aria-controls="site-mobile-panel" → lie le bouton au panel qu'il contrôle.
+    aria-expanded="false"            → état initial : fermé.
+    aria-label                       → nom accessible (l'icône ☰ ne suffit pas).
+  -->
+  <button class="site-burger"
+          type="button"
+          id="site-burger"
+          aria-controls="site-mobile-panel"
+          aria-expanded="false"
+          aria-label="Ouvrir le menu de navigation">
+    <span aria-hidden="true" id="site-burger-ico">☰</span>
+  </button>
 </header>
+
+<!--
+  Panel de navigation mobile.
+  Utilise l'attribut HTML "hidden" pour masquer/afficher via JS.
+  (display:none + retiré de l'arbre d'accessibilité quand hidden)
+  Placé juste après le <header> pour un ordre DOM logique.
+-->
+<div class="site-mobile-nav" id="site-mobile-panel" hidden>
+  <nav aria-label="Navigation mobile">
+    <ul>
+      <li><a href="#structure">🏗️ Structure</a></li>
+      <li><a href="#texte">📝 Texte</a></li>
+      <li><a href="#listes">📋 Listes</a></li>
+      <li><a href="#formulaires">📄 Formulaires</a></li>
+      <li><a href="#medias">🖼️ Médias</a></li>
+      <li><a href="#accessibilite">♿ Accessibilité</a></li>
+      <li><div class="mobile-sep" role="separator"></div></li>
+      <li><a href="./accessibilite-handicaps.html" class="mobile-cta">♿ Guides handicaps</a></li>
+      <li><a href="./patterns.html" class="mobile-cta">🎨 Design Patterns</a></li>
+    </ul>
+  </nav>
+</div><!-- fin #site-mobile-panel -->
 
 <!--
   ════════════════════════════════════════════════════════════════════════
@@ -881,7 +587,7 @@
                 <div class="demo-zone">
                   <header style="background:#1a1a2e;color:#fff;padding:12px 16px;border-radius:6px;display:flex;align-items:center;gap:12px;">
                     <strong>🎓 Mon Site</strong>
-                    <nav><ul style="display:flex;gap:8px;list-style:none;"><li><a href="#" style="color:rgba(255,255,255,.8);text-decoration:none;">Accueil</a></li><li><a href="#" style="color:rgba(255,255,255,.8);text-decoration:none;">Blog</a></li></ul></nav>
+                    <nav><ul style="display:flex;gap:8px;list-style:none;"><li><a href="#" style="color:rgba(255,255,255,.92);text-decoration:none;">Accueil</a></li><li><a href="#" style="color:rgba(255,255,255,.92);text-decoration:none;">Blog</a></li></ul></nav>
                   </header>
                 </div>
               </div>
@@ -1092,9 +798,9 @@
                 <div class="balise-exemple-label">Rendu</div>
                 <div class="demo-zone">
                   <address>
-                    <strong>École du Web</strong><br>
-                    123 rue du Code, 75001 Paris<br>
-                    <a href="/cdn-cgi/l/email-protection#0a6965647e6b697e4a6f6965666f246c78"><span class="__cf_email__" data-cfemail="32515d5c465351467257515d5e571c5440">[email&#160;protected]</span></a><br>
+                    <span style="display:block;"><strong>IntA11Y - Solutions</strong></span>
+                    <span style="display:block;">123 rue du Code, 75001 Paris</span>
+                    <span style="display:block;"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="40232f2e3421233400292e34212c2c396d332f2c3534292f2e336e2632">[email&#160;protected]</a></span>
                     <a href="tel:+33123456789">01 23 45 67 89</a>
                   </address>
                 </div>
@@ -1133,11 +839,15 @@
                 Créent la <strong>hiérarchie du document</strong> (plan du document).
                 Les lecteurs d'écran les utilisent pour naviguer.
                 Google les utilise pour comprendre la structure du contenu.
-                <br><br>
+              </p>
+              <p class="balise-desc">
                 Règles importantes :
-                <br>✓ <strong>Un seul &lt;h1&gt;</strong> par page (titre principal).
-                <br>✓ <strong>Ne pas sauter de niveaux</strong> : h1 → h2 → h3 (pas h1 → h3).
-                <br>✗ <strong>NE PAS</strong> choisir le niveau selon la taille visuelle (utiliser CSS).
+              </p>
+              <ul style="list-style:none;padding-left:0;font-size:.9rem;color:var(--txt2);line-height:1.8;">
+                <li>✓ <strong>Un seul &lt;h1&gt;</strong> par page (titre principal).</li>
+                <li>✓ <strong>Ne pas sauter de niveaux</strong> : h1 → h2 → h3 (pas h1 → h3).</li>
+                <li>✗ <strong>NE PAS</strong> choisir le niveau selon la taille visuelle (utiliser CSS).</li>
+              </ul>
               </p>
               <div class="balise-exemple">
                 <div class="balise-exemple-label">Rendu</div>
@@ -1194,9 +904,9 @@
                 <div class="balise-exemple-label">Rendu</div>
                 <div class="demo-zone">
                   <p>
-                    Ligne 1<br>
-                    Ligne 2 (après un saut de ligne)<br>
-                    Ligne 3 — Exemple : adresse postale
+                    <span style="display:block;">Ligne 1</span>
+                    <span style="display:block;">Ligne 2 (après un saut de ligne)</span>
+                    <span style="display:block;">Ligne 3 — Exemple : adresse postale</span>
                   </p>
                 </div>
               </div>
@@ -1311,10 +1021,12 @@
                 <code>&lt;pre&gt;</code> — Texte préformaté : conserve les espaces,
                 les tabulations et les sauts de ligne exactement comme dans le HTML.
                 Police monospace par défaut.
-                <br><br>
+              </p>
+              <p class="balise-desc">
                 <code>&lt;code&gt;</code> — Fragment de code informatique inline.
                 Police monospace. Souvent utilisé dans du texte courant.
-                <br><br>
+              </p>
+              <p class="balise-desc">
                 <strong>Combo &lt;pre&gt;&lt;code&gt;</strong> → Bloc de code multilignes
                 (la combinaison standard pour afficher du code).
               </p>
@@ -1368,7 +1080,7 @@ console.log(saluer("Alice"));</code></pre>
                   <p><strong>&lt;b&gt;</strong> — <b>Gras sans importance sémantique</b> (mots-clés, noms de produits).</p>
                   <p><strong>&lt;i&gt;</strong> — <i>Italique sans emphase</i> (termes techniques, noms étrangers, pensées).</p>
                   <p><strong>&lt;u&gt;</strong> — <u>Soulignement sémantique</u> (fautes d'orthographe, noms propres chinois). Éviter car ressemble à un lien.</p>
-                  <p><strong>&lt;s&gt;</strong> — <s>Texte barré / obsolète</s> (prix réduit, ancienne version).</p>
+                  <p><strong>&lt;s&gt;</strong> — <span style="text-decoration:line-through;"><span class="visually-hidden">[début texte barré] </span>Texte barré / obsolète<span class="visually-hidden"> [fin texte barré]</span></span> (prix réduit, ancienne version).</p>
                   <p><strong>&lt;del&gt;</strong> — <del>Texte supprimé</del> (modification de document, WCAG accessible).</p>
                   <p><strong>&lt;ins&gt;</strong> — <ins>Texte inséré</ins> (contenu ajouté à un document).</p>
                   <p><strong>&lt;mark&gt;</strong> — <mark>Texte surligné</mark> (résultat de recherche, passage pertinent).</p>
@@ -1608,7 +1320,7 @@ console.log(saluer("Alice"));</code></pre>
                   <p><a href="https://example.com" target="_blank" rel="noopener noreferrer">Nouvel onglet (avec sécurité)</a></p>
                   <p><a href="/page.html">Lien interne relatif</a></p>
                   <p><a href="#titre-liens">Ancre (même page)</a></p>
-                  <p><a href="/cdn-cgi/l/email-protection#7c1f1312081d1f083c19041d110c1019521f1311">Email</a></p>
+                  <p><a href="/cdn-cgi/l/email-protection#b9dad6d7cdd8dacdf9dcc1dcd4c9d5dc97dfcb" style="color:#2b6cb0;">Email</a></p>
                   <p><a href="tel:+33123456789">Téléphone : 01 23 45 67 89</a></p>
                   <p><a href="sms:+33612345678">SMS</a></p>
                   <p><a href="/document.pdf" download="mon-document.pdf">Télécharger le PDF</a></p>
@@ -1669,7 +1381,7 @@ console.log(saluer("Alice"));</code></pre>
               <div class="balise-exemple">
                 <div class="balise-exemple-label">Rendu</div>
                 <div class="demo-zone">
-                  <img src="https://picsum.photos/400/200" alt="Image de démonstration — paysage généré aléatoirement" width="400" height="200" loading="lazy" decoding="async">
+                  <img src="https://picsum.photos/400/200" alt="Paysage généré aléatoirement par picsum.photos" width="400" height="200" loading="lazy" decoding="async" fetchpriority="low">
                 </div>
               </div>
             </div>
@@ -1686,7 +1398,8 @@ console.log(saluer("Alice"));</code></pre>
                 <code>&lt;figure&gt;</code> — Contenu autonome référencé depuis le texte principal :
                 image, graphique, diagramme, code, poème, tableau...
                 Peut être déplacé sans affecter le flux principal.
-                <br><br>
+              </p>
+              <p class="balise-desc">
                 <code>&lt;figcaption&gt;</code> — Légende du &lt;figure&gt; (facultative).
                 Premier ou dernier enfant de &lt;figure&gt;.
               </p>
@@ -1694,8 +1407,18 @@ console.log(saluer("Alice"));</code></pre>
                 <div class="balise-exemple-label">Rendu</div>
                 <div class="demo-zone">
                   <figure>
-                    <img src="https://picsum.photos/300/150" alt="Exemple de figure HTML avec légende" width="300" height="150">
-                    <figcaption>Fig. 1 — Exemple d'image avec sa légende dans un élément figure.</figcaption>
+                    <!--
+                      RGAA 1.9 — Image dans un <figure> avec <figcaption> :
+                      Approche retenue : alt="" + aria-hidden="true" sur l'image.
+                      L'image est décorative, la <figcaption> porte la description.
+                      Le lecteur d'écran lit uniquement la légende, sans doublon.
+                    -->
+                    <img src="https://picsum.photos/300/150"
+                         alt=""
+                         aria-hidden="true"
+                         width="300" height="150"
+                         style="max-width:100%;height:auto;">
+                    <figcaption id="figcaption-demo">Fig. 1 — La balise <code>&lt;figcaption&gt;</code> ajoute une légende accessible à la figure.</figcaption>
                   </figure>
                 </div>
               </div>
@@ -1714,7 +1437,8 @@ console.log(saluer("Alice"));</code></pre>
                 Permet de servir des formats modernes (WebP, AVIF) avec
                 fallback vers JPEG/PNG. Aussi pour le responsive art direction
                 (image différente selon la taille d'écran).
-                <br><br>
+              </p>
+              <p class="balise-desc">
                 <code>&lt;source&gt;</code> — Source alternative testée dans l'ordre.
                 Le navigateur choisit la première qui correspond.
                 <code>&lt;img&gt;</code> en dernier = fallback obligatoire.
@@ -1756,7 +1480,7 @@ console.log(saluer("Alice"));</code></pre>
               <div class="balise-exemple">
                 <div class="balise-exemple-label">Rendu (image avec zones cliquables)</div>
                 <div class="demo-zone">
-                  <img src="https://picsum.photos/300/100" alt="Image avec zones cliquables" usemap="#demo-map" width="300" height="100">
+                  <img src="https://picsum.photos/300/100" alt="Image avec zones cliquables" usemap="#demo-map" width="300" height="100" style="max-width:100%;height:auto;">
                   <map name="demo-map">
                     <area shape="rect" coords="0,0,150,100" href="#" alt="Zone gauche">
                     <area shape="rect" coords="150,0,300,100" href="#" alt="Zone droite">
@@ -1785,9 +1509,10 @@ console.log(saluer("Alice"));</code></pre>
                 <div class="demo-zone">
                   <svg width="200" height="100" viewBox="0 0 200 100" aria-label="Formes géométriques SVG" role="img">
                     <title>Formes géométriques SVG</title>
-                    <rect x="10" y="10" width="80" height="80" fill="#1a1a2e" rx="8"/>
-                    <circle cx="150" cy="50" r="40" fill="#22c55e"/>
-                    <polygon points="100,10 190,90 10,90" fill="none" stroke="#b91c1c" stroke-width="3"/>
+                    <!-- fill et stroke passés en CSS — RGAA 10.1 interdit les attributs de présentation -->
+                    <rect x="10" y="10" rx="8" style="width:80px;height:80px;fill:#1a1a2e;"/>
+                    <circle cx="150" cy="50" r="40" style="fill:#22c55e;"/>
+                    <polygon points="100,10 190,90 10,90" style="fill:none;stroke:#b91c1c;stroke-width:3;"/>
                   </svg>
                 </div>
               </div>
@@ -1811,36 +1536,14 @@ console.log(saluer("Alice"));</code></pre>
               <div class="balise-exemple">
                 <div class="balise-exemple-label">Rendu (dessiné par JavaScript)</div>
                 <div class="demo-zone">
-                  <canvas id="demo-canvas" width="300" height="100" aria-label="Dessin de démonstration Canvas">
+                  <canvas role="img" id="demo-canvas" width="300" height="100" aria-label="Dessin de démonstration Canvas">
                     Votre navigateur ne supporte pas Canvas.
                   </canvas>
-                  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-                    (function() {
-                      var c = document.getElementById('demo-canvas');
-                      if (!c) return;
-                      var ctx = c.getContext('2d');
-                      // Fond
-                      ctx.fillStyle = '#1a1a2e';
-                      ctx.fillRect(0, 0, 300, 100);
-                      // Cercle
-                      ctx.beginPath();
-                      ctx.arc(50, 50, 35, 0, Math.PI * 2);
-                      ctx.fillStyle = '#22c55e';
-                      ctx.fill();
-                      // Rectangle
-                      ctx.fillStyle = '#b91c1c';
-                      ctx.fillRect(100, 20, 80, 60);
-                      // Texte
-                      ctx.fillStyle = '#fff';
-                      ctx.font = '14px monospace';
-                      ctx.fillText('Canvas 2D', 195, 55);
-                    })();
-                  </script>
+                  <!-- Canvas dessiné par le script principal en bas de page -->
                 </div>
               </div>
             </div>
           </div>
-
           <!-- video -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -1869,11 +1572,12 @@ console.log(saluer("Alice"));</code></pre>
               <div class="balise-exemple">
                 <div class="balise-exemple-label">Code</div>
                 <div class="demo-zone">
-                  <video controls width="100%" poster="https://picsum.photos/400/225" preload="metadata" aria-label="Vidéo de démonstration">
-                    <source src="video.mp4" type="video/mp4">
-                    <source src="video.webm" type="video/webm">
-                    <track kind="subtitles" src="subtitles-fr.vtt" srclang="fr" label="Français" default>
-                    <track kind="subtitles" src="subtitles-en.vtt" srclang="en" label="English">
+                  <video controls style="width:100%;" poster="https://picsum.photos/400/225" preload="none" aria-label="Vidéo de démonstration">
+                    <!-- Sources fictives commentées pour éviter les 404 -->
+                    <!-- <source src="video.mp4" type="video/mp4"> -->
+                    <!-- <source src="video.webm" type="video/webm"> -->
+                    <!-- Track captions inline via data URI (démo sans serveur) -->
+                    <track kind="captions" src="data:text/vtt;base64,V0VCVlRUCgowMDowMDowMC4wMDAgLS0+IDAwOjAwOjA1LjAwMApbVmlkw6lvIGRlIGTDqW1vbnN0cmF0aW9uIOKAlCBhdWN1biBjb250ZW51IGF1ZGlvXQoKMDA6MDA6MDUuMDAwIC0tPiAwMDowMDoxMC4wMDAKW0V4ZW1wbGUgZGUgc291cy10aXRyYWdlIGF2ZWMgdHJhY2sga2luZD0iY2FwdGlvbnMiXQo=" srclang="fr" label="Français" default>
                     Votre navigateur ne supporte pas la vidéo HTML5.
                   </video>
                   <p style="font-size:.8rem;color:var(--txt2);margin-top:6px;">⚠️ Aucune vidéo chargée dans cet exemple — le poster s'affiche.</p>
@@ -1881,7 +1585,6 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
           <!-- audio -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -1902,15 +1605,15 @@ console.log(saluer("Alice"));</code></pre>
                 <div class="balise-exemple-label">Rendu</div>
                 <div class="demo-zone">
                   <audio controls aria-label="Audio de démonstration">
-                    <source src="audio.mp3" type="audio/mpeg">
-                    <source src="audio.ogg" type="audio/ogg">
+                    <!-- Sources fictives commentées pour éviter les 404 -->
+                    <!-- <source src="audio.mp3" type="audio/mpeg"> -->
+                    <!-- <source src="audio.ogg" type="audio/ogg"> -->
                     Votre navigateur ne supporte pas l'audio HTML5.
                   </audio>
                 </div>
               </div>
             </div>
           </div>
-
           <!-- track -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -1933,7 +1636,6 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
           <!-- iframe -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -1966,17 +1668,14 @@ console.log(saluer("Alice"));</code></pre>
                   <iframe
                     src="https://www.openstreetmap.org/export/embed.html?bbox=2.3,48.8,2.4,48.9&layer=mapnik"
                     title="Carte OpenStreetMap de Paris"
-                    width="100%"
-                    height="200"
                     loading="lazy"
                     sandbox="allow-scripts allow-same-origin"
-                    style="border-radius:var(--r);border:1px solid var(--bord);">
+                    style="width:100%;height:200px;border-radius:var(--r);border:1px solid var(--bord);display:block;">
                   </iframe>
                 </div>
               </div>
             </div>
           </div>
-
           <!-- embed object -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -1994,11 +1693,9 @@ console.log(saluer("Alice"));</code></pre>
               </p>
             </div>
           </div>
-
         </div>
       </div>
     </section>
-
     <!-- ════════════════════════════════════════════════════════════════
          SECTION 6 : TABLEAUX
          ════════════════════════════════════════════════════════════════ -->
@@ -2006,14 +1703,12 @@ console.log(saluer("Alice"));</code></pre>
       <h2 id="titre-tableaux" style="font-size:1.3rem; margin: 32px 0 16px; padding-top: 16px; border-top: 2px solid var(--bord);">
         📊 Tableaux
       </h2>
-
       <div class="ref-section">
         <div class="ref-section-header">
           <span class="tag-cat">Tableau</span>
           <h2>&lt;table&gt; — Données tabulaires</h2>
         </div>
         <div class="ref-section-body">
-
           <div class="balise-bloc">
             <div class="balise-head">
               <span class="balise-tag">&lt;table&gt; et toutes ses balises</span>
@@ -2090,11 +1785,9 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
-
     <!-- ════════════════════════════════════════════════════════════════
          SECTION 7 : FORMULAIRES
          ════════════════════════════════════════════════════════════════ -->
@@ -2102,14 +1795,12 @@ console.log(saluer("Alice"));</code></pre>
       <h2 id="titre-formulaires" style="font-size:1.3rem; margin: 32px 0 16px; padding-top: 16px; border-top: 2px solid var(--bord);">
         📋 Formulaires
       </h2>
-
       <div class="ref-section">
         <div class="ref-section-header">
           <span class="tag-cat">Formulaire</span>
           <h2>&lt;form&gt; et tous ses éléments</h2>
         </div>
         <div class="ref-section-body">
-
           <!-- form -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -2133,7 +1824,6 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
           <!-- label -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -2150,7 +1840,6 @@ console.log(saluer("Alice"));</code></pre>
               </p>
             </div>
           </div>
-
           <!-- input — tous les types -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -2166,32 +1855,26 @@ console.log(saluer("Alice"));</code></pre>
                 <div class="balise-exemple-label">Tous les types d'input</div>
                 <div class="demo-zone">
                   <form aria-label="Démonstration de tous les types d'input" style="gap:16px;">
-
                     <div>
                       <label for="inp-text">text — Texte libre</label>
                       <input type="text" id="inp-text" name="text" placeholder="Votre nom" autocomplete="name">
                     </div>
-
                     <div>
                       <label for="inp-email">email — Adresse email</label>
                       <input type="email" id="inp-email" name="email" placeholder="exemple@mail.com" autocomplete="email">
                     </div>
-
                     <div>
                       <label for="inp-password">password — Mot de passe</label>
                       <input type="password" id="inp-password" name="password" autocomplete="new-password">
                     </div>
-
                     <div>
                       <label for="inp-tel">tel — Téléphone</label>
                       <input type="tel" id="inp-tel" name="tel" placeholder="+33 6 00 00 00 00" autocomplete="tel">
                     </div>
-
                     <div>
                       <label for="inp-url">url — URL</label>
                       <input type="url" id="inp-url" name="url" placeholder="https://example.com">
                     </div>
-
                     <div>
                       <label for="inp-number">number — Nombre</label>
                       <input type="number" id="inp-number" name="number" min="0" max="100" step="5" value="25">
@@ -2201,56 +1884,46 @@ console.log(saluer("Alice"));</code></pre>
                         step → incrément de chaque clic sur les flèches
                       -->
                     </div>
-
                     <div>
                       <label for="inp-range">range — Curseur (slider)</label>
                       <input type="range" id="inp-range" name="range" min="0" max="100" step="10" value="40">
                     </div>
-
                     <div>
                       <label for="inp-date">date — Date</label>
                       <input type="date" id="inp-date" name="date" value="2026-03-18" min="2020-01-01" max="2030-12-31">
                     </div>
-
                     <div>
                       <label for="inp-time">time — Heure</label>
-                      <input type="time" id="inp-time" name="time" value="14:30">
+                      <input type="time" id="inp-time" name="time" value="14:30" aria-label="time — Heure">
                     </div>
-
                     <div>
                       <label for="inp-datetime">datetime-local — Date et heure locale</label>
-                      <input type="datetime-local" id="inp-datetime" name="datetime" value="2026-03-18T14:30">
+                      <input type="datetime-local" id="inp-datetime" name="datetime" value="2026-03-18T14:30" aria-label="datetime-local — Date et heure locale">
                     </div>
-
                     <div>
                       <label for="inp-month">month — Mois</label>
-                      <input type="month" id="inp-month" name="month" value="2026-03">
+                      <input type="month" id="inp-month" name="month" value="2026-03" aria-label="month — Mois">
                     </div>
-
                     <div>
                       <label for="inp-week">week — Semaine</label>
-                      <input type="week" id="inp-week" name="week" value="2026-W11">
+                      <input type="week" id="inp-week" name="week" value="2026-W11" aria-label="week — Semaine">
                     </div>
-
                     <div>
                       <label for="inp-color">color — Sélecteur de couleur</label>
-                      <input type="color" id="inp-color" name="color" value="#22c55e">
+                      <input type="color" id="inp-color" name="color" value="#22c55e" aria-label="color — Sélecteur de couleur">
                     </div>
-
                     <div>
                       <label for="inp-search">search — Recherche</label>
-                      <input type="search" id="inp-search" name="search" placeholder="Rechercher..." aria-label="Recherche de démonstration">
+                      <input type="search" id="inp-search" name="search" placeholder="Rechercher..." aria-label="search — Recherche">
                     </div>
-
                     <div>
                       <label for="inp-file">file — Fichier</label>
-                      <input type="file" id="inp-file" name="file" accept=".pdf,.jpg,.png" multiple>
+                      <input type="file" id="inp-file" name="file" accept=".pdf,.jpg,.png" multiple aria-label="file — Fichier">
                       <!--
                         accept → types MIME ou extensions acceptés
                         multiple → permet de sélectionner plusieurs fichiers
                       -->
                     </div>
-
                     <fieldset>
                       <legend>checkbox — Cases à cocher (choix multiples)</legend>
                       <div class="check-group">
@@ -2268,7 +1941,6 @@ console.log(saluer("Alice"));</code></pre>
                         </label>
                       </div>
                     </fieldset>
-
                     <fieldset>
                       <legend>radio — Boutons radio (choix unique)</legend>
                       <div class="radio-group">
@@ -2286,39 +1958,32 @@ console.log(saluer("Alice"));</code></pre>
                         </label>
                       </div>
                     </fieldset>
-
                     <div>
                       <!-- hidden — Champ caché (non visible, mais envoyé avec le formulaire) -->
                       <input type="hidden" name="csrf_token" value="abc123xyz">
                       <p style="font-size:.82rem;color:var(--txt2);">hidden — Champ invisible envoyé avec le formulaire (ex: token CSRF, ID session).</p>
                     </div>
-
                     <div>
-                      <label for="inp-image">image — Bouton image</label><br>
-                      <input type="image" id="inp-image" src="https://picsum.photos/80/30" alt="Bouton image de soumission" width="80" height="30">
+                      <label for="inp-image" style="display:block;margin-bottom:6px;">image — Bouton image</label>
+                      <input type="image" id="inp-image" src="https://picsum.photos/80/30" alt="Bouton image de soumission — Envoyer" style="width:80px;height:30px;">
                     </div>
-
                     <div>
                       <!-- submit — Bouton d'envoi du formulaire -->
-                      <input type="submit" value="Envoyer (input submit)">
+                      <input type="submit" value="Envoyer" aria-label="Envoyer le formulaire">
                     </div>
-
                     <div>
                       <!-- reset — Réinitialise tous les champs du formulaire -->
-                      <input type="reset" value="Réinitialiser (input reset)">
+                      <input type="reset" value="Réinitialiser" aria-label="Réinitialiser le formulaire">
                     </div>
-
                     <div>
                       <!-- button — Bouton générique (type="button" dans <input>) -->
-                      <input type="button" value="Bouton (input button)">
+                      <input type="button" value="Exemple bouton" aria-label="Exemple bouton">
                     </div>
-
                   </form>
                 </div>
               </div>
             </div>
           </div>
-
           <!-- Attributs communs des inputs -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -2346,7 +2011,6 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
           <!-- textarea -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -2373,7 +2037,6 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
           <!-- select option optgroup -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -2414,7 +2077,6 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
           <!-- datalist -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -2444,7 +2106,6 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
           <!-- fieldset legend -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -2473,7 +2134,6 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
           <!-- button -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -2502,15 +2162,14 @@ console.log(saluer("Alice"));</code></pre>
               <div class="balise-exemple">
                 <div class="balise-exemple-label">Rendu</div>
                 <div class="demo-zone" style="display:flex;flex-wrap:wrap;gap:10px;">
-                  <button type="button" style="background:var(--accent);color:#fff;border:none;padding:8px 16px;border-radius:var(--r);cursor:pointer;">✓ Soumettre</button>
+                  <button type="button" style="background:#15803d;color:#fff;border:none;padding:8px 16px;border-radius:var(--r);cursor:pointer;">✓ Soumettre</button>
                   <button type="button" style="background:none;border:2px solid var(--bord);padding:8px 16px;border-radius:var(--r);cursor:pointer;">Annuler</button>
                   <button type="button" disabled style="background:#e2e8f0;border:none;padding:8px 16px;border-radius:var(--r);cursor:not-allowed;color:#a0aec0;">Désactivé</button>
-                  <button type="button" aria-pressed="false" style="background:#f0f4f8;border:1px solid var(--bord);padding:8px 16px;border-radius:var(--r);cursor:pointer;" onclick="this.setAttribute('aria-pressed', this.getAttribute('aria-pressed')==='true' ? 'false' : 'true');this.style.background=this.getAttribute('aria-pressed')==='true'?'var(--accent)':'#f0f4f8';this.style.color=this.getAttribute('aria-pressed')==='true'?'#fff':'inherit'">Toggle (aria-pressed)</button>
+                  <button type="button" aria-pressed="false" style="background:#f0f4f8;border:1px solid var(--bord);padding:8px 16px;border-radius:var(--r);cursor:pointer;" onclick="demoToggleAriaPressed(this)">Toggle (aria-pressed)</button>
                 </div>
               </div>
             </div>
           </div>
-
           <!-- progress meter output -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -2542,20 +2201,27 @@ console.log(saluer("Alice"));</code></pre>
                     <meter id="met1" value="6" min="0" max="10" low="3" high="8" optimum="9">6/10</meter>
                   </div>
                   <div>
-                    <label>Calcul (a + b = résultat) :</label>
-                    <div style="display:flex;gap:8px;align-items:center;">
-                      <input type="number" id="val-a" value="5" style="width:70px;padding:4px 8px;border:1px solid var(--bord);border-radius:4px;" oninput="document.getElementById('calc-result').value = +this.value + +document.getElementById('val-b').value">
-                      <span>+</span>
-                      <input type="number" id="val-b" value="3" style="width:70px;padding:4px 8px;border:1px solid var(--bord);border-radius:4px;" oninput="document.getElementById('calc-result').value = +document.getElementById('val-a').value + +this.value">
-                      <span>=</span>
-                      <output id="calc-result" name="resultat" for="val-a val-b">8</output>
+                    <p id="lbl-calcul" style="font-size:.88rem;font-weight:600;margin-bottom:6px;">Calcul (a + b = résultat) :</p>
+                    <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+                      <label for="val-a" id="lbl-val-a" style="font-size:.85rem;font-weight:600;">a =</label>
+                      <input type="number" id="val-a" value="5"
+                             aria-labelledby="lbl-val-a"
+                             style="width:70px;padding:4px 8px;border:1px solid var(--bord);border-radius:4px;"
+                             oninput="document.getElementById('calc-result').value = +this.value + +document.getElementById('val-b').value">
+                      <span aria-hidden="true">+</span>
+                      <label for="val-b" id="lbl-val-b" style="font-size:.85rem;font-weight:600;">b =</label>
+                      <input type="number" id="val-b" value="3"
+                             aria-labelledby="lbl-val-b"
+                             style="width:70px;padding:4px 8px;border:1px solid var(--bord);border-radius:4px;"
+                             oninput="document.getElementById('calc-result').value = +document.getElementById('val-a').value + +this.value">
+                      <span aria-hidden="true">=</span>
+                      <output id="calc-result" name="resultat" for="val-a val-b">8</o>
                     </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
           <!-- Formulaire complet d'exemple -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -2570,7 +2236,6 @@ console.log(saluer("Alice"));</code></pre>
                   <form action="#" method="POST" novalidate aria-label="Formulaire d'inscription">
                     <fieldset>
                       <legend>Informations de compte</legend>
-
                       <div>
                         <label for="f-prenom">
                           Prénom <span aria-hidden="true" style="color:var(--rouge)">*</span>
@@ -2582,7 +2247,6 @@ console.log(saluer("Alice"));</code></pre>
                                aria-describedby="f-prenom-aide">
                         <small id="f-prenom-aide" style="color:var(--txt2);display:block;margin-top:3px;">Entre 2 et 50 caractères.</small>
                       </div>
-
                       <div>
                         <label for="f-email">
                           Email <span aria-hidden="true" style="color:var(--rouge)">*</span>
@@ -2592,7 +2256,6 @@ console.log(saluer("Alice"));</code></pre>
                                autocomplete="email"
                                placeholder="vous@exemple.com">
                       </div>
-
                       <div>
                         <label for="f-mdp">
                           Mot de passe <span aria-hidden="true" style="color:var(--rouge)">*</span>
@@ -2604,7 +2267,6 @@ console.log(saluer("Alice"));</code></pre>
                         <small id="f-mdp-aide" style="color:var(--txt2);display:block;margin-top:3px;">Minimum 8 caractères.</small>
                       </div>
                     </fieldset>
-
                     <fieldset>
                       <legend>Votre niveau</legend>
                       <div class="radio-group">
@@ -2613,19 +2275,16 @@ console.log(saluer("Alice"));</code></pre>
                         <label for="f-niv3"><input type="radio" id="f-niv3" name="niveau" value="avance"> Avancé</label>
                       </div>
                     </fieldset>
-
                     <div>
                       <label for="f-cgu">
                         <input type="checkbox" id="f-cgu" name="cgu" required aria-required="true">
                         J'accepte les <a href="#">conditions d'utilisation</a>
                       </label>
                     </div>
-
                     <p style="font-size:.8rem;color:var(--txt2);">
                       <span aria-hidden="true" style="color:var(--rouge)">*</span> Champs obligatoires
                     </p>
-
-                    <button type="submit" style="background:var(--accent);color:#fff;border:none;padding:10px 24px;border-radius:var(--r);cursor:pointer;font-weight:700;font-size:.95rem;">
+                    <button type="submit" style="background:#15803d;color:#fff;border:none;padding:10px 24px;border-radius:var(--r);cursor:pointer;font-weight:700;font-size:.95rem;">
                       Créer mon compte
                     </button>
                   </form>
@@ -2633,11 +2292,9 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
-
     <!-- ════════════════════════════════════════════════════════════════
          SECTION 8 : BALISES SPÉCIALES
          ════════════════════════════════════════════════════════════════ -->
@@ -2645,14 +2302,12 @@ console.log(saluer("Alice"));</code></pre>
       <h2 id="titre-special" style="font-size:1.3rem; margin: 32px 0 16px; padding-top: 16px; border-top: 2px solid var(--bord);">
         ✨ Balises spéciales
       </h2>
-
       <div class="ref-section">
         <div class="ref-section-header">
           <span class="tag-cat">Spécial</span>
           <h2>&lt;details&gt; &lt;dialog&gt; &lt;template&gt; &lt;slot&gt;</h2>
         </div>
         <div class="ref-section-body">
-
           <!-- details summary -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -2685,7 +2340,6 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
           <!-- dialog -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -2704,7 +2358,7 @@ console.log(saluer("Alice"));</code></pre>
               <div class="balise-exemple">
                 <div class="balise-exemple-label">Rendu (cliquer le bouton)</div>
                 <div class="demo-zone">
-                  <button type="button" class="dialog-btn" onclick="document.getElementById('demo-dialog').showModal()">
+                  <button type="button" class="dialog-btn" onclick="demoDialogOuvrir()">
                     Ouvrir la boîte de dialogue
                   </button>
                   <dialog id="demo-dialog" aria-labelledby="dialog-titre" aria-describedby="dialog-desc">
@@ -2713,14 +2367,13 @@ console.log(saluer("Alice"));</code></pre>
                     <form method="dialog" style="display:flex;gap:8px;margin-top:12px;">
                       <!-- method="dialog" → ferme la modale à la soumission -->
                       <button type="submit" style="background:var(--accent);color:#fff;border:none;padding:8px 16px;border-radius:var(--r);cursor:pointer;">Confirmer</button>
-                      <button type="button" class="dialog-close" onclick="document.getElementById('demo-dialog').close()">Annuler</button>
+                      <button type="button" class="dialog-close" onclick="demoDialogFermer()">Annuler</button>
                     </form>
                   </dialog>
                 </div>
               </div>
             </div>
           </div>
-
           <!-- template slot -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -2733,7 +2386,8 @@ console.log(saluer("Alice"));</code></pre>
                 Stocke du HTML réutilisable activable par JavaScript via
                 <code>template.content.cloneNode(true)</code>.
                 Utilisé pour les Web Components et la génération dynamique.
-                <br><br>
+              </p>
+              <p class="balise-desc">
                 <code>&lt;slot&gt;</code> — Emplacement de contenu dans un Shadow DOM
                 (Web Components). Permet d'injecter du contenu depuis l'extérieur
                 du composant.
@@ -2749,19 +2403,11 @@ console.log(saluer("Alice"));</code></pre>
                     </div>
                   </template>
                   <div id="template-container"></div>
-                  <button type="button" style="background:var(--primaire);color:#fff;border:none;padding:6px 14px;border-radius:var(--r);cursor:pointer;font-size:.85rem;" onclick="
-                    var tpl = document.getElementById('carte-template');
-                    var clone = tpl.content.cloneNode(true);
-                    var n = document.getElementById('template-container').children.length + 1;
-                    clone.querySelector('.carte-nom').textContent = 'Carte n°' + n;
-                    clone.querySelector('.carte-desc').textContent = 'Générée depuis &lt;template&gt;';
-                    document.getElementById('template-container').appendChild(clone);
-                  ">Ajouter une carte depuis &lt;template&gt;</button>
+                  <button type="button" style="background:var(--primaire);color:#fff;border:none;padding:6px 14px;border-radius:var(--r);cursor:pointer;font-size:.85rem;" onclick="demoTemplateAjouter()">Ajouter une carte depuis &lt;template&gt;</button>
                 </div>
               </div>
             </div>
           </div>
-
           <!-- script et noscript dans le body -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -2774,7 +2420,8 @@ console.log(saluer("Alice"));</code></pre>
                 Dans le body = exécuté quand rencontré.
                 <strong>Toujours en bas du &lt;body&gt;</strong> ou avec defer/async
                 dans le head, pour ne pas bloquer l'affichage de la page.
-                <br><br>
+              </p>
+              <p class="balise-desc">
                 <code>&lt;noscript&gt;</code> — Contenu de fallback affiché si JavaScript
                 est désactivé. Dans le body : peut contenir n'importe quel HTML.
               </p>
@@ -2788,7 +2435,6 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
           <!-- Autres balises head -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -2810,7 +2456,6 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
           <!-- Attributs globaux -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -2845,11 +2490,9 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
         </div>
       </div>
     </section>
-
     <!-- ════════════════════════════════════════════════════════════════
          SECTION 9 : RÉCAPITULATIF
          ════════════════════════════════════════════════════════════════ -->
@@ -2857,7 +2500,6 @@ console.log(saluer("Alice"));</code></pre>
       <h2 id="titre-recap" style="font-size:1.3rem; margin: 32px 0 16px; padding-top: 16px; border-top: 2px solid var(--bord);">
         📌 Règles d'or à retenir
       </h2>
-
       <div class="ref-section">
         <div class="ref-section-header">
           <span class="tag-cat">Résumé</span>
@@ -2865,7 +2507,6 @@ console.log(saluer("Alice"));</code></pre>
         </div>
         <div class="ref-section-body">
           <div class="demo-zone" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:16px;">
-
             <div style="background:#f0fff4;border:1px solid #9ae6b4;border-radius:var(--r);padding:14px;">
               <h3 style="color:#276749;font-size:.95rem;margin-bottom:8px;">✅ Sémantique</h3>
               <ul style="padding-left:16px;font-size:.85rem;color:var(--txt2);">
@@ -2878,7 +2519,6 @@ console.log(saluer("Alice"));</code></pre>
                 <li>&lt;div&gt;/&lt;span&gt; = dernier recours</li>
               </ul>
             </div>
-
             <div style="background:#ebf8ff;border:1px solid #90cdf4;border-radius:var(--r);padding:14px;">
               <h3 style="color:#2b6cb0;font-size:.95rem;margin-bottom:8px;">♿ Accessibilité</h3>
               <ul style="padding-left:16px;font-size:.85rem;color:var(--txt2);">
@@ -2891,9 +2531,8 @@ console.log(saluer("Alice"));</code></pre>
                 <li>Sous-titres pour vidéos</li>
               </ul>
             </div>
-
             <div style="background:#fffbeb;border:1px solid #f6e05e;border-radius:var(--r);padding:14px;">
-              <h3 style="color:#b7791f;font-size:.95rem;margin-bottom:8px;">🔗 Liens et boutons</h3>
+              <h3 style="color:#92400e;font-size:.95rem;margin-bottom:8px;">🔗 Liens et boutons</h3>
               <ul style="padding-left:16px;font-size:.85rem;color:var(--txt2);">
                 <li>&lt;a href&gt; = naviguer</li>
                 <li>&lt;button&gt; = agir</li>
@@ -2903,7 +2542,6 @@ console.log(saluer("Alice"));</code></pre>
                 <li>aria-current="page" sur lien actif</li>
               </ul>
             </div>
-
             <div style="background:#fff5f5;border:1px solid #feb2b2;border-radius:var(--r);padding:14px;">
               <h3 style="color:#c53030;font-size:.95rem;margin-bottom:8px;">⚡ Performance</h3>
               <ul style="padding-left:16px;font-size:.85rem;color:var(--txt2);">
@@ -2915,13 +2553,10 @@ console.log(saluer("Alice"));</code></pre>
                 <li>&lt;picture&gt; pour les formats modernes</li>
               </ul>
             </div>
-
           </div>
         </div>
       </div>
     </section>
-
-
     <!-- ════════════════════════════════════════════════════════════════
          SECTION 10 : ACCESSIBILITÉ — WCAG, RGAA ET ARIA
          ════════════════════════════════════════════════════════════════ -->
@@ -2929,7 +2564,6 @@ console.log(saluer("Alice"));</code></pre>
       <h2 id="titre-a11y" style="font-size:1.3rem; margin: 32px 0 16px; padding-top: 16px; border-top: 2px solid var(--bord);">
         ♿ Accessibilité — WCAG, RGAA &amp; ARIA
       </h2>
-
       <!-- ─────────────────────────────────────────────────────────────
            BLOC 1 : C'EST QUOI L'ACCESSIBILITÉ ?
            ───────────────────────────────────────────────────────────── -->
@@ -2939,7 +2573,6 @@ console.log(saluer("Alice"));</code></pre>
           <h2>Qu'est-ce que l'accessibilité web ?</h2>
         </div>
         <div class="ref-section-body">
-
           <div class="balise-bloc">
             <div class="balise-head">
               <span class="balise-tag">Définition</span>
@@ -2968,7 +2601,7 @@ console.log(saluer("Alice"));</code></pre>
                   </ul>
                 </div>
                 <div style="background:#fffbeb;border:1px solid #f6e05e;border-radius:var(--r);padding:12px;">
-                  <strong style="color:#b7791f;">🖐️ Motrices</strong>
+                  <strong style="color:#92400e;">🖐️ Motrices</strong>
                   <ul style="padding-left:16px;font-size:.83rem;color:var(--txt2);margin-top:6px;">
                     <li>Clavier seul (pas de souris)</li>
                     <li>Commande vocale</li>
@@ -2986,7 +2619,6 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
           <!-- WCAG -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -3009,7 +2641,7 @@ console.log(saluer("Alice"));</code></pre>
                   <p style="font-size:.83rem;color:var(--txt2);margin-top:4px;">Les composants d'interface et la navigation doivent être utilisables. Navigation clavier, pas de clignotement dangereux.</p>
                 </div>
                 <div style="border-left:4px solid var(--ambre);padding:10px 14px;background:#fffbeb;border-radius:0 var(--r) var(--r) 0;">
-                  <strong style="color:var(--ambre);">U — Compréhensible</strong>
+                  <strong style="color:#92400e;">U — Compréhensible</strong>
                   <p style="font-size:.83rem;color:var(--txt2);margin-top:4px;">Le contenu et l'interface doivent être compréhensibles. Langue déclarée, formulaires explicites, comportement prévisible.</p>
                 </div>
                 <div style="border-left:4px solid var(--rouge);padding:10px 14px;background:#fff5f5;border-radius:0 var(--r) var(--r) 0;">
@@ -3021,13 +2653,12 @@ console.log(saluer("Alice"));</code></pre>
                 <p style="font-size:.88rem;color:var(--txt2);margin-bottom:8px;"><strong>3 niveaux de conformité :</strong></p>
                 <div class="attrs">
                   <div class="attr-item"><span class="attr-name" style="color:var(--vert);">A (minimum)</span><span class="attr-desc">→ Critères de base. Sans eux, certains utilisateurs ne peuvent PAS accéder au contenu.</span></div>
-                  <div class="attr-item"><span class="attr-name" style="color:var(--ambre);">AA (recommandé)</span><span class="attr-desc">→ Niveau visé par la loi française (RGAA) et la plupart des obligations légales mondiales.</span></div>
+                  <div class="attr-item"><span class="attr-name" style="color:#92400e;">AA (recommandé)</span><span class="attr-desc">→ Niveau visé par la loi française (RGAA) et la plupart des obligations légales mondiales.</span></div>
                   <div class="attr-item"><span class="attr-name" style="color:var(--rouge);">AAA (excellence)</span><span class="attr-desc">→ Niveau le plus élevé. Difficile à atteindre sur l'ensemble d'un site. Objectif pour certains contenus.</span></div>
                 </div>
               </div>
             </div>
           </div>
-
           <!-- RGAA -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -3059,10 +2690,8 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
         </div>
       </div>
-
       <!-- ─────────────────────────────────────────────────────────────
            BLOC 2 : WCAG — CRITÈRES ESSENTIELS
            ───────────────────────────────────────────────────────────── -->
@@ -3072,7 +2701,6 @@ console.log(saluer("Alice"));</code></pre>
           <h2>Critères essentiels à connaître</h2>
         </div>
         <div class="ref-section-body">
-
           <!-- Critères Perceptible -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -3083,20 +2711,17 @@ console.log(saluer("Alice"));</code></pre>
               <div class="attrs">
                 <div class="attrs-label">1.1 — Alternatives textuelles</div>
                 <div class="attr-item"><span class="attr-name">1.1.1 — A</span><span class="attr-desc">Tout contenu non textuel (image, icône, graphique) doit avoir une alternative textuelle. <code>alt="description"</code> sur &lt;img&gt;. <code>aria-label</code> sur &lt;svg&gt;. <code>alt=""</code> si décoratif.</span></div>
-
                 <div class="attrs-label" style="margin-top:10px;">1.2 — Médias temporels</div>
                 <div class="attr-item"><span class="attr-name">1.2.1 — A</span><span class="attr-desc">Audio/vidéo pré-enregistré : sous-titres ou transcription textuelle.</span></div>
                 <div class="attr-item"><span class="attr-name">1.2.2 — A</span><span class="attr-desc">Sous-titres pour toutes les vidéos pré-enregistrées. <code>&lt;track kind="captions"&gt;</code></span></div>
                 <div class="attr-item"><span class="attr-name">1.2.3 — A</span><span class="attr-desc">Audiodescription ou alternative textuelle pour les vidéos.</span></div>
                 <div class="attr-item"><span class="attr-name">1.2.5 — AA</span><span class="attr-desc">Audiodescription pour toutes les vidéos pré-enregistrées. <code>&lt;track kind="descriptions"&gt;</code></span></div>
-
                 <div class="attrs-label" style="margin-top:10px;">1.3 — Adaptabilité</div>
                 <div class="attr-item"><span class="attr-name">1.3.1 — A</span><span class="attr-desc">Information et relations : la structure est transmissible via le code (titres, listes, tableaux, formulaires). HTML sémantique + ARIA.</span></div>
                 <div class="attr-item"><span class="attr-name">1.3.2 — A</span><span class="attr-desc">Ordre séquentiel : l'ordre de lecture du DOM correspond à l'ordre visuel.</span></div>
                 <div class="attr-item"><span class="attr-name">1.3.3 — A</span><span class="attr-desc">Caractéristiques sensorielles : les instructions ne reposent pas uniquement sur la forme, couleur ou position ("cliquez sur le bouton rouge à droite" ← insuffisant).</span></div>
                 <div class="attr-item"><span class="attr-name">1.3.4 — AA</span><span class="attr-desc">Orientation : le contenu n'est pas limité à une orientation (portrait/paysage). Ne pas bloquer l'orientation.</span></div>
                 <div class="attr-item"><span class="attr-name">1.3.5 — AA</span><span class="attr-desc">Identification de l'objet de saisie : utiliser <code>autocomplete</code> avec les valeurs standardisées (name, email, tel...).</span></div>
-
                 <div class="attrs-label" style="margin-top:10px;">1.4 — Distinguable</div>
                 <div class="attr-item"><span class="attr-name">1.4.1 — A</span><span class="attr-desc">Utilisation de la couleur : la couleur seule ne suffit pas à transmettre une information. Toujours doubler d'un autre indicateur (icône, texte, motif).</span></div>
                 <div class="attr-item"><span class="attr-name">1.4.2 — A</span><span class="attr-desc">Contrôle du son : tout son automatique > 3s doit pouvoir être coupé.</span></div>
@@ -3110,7 +2735,6 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
           <!-- Critères Utilisable -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -3123,15 +2747,12 @@ console.log(saluer("Alice"));</code></pre>
                 <div class="attr-item"><span class="attr-name">2.1.1 — A</span><span class="attr-desc">Toutes les fonctionnalités sont accessibles au clavier (Tab, Entrée, Espace, flèches, Échap).</span></div>
                 <div class="attr-item"><span class="attr-name">2.1.2 — A</span><span class="attr-desc">Pas de piège clavier : le focus peut toujours quitter un composant (modales : Échap, focus trap documenté).</span></div>
                 <div class="attr-item"><span class="attr-name">2.1.4 — A</span><span class="attr-desc">Raccourcis clavier d'un seul caractère : doivent pouvoir être désactivés ou reconfigurés.</span></div>
-
                 <div class="attrs-label" style="margin-top:10px;">2.2 — Délais suffisants</div>
                 <div class="attr-item"><span class="attr-name">2.2.1 — A</span><span class="attr-desc">Délais : tout délai doit pouvoir être désactivé, ajusté (×10) ou prolongé (×20).</span></div>
                 <div class="attr-item"><span class="attr-name">2.2.2 — A</span><span class="attr-desc">Pause, stop, masquer : tout contenu animé, clignotant ou défilant doit pouvoir être mis en pause.</span></div>
-
                 <div class="attrs-label" style="margin-top:10px;">2.3 — Crises et réactions physiques</div>
                 <div class="attr-item"><span class="attr-name">2.3.1 — A</span><span class="attr-desc">Pas plus de 3 flashs par seconde (risque d'épilepsie photosensible).</span></div>
                 <div class="attr-item"><span class="attr-name">2.3.3 — AAA</span><span class="attr-desc">prefers-reduced-motion CSS : respecter le paramètre système qui demande de réduire les animations.</span></div>
-
                 <div class="attrs-label" style="margin-top:10px;">2.4 — Navigation</div>
                 <div class="attr-item"><span class="attr-name">2.4.1 — A</span><span class="attr-desc">Bypass blocks : skip link pour sauter la navigation répétitive. <code>&lt;a href="#main"&gt;Aller au contenu&lt;/a&gt;</code></span></div>
                 <div class="attr-item"><span class="attr-name">2.4.2 — A</span><span class="attr-desc">Titre de page : <code>&lt;title&gt;</code> descriptif et unique pour chaque page.</span></div>
@@ -3141,7 +2762,6 @@ console.log(saluer("Alice"));</code></pre>
                 <div class="attr-item"><span class="attr-name">2.4.7 — AA</span><span class="attr-desc">Focus visible : le composant qui a le focus clavier est TOUJOURS visuellement identifiable. <code>:focus-visible { outline: 3px solid ... }</code></span></div>
                 <div class="attr-item"><span class="attr-name">2.4.11 — AA</span><span class="attr-desc">Focus non obscurci : quand un composant reçoit le focus, il n'est pas entièrement masqué (sticky header...).</span></div>
                 <div class="attr-item"><span class="attr-name">2.4.12 — AAA</span><span class="attr-desc">Focus non obscurci (renforcé) : le composant focusé n'est pas du tout masqué.</span></div>
-
                 <div class="attrs-label" style="margin-top:10px;">2.5 — Modalités d'entrée</div>
                 <div class="attr-item"><span class="attr-name">2.5.3 — A</span><span class="attr-desc">Étiquette dans le nom : le nom accessible contient le texte visible (aria-label inclut le texte du bouton).</span></div>
                 <div class="attr-item"><span class="attr-name">2.5.4 — A</span><span class="attr-desc">Activation par le mouvement : fonctionnalités activables par geste ou mouvement ont une alternative.</span></div>
@@ -3151,7 +2771,6 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
           <!-- Critères Compréhensible -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -3163,14 +2782,12 @@ console.log(saluer("Alice"));</code></pre>
                 <div class="attrs-label">3.1 — Lisible</div>
                 <div class="attr-item"><span class="attr-name">3.1.1 — A</span><span class="attr-desc">Langue de la page : <code>&lt;html lang="fr"&gt;</code> obligatoire. Permet aux synthèses vocales de choisir la bonne voix.</span></div>
                 <div class="attr-item"><span class="attr-name">3.1.2 — AA</span><span class="attr-desc">Langue d'un passage : <code>&lt;span lang="en"&gt;Hello world&lt;/span&gt;</code> pour les passages dans une autre langue.</span></div>
-
                 <div class="attrs-label" style="margin-top:10px;">3.2 — Prévisible</div>
                 <div class="attr-item"><span class="attr-name">3.2.1 — A</span><span class="attr-desc">Pas de changement de contexte au focus : recevoir le focus ne soumet pas un formulaire ou ne change pas la page.</span></div>
                 <div class="attr-item"><span class="attr-name">3.2.2 — A</span><span class="attr-desc">Pas de changement de contexte à la saisie : changer un champ ne déclenche pas une action inattendue sans avertissement.</span></div>
                 <div class="attr-item"><span class="attr-name">3.2.3 — AA</span><span class="attr-desc">Navigation cohérente : les composants répétés (nav, recherche...) sont dans le même ordre relatif sur toutes les pages.</span></div>
                 <div class="attr-item"><span class="attr-name">3.2.4 — AA</span><span class="attr-desc">Identification cohérente : les composants avec la même fonction sont identifiés de façon cohérente.</span></div>
                 <div class="attr-item"><span class="attr-name">3.2.6 — A</span><span class="attr-desc">Aide à la navigation cohérente : les mécanismes d'aide (contact, FAQ...) apparaissent dans le même ordre.</span></div>
-
                 <div class="attrs-label" style="margin-top:10px;">3.3 — Assistance à la saisie</div>
                 <div class="attr-item"><span class="attr-name">3.3.1 — A</span><span class="attr-desc">Identification des erreurs : les erreurs sont détectées et décrites à l'utilisateur par du texte (pas seulement rouge). <code>aria-invalid="true"</code> + message d'erreur.</span></div>
                 <div class="attr-item"><span class="attr-name">3.3.2 — A</span><span class="attr-desc">Étiquettes et instructions : les champs de formulaire ont des labels clairs et les formats attendus sont indiqués.</span></div>
@@ -3180,7 +2797,6 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
           <!-- Critères Robuste -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -3196,10 +2812,8 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
         </div>
       </div>
-
       <!-- ─────────────────────────────────────────────────────────────
            BLOC 3 : ARIA — ATTRIBUTS COMPLETS
            ───────────────────────────────────────────────────────────── -->
@@ -3209,7 +2823,6 @@ console.log(saluer("Alice"));</code></pre>
           <h2>WAI-ARIA — Accessible Rich Internet Applications</h2>
         </div>
         <div class="ref-section-body">
-
           <div class="balise-bloc">
             <div class="balise-head">
               <span class="balise-tag">Qu'est-ce que ARIA ?</span>
@@ -3233,7 +2846,6 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
           <!-- Roles ARIA -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -3246,7 +2858,6 @@ console.log(saluer("Alice"));</code></pre>
                 Les balises HTML ont déjà des rôles implicites (voir tableau ci-dessous).
                 N'utiliser <code>role</code> que quand le HTML natif est insuffisant.
               </p>
-
               <p style="font-weight:700;font-size:.85rem;margin:12px 0 6px;">Rôles implicites des balises HTML (ne pas les redéfinir)</p>
               <div class="demo-zone" style="overflow-x:auto;">
                 <table>
@@ -3286,7 +2897,6 @@ console.log(saluer("Alice"));</code></pre>
                   </tbody>
                 </table>
               </div>
-
               <p style="font-weight:700;font-size:.85rem;margin:16px 0 6px;">Rôles ARIA à utiliser manuellement (sur des &lt;div&gt; ou éléments non natifs)</p>
               <div class="attrs">
                 <div class="attrs-label">Landmarks (points de repère de navigation)</div>
@@ -3298,7 +2908,6 @@ console.log(saluer("Alice"));</code></pre>
                 <div class="attr-item"><span class="attr-name">role="search"</span><span class="attr-desc">→ Formulaire/zone de recherche (n'a pas de balise HTML native)</span></div>
                 <div class="attr-item"><span class="attr-name">role="region"</span><span class="attr-desc">→ Section nommée (avec aria-label ou aria-labelledby)</span></div>
                 <div class="attr-item"><span class="attr-name">role="form"</span><span class="attr-desc">→ Formulaire nommé (sur &lt;div&gt; si &lt;form&gt; impossible)</span></div>
-
                 <div class="attrs-label" style="margin-top:10px;">Widgets interactifs</div>
                 <div class="attr-item"><span class="attr-name">role="button"</span><span class="attr-desc">→ Bouton (préférer &lt;button&gt;). Doit gérer clic + Entrée + Espace en JS.</span></div>
                 <div class="attr-item"><span class="attr-name">role="link"</span><span class="attr-desc">→ Lien (préférer &lt;a href&gt;). Doit gérer clic + Entrée en JS.</span></div>
@@ -3326,7 +2935,6 @@ console.log(saluer("Alice"));</code></pre>
                 <div class="attr-item"><span class="attr-name">role="separator"</span><span class="attr-desc">→ Séparateur (focusable si interactif, sinon préférer &lt;hr&gt;).</span></div>
                 <div class="attr-item"><span class="attr-name">role="toolbar"</span><span class="attr-desc">→ Barre d'outils (groupe de boutons liés).</span></div>
                 <div class="attr-item"><span class="attr-name">role="tooltip"</span><span class="attr-desc">→ Infobulle. Associé au déclencheur via aria-describedby.</span></div>
-
                 <div class="attrs-label" style="margin-top:10px;">Zones de contenu</div>
                 <div class="attr-item"><span class="attr-name">role="alert"</span><span class="attr-desc">→ Message urgent annoncé immédiatement par les lecteurs d'écran (erreur, message critique). Équivalent aria-live="assertive" + aria-atomic="true".</span></div>
                 <div class="attr-item"><span class="attr-name">role="status"</span><span class="attr-desc">→ Message d'état non urgent (confirmation, info). Équivalent aria-live="polite".</span></div>
@@ -3336,7 +2944,6 @@ console.log(saluer("Alice"));</code></pre>
                 <div class="attr-item"><span class="attr-name">role="progressbar"</span><span class="attr-desc">→ Barre de progression (préférer &lt;progress&gt;).</span></div>
                 <div class="attr-item"><span class="attr-name">role="dialog"</span><span class="attr-desc">→ Boîte de dialogue modale (préférer &lt;dialog&gt;).</span></div>
                 <div class="attr-item"><span class="attr-name">role="alertdialog"</span><span class="attr-desc">→ Modale urgente (erreur critique, confirmation destructive). Focus forcé dessus.</span></div>
-
                 <div class="attrs-label" style="margin-top:10px;">Document / Structure</div>
                 <div class="attr-item"><span class="attr-name">role="heading"</span><span class="attr-desc">→ Titre. Toujours avec aria-level="1" à "6". Préférer &lt;h1&gt;-&lt;h6&gt;.</span></div>
                 <div class="attr-item"><span class="attr-name">role="list"</span><span class="attr-desc">→ Liste. Utiliser si list-style:none retire le rôle natif sur &lt;ul&gt;.</span></div>
@@ -3355,7 +2962,6 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
           <!-- Propriétés ARIA -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -3368,7 +2974,6 @@ console.log(saluer("Alice"));</code></pre>
                 <strong>propriétés</strong> (valeurs stables, rarement modifiées) et
                 <strong>états</strong> (valeurs changeant dynamiquement via JavaScript).
               </p>
-
               <div class="attrs">
                 <div class="attrs-label">Nommage accessible (nom de l'élément)</div>
                 <div class="attr-item"><span class="attr-name">aria-label="Fermer"</span><span class="attr-desc">→ Nom textuel direct. Remplace le contenu visible pour les lecteurs d'écran. Sur bouton avec icône seule, sur input sans label visible.</span></div>
@@ -3376,11 +2981,9 @@ console.log(saluer("Alice"));</code></pre>
                 <div class="attr-item"><span class="attr-name">aria-describedby="id-msg"</span><span class="attr-desc">→ Description complémentaire via un autre élément. Sur input (message d'aide/erreur), dialog (description sous le titre). Annoncé après le nom.</span></div>
                 <div class="attr-item"><span class="attr-name">aria-description="texte"</span><span class="attr-desc">→ Description textuelle directe (alternative à aria-describedby sans créer d'élément DOM).</span></div>
                 <div class="attr-item"><span class="attr-name">aria-details="id"</span><span class="attr-desc">→ Lien vers une description étendue (glossaire, graphique complexe, instructions longues).</span></div>
-
                 <div class="attrs-label" style="margin-top:10px;">Visibilité et masquage</div>
                 <div class="attr-item"><span class="attr-name">aria-hidden="true"</span><span class="attr-desc">→ Masque l'élément et tous ses descendants des technologies d'assistance. Pour les décorations, icônes redondantes, contenus dupliqués.</span></div>
                 <div class="attr-item"><span class="attr-name">aria-hidden="false"</span><span class="attr-desc">→ Restaure la visibilité (rarement utile, préférer retirer l'attribut).</span></div>
-
                 <div class="attrs-label" style="margin-top:10px;">États interactifs</div>
                 <div class="attr-item"><span class="attr-name">aria-expanded="true|false"</span><span class="attr-desc">→ État ouvert/fermé d'un accordéon, menu déroulant, liste de suggestions. Sur le bouton déclencheur. "true" = contenu visible.</span></div>
                 <div class="attr-item"><span class="attr-name">aria-pressed="true|false|mixed"</span><span class="attr-desc">→ État d'un bouton bascule (toggle button). true = actif, false = inactif, mixed = état intermédiaire.</span></div>
@@ -3390,20 +2993,17 @@ console.log(saluer("Alice"));</code></pre>
                 <div class="attr-item"><span class="attr-name">aria-disabled="true|false"</span><span class="attr-desc">→ Composant désactivé mais toujours focusable (différent de disabled HTML qui retire du tabindex). Pour indiquer l'état sans retirer la possibilité de focus.</span></div>
                 <div class="attr-item"><span class="attr-name">aria-busy="true|false"</span><span class="attr-desc">→ Zone en cours de chargement. "true" = les lecteurs d'écran attendent que le chargement soit terminé avant d'annoncer les changements.</span></div>
                 <div class="attr-item"><span class="attr-name">aria-grabbed="true|false"</span><span class="attr-desc">→ Élément en cours de glissement (drag and drop). Déprécié en ARIA 1.1, utiliser aria-grabbed + aria-dropeffect avec précaution.</span></div>
-
                 <div class="attrs-label" style="margin-top:10px;">Contraintes et validation de formulaire</div>
                 <div class="attr-item"><span class="attr-name">aria-required="true"</span><span class="attr-desc">→ Champ obligatoire (en complément de required HTML). Annoncé "obligatoire" par les lecteurs d'écran.</span></div>
                 <div class="attr-item"><span class="attr-name">aria-invalid="true|false|grammar|spelling"</span><span class="attr-desc">→ Champ invalide. "true" = erreur générique. "grammar" = erreur grammaticale. "spelling" = faute d'orthographe. Associer à un message d'erreur via aria-describedby.</span></div>
                 <div class="attr-item"><span class="attr-name">aria-readonly="true"</span><span class="attr-desc">→ Champ en lecture seule (en complément de readonly HTML).</span></div>
                 <div class="attr-item"><span class="attr-name">aria-multiselectable="true"</span><span class="attr-desc">→ Plusieurs éléments peuvent être sélectionnés dans un listbox ou grid.</span></div>
                 <div class="attr-item"><span class="attr-name">aria-multiline="true"</span><span class="attr-desc">→ Champ de texte multiligne (sur role="textbox").</span></div>
-
                 <div class="attrs-label" style="margin-top:10px;">Valeurs et plages</div>
                 <div class="attr-item"><span class="attr-name">aria-valuenow="50"</span><span class="attr-desc">→ Valeur actuelle d'un slider, progressbar, spinbutton.</span></div>
                 <div class="attr-item"><span class="attr-name">aria-valuemin="0"</span><span class="attr-desc">→ Valeur minimale.</span></div>
                 <div class="attr-item"><span class="attr-name">aria-valuemax="100"</span><span class="attr-desc">→ Valeur maximale.</span></div>
                 <div class="attr-item"><span class="attr-name">aria-valuetext="Moyen"</span><span class="attr-desc">→ Texte lisible de la valeur (quand le nombre seul n'est pas suffisant. Ex: aria-valuenow="2" aria-valuetext="Mardi").</span></div>
-
                 <div class="attrs-label" style="margin-top:10px;">Structure et relations</div>
                 <div class="attr-item"><span class="attr-name">aria-controls="id-contenu"</span><span class="attr-desc">→ Indique quel élément ce widget contrôle (bouton burger → nav, bouton tab → tabpanel).</span></div>
                 <div class="attr-item"><span class="attr-name">aria-owns="id1 id2"</span><span class="attr-desc">→ Déclare des enfants qui ne sont pas dans le DOM (éléments rendus hors du parent pour des raisons CSS/z-index).</span></div>
@@ -3415,7 +3015,6 @@ console.log(saluer("Alice"));</code></pre>
                 <div class="attr-item"><span class="attr-name">aria-colindex / aria-rowindex</span><span class="attr-desc">→ Index de la colonne/ligne dans le tableau complet (tableaux virtualisés).</span></div>
                 <div class="attr-item"><span class="attr-name">aria-colspan / aria-rowspan</span><span class="attr-desc">→ Nombre de colonnes/lignes que couvre une cellule (dans un grid ARIA).</span></div>
                 <div class="attr-item"><span class="attr-name">aria-sort="ascending|descending|none|other"</span><span class="attr-desc">→ Tri d'une colonne de tableau. Sur le &lt;th&gt; de la colonne triée.</span></div>
-
                 <div class="attrs-label" style="margin-top:10px;">Zones de mise à jour dynamique (Live Regions)</div>
                 <div class="attr-item"><span class="attr-name">aria-live="polite"</span><span class="attr-desc">→ Annonce les mises à jour quand le lecteur d'écran a terminé sa lecture en cours. Pour les notifications non urgentes (succès, mise à jour de données).</span></div>
                 <div class="attr-item"><span class="attr-name">aria-live="assertive"</span><span class="attr-desc">→ Annonce immédiatement, en interrompant la lecture en cours. Pour les alertes urgentes, messages d'erreur critiques. Utiliser avec parcimonie.</span></div>
@@ -3423,7 +3022,6 @@ console.log(saluer("Alice"));</code></pre>
                 <div class="attr-item"><span class="attr-name">aria-atomic="true"</span><span class="attr-desc">→ Annonce TOUT le contenu de la zone (même ce qui n'a pas changé) à chaque mise à jour. Plutôt que seulement la partie modifiée.</span></div>
                 <div class="attr-item"><span class="attr-name">aria-atomic="false"</span><span class="attr-desc">→ Annonce uniquement les parties modifiées (défaut).</span></div>
                 <div class="attr-item"><span class="attr-name">aria-relevant="additions removals text"</span><span class="attr-desc">→ Quels types de changements déclencher des annonces. "additions" = ajouts, "removals" = suppressions, "text" = modifications de texte. Défaut : "additions text".</span></div>
-
                 <div class="attrs-label" style="margin-top:10px;">Keyboard shortcuts et aide</div>
                 <div class="attr-item"><span class="attr-name">aria-keyshortcuts="Alt+Shift+A"</span><span class="attr-desc">→ Raccourci clavier associé au composant. Annoncé par les lecteurs d'écran.</span></div>
                 <div class="attr-item"><span class="attr-name">aria-roledescription="Carrousel"</span><span class="attr-desc">→ Description du rôle en langage naturel (remplace le rôle technique par un terme métier). Ex: role="group" + aria-roledescription="Diapositive".</span></div>
@@ -3437,10 +3035,8 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
         </div>
       </div>
-
       <!-- ─────────────────────────────────────────────────────────────
            BLOC 4 : PATTERNS ARIA CONCRETS
            ───────────────────────────────────────────────────────────── -->
@@ -3450,7 +3046,6 @@ console.log(saluer("Alice"));</code></pre>
           <h2>Patterns ARIA courants avec code</h2>
         </div>
         <div class="ref-section-body">
-
           <!-- Skip link -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -3468,7 +3063,6 @@ console.log(saluer("Alice"));</code></pre>
 &lt;a href="#contenu-principal" class="skip-link"&gt;
   Aller au contenu principal
 &lt;/a&gt;
-
 &lt;!-- CSS --&gt;
 .skip-link {
   position: absolute;
@@ -3487,7 +3081,6 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
           <!-- Bouton avec icône -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -3502,18 +3095,15 @@ console.log(saluer("Alice"));</code></pre>
               <div class="demo-zone">
                 <pre><code>&lt;!-- ❌ MAUVAIS : aucun nom accessible --&gt;
 &lt;button type="button"&gt;✕&lt;/button&gt;
-
 &lt;!-- ✅ CORRECT : aria-label donne le nom --&gt;
 &lt;button type="button" aria-label="Fermer la fenêtre"&gt;
   &lt;span aria-hidden="true"&gt;✕&lt;/span&gt;
 &lt;/button&gt;
-
 &lt;!-- ✅ AUSSI CORRECT : texte masqué visuellement --&gt;
 &lt;button type="button"&gt;
   &lt;svg aria-hidden="true" focusable="false"&gt;...&lt;/svg&gt;
   &lt;span class="visually-hidden"&gt;Fermer la fenêtre&lt;/span&gt;
 &lt;/button&gt;
-
 &lt;!-- CSS visually-hidden (meilleure pratique) --&gt;
 .visually-hidden {
   position: absolute;
@@ -3538,7 +3128,6 @@ console.log(saluer("Alice"));</code></pre>
               </div>
             </div>
           </div>
-
           <!-- Toggle button -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -3556,19 +3145,15 @@ console.log(saluer("Alice"));</code></pre>
         id="btn-theme"&gt;
   Mode sombre
 &lt;/button&gt;
-
 /* CSS : cibler l'état ARIA directement */
 [aria-pressed="true"] {
   background: #1a1a2e;
   color: white;
 }
-
-// JavaScript
 var btn = document.getElementById('btn-theme');
 btn.addEventListener('click', function() {
   var etat = this.getAttribute('aria-pressed') === 'true';
   this.setAttribute('aria-pressed', String(!etat));
-  // Mettre à jour l'aria-label aussi
   this.setAttribute('aria-label',
     !etat ? 'Désactiver le mode sombre'
            : 'Activer le mode sombre');
@@ -3581,20 +3166,13 @@ btn.addEventListener('click', function() {
                     id="demo-toggle"
                     aria-pressed="false"
                     style="padding:8px 16px;border:2px solid var(--bord);border-radius:var(--r);cursor:pointer;font-size:.9rem;transition:all .2s;"
-                    onclick="
-                      var etat = this.getAttribute('aria-pressed')==='true';
-                      this.setAttribute('aria-pressed',String(!etat));
-                      this.style.background = !etat ? 'var(--primaire)' : '';
-                      this.style.color = !etat ? '#fff' : '';
-                      this.textContent = !etat ? '🌙 Mode sombre (actif)' : '🌙 Mode sombre (inactif)';
-                    ">
+                    onclick="demoModeSombre(this)">
                     🌙 Mode sombre (inactif)
                   </button>
                 </div>
               </div>
             </div>
           </div>
-
           <!-- Menu burger -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -3615,15 +3193,11 @@ btn.addEventListener('click', function() {
         aria-label="Ouvrir le menu de navigation"&gt;
   &lt;span aria-hidden="true"&gt;☰&lt;/span&gt;
 &lt;/button&gt;
-
 &lt;nav id="main-nav" hidden&gt;
   &lt;!-- liens --&gt;
 &lt;/nav&gt;
-
-// JavaScript
 var burger = document.getElementById('burger');
 var nav = document.getElementById('main-nav');
-
 burger.addEventListener('click', function() {
   var ouvert = this.getAttribute('aria-expanded') === 'true';
   this.setAttribute('aria-expanded', String(!ouvert));
@@ -3638,7 +3212,6 @@ burger.addEventListener('click', function() {
               </div>
             </div>
           </div>
-
           <!-- Formulaire accessible -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -3664,7 +3237,7 @@ burger.addEventListener('click', function() {
          aria-required="true"
          aria-describedby="email-aide email-erreur"
          aria-invalid="false"&gt;
-  &lt;small id="email-aide"&gt;Format : <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="bdd3d2d0fdd8c5d8d0cdd1d893ded2d0">[email&#160;protected]</a>&lt;/small&gt;
+  &lt;small id="email-aide"&gt;Format : vous&#64;exemple&#46;com&lt;/small&gt;
   &lt;span id="email-erreur"
         role="alert"
         aria-live="assertive"
@@ -3672,17 +3245,12 @@ burger.addEventListener('click', function() {
     ❌ Email invalide. Vérifiez le format.
   &lt;/span&gt;
 &lt;/div&gt;
-
-// Afficher l'erreur
 function afficherErreur(inputId, msgId) {
   var input = document.getElementById(inputId);
   var msg = document.getElementById(msgId);
   input.setAttribute('aria-invalid', 'true');
   msg.removeAttribute('hidden');
-  // role="alert" déclenche l'annonce automatique
 }
-
-// Effacer l'erreur
 function effacerErreur(inputId, msgId) {
   var input = document.getElementById(inputId);
   var msg = document.getElementById(msgId);
@@ -3700,37 +3268,22 @@ function effacerErreur(inputId, msgId) {
                            aria-invalid="false"
                            aria-describedby="demo-email-aide demo-email-err"
                            placeholder="vous@exemple.com">
-                    <small id="demo-email-aide" style="color:var(--txt2);">Format attendu : <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="ef818082af8b80828e86818ac18c8082">[email&#160;protected]</a></small>
+                    <small id="demo-email-aide" style="color:var(--txt2);">Format attendu : <span style="color:var(--txt2);"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="99eff6ecead9fce1fcf4e9f5fcb7faf6f4">[email&#160;protected]</a></span></small>
                     <span id="demo-email-err" role="alert" hidden
                           style="color:var(--rouge);font-size:.85rem;display:flex;align-items:center;gap:4px;">
                       ❌ Adresse email invalide. Vérifiez le format.
                     </span>
                     <div style="display:flex;gap:8px;">
                       <button type="button" style="background:var(--rouge);color:#fff;border:none;padding:8px 14px;border-radius:var(--r);cursor:pointer;font-size:.85rem;"
-                        onclick="
-                          var i = document.getElementById('demo-email');
-                          var e = document.getElementById('demo-email-err');
-                          i.setAttribute('aria-invalid','true');
-                          i.style.borderColor='var(--rouge)';
-                          i.style.outline='2px solid var(--rouge)';
-                          e.removeAttribute('hidden');
-                        ">Simuler erreur</button>
-                      <button type="button" style="background:var(--vert);color:#fff;border:none;padding:8px 14px;border-radius:var(--r);cursor:pointer;font-size:.85rem;"
-                        onclick="
-                          var i = document.getElementById('demo-email');
-                          var e = document.getElementById('demo-email-err');
-                          i.setAttribute('aria-invalid','false');
-                          i.style.borderColor='';
-                          i.style.outline='';
-                          e.setAttribute('hidden','');
-                        ">Effacer erreur</button>
+                        onclick="demoErreurSimuler()">Simuler erreur</button>
+                      <button type="button" style="background:#2d3748;color:#fff;border:none;padding:8px 14px;border-radius:var(--r);cursor:pointer;font-size:.85rem;"
+                        onclick="demoErreurEffacer()">Effacer erreur</button>
                     </div>
                   </form>
                 </div>
               </div>
             </div>
           </div>
-
           <!-- Modale accessible -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -3748,7 +3301,6 @@ function effacerErreur(inputId, msgId) {
         aria-haspopup="dialog"&gt;
   Ouvrir la modale
 &lt;/button&gt;
-
 &lt;div id="modale"
      role="dialog"
      aria-modal="true"
@@ -3762,35 +3314,28 @@ function effacerErreur(inputId, msgId) {
             aria-label="Fermer la modale"&gt;✕&lt;/button&gt;
   &lt;/div&gt;
 &lt;/div&gt;
-
-// JavaScript — Focus Trap
 var trigger, modal, closeBtn;
-
 function ouvrir() {
-  trigger = document.activeElement;      // Mémoriser le déclencheur
+  trigger = document.activeElement;
   modal.removeAttribute('hidden');
   document.body.style.overflow = 'hidden';
-  closeBtn.focus();                      // Focus sur le premier élément
+  closeBtn.focus();
   document.addEventListener('keydown', trapFocus);
 }
-
 function fermer() {
   modal.setAttribute('hidden', '');
   document.body.style.overflow = '';
   document.removeEventListener('keydown', trapFocus);
-  trigger.focus();                       // Restaurer le focus
+  trigger.focus();
 }
-
 function trapFocus(e) {
   if (e.key === 'Escape') { fermer(); return; }
   if (e.key !== 'Tab') return;
-
   var focusables = modal.querySelectorAll(
     'a[href], button, input, [tabindex]:not([tabindex="-1"])'
   );
   var first = focusables[0];
   var last  = focusables[focusables.length - 1];
-
   if (e.shiftKey && document.activeElement === first) {
     e.preventDefault();
     last.focus();
@@ -3802,7 +3347,6 @@ function trapFocus(e) {
               </div>
             </div>
           </div>
-
           <!-- Live region -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -3820,26 +3364,21 @@ function trapFocus(e) {
 &lt;div role="alert" aria-live="assertive" aria-atomic="true"&gt;
   &lt;!-- Vide au départ, rempli par JS en cas d'erreur critique --&gt;
 &lt;/div&gt;
-
 &lt;!-- role="status" : annonce différée (polite) --&gt;
 &lt;div role="status" aria-live="polite" aria-atomic="true"&gt;
   &lt;!-- Confirmations, informations, résultats --&gt;
 &lt;/div&gt;
-
 &lt;!-- Exemple : notification de succès --&gt;
 &lt;div id="notif"
      aria-live="polite"
      aria-atomic="true"
      class="visually-hidden"&gt;
 &lt;/div&gt;
-
-// JS : injecter le message APRÈS que la zone est dans le DOM
 function notifier(message) {
   var zone = document.getElementById('notif');
   zone.textContent = '';           // Vider d'abord
   setTimeout(function() {
-    zone.textContent = message;    // Remplir ensuite
-    // Le lecteur annonce : "Formulaire envoyé avec succès"
+    zone.textContent = message;
   }, 100);
 }</code></pre>
               </div>
@@ -3853,39 +3392,19 @@ function notifier(message) {
                     Zone de notification (vide)
                   </div>
                   <div style="display:flex;gap:8px;margin-top:8px;flex-wrap:wrap;">
-                    <button type="button" style="background:var(--vert);color:#fff;border:none;padding:8px 14px;border-radius:var(--r);cursor:pointer;font-size:.85rem;"
-                      onclick="
-                        var z = document.getElementById('demo-live-region');
-                        z.style.borderColor='var(--vert)';z.style.color='var(--vert)';
-                        z.textContent='';
-                        setTimeout(function(){z.textContent='✅ Formulaire envoyé avec succès !';},100);
-                      ">Succès</button>
+                    <button type="button" style="background:#15803d;color:#fff;border:none;padding:8px 14px;border-radius:var(--r);cursor:pointer;font-size:.85rem;"
+                      onclick="demoLiveRegion(this)" data-msg="succes">Succès</button>
                     <button type="button" style="background:var(--rouge);color:#fff;border:none;padding:8px 14px;border-radius:var(--r);cursor:pointer;font-size:.85rem;"
-                      onclick="
-                        var z = document.getElementById('demo-live-region');
-                        z.style.borderColor='var(--rouge)';z.style.color='var(--rouge)';
-                        z.textContent='';
-                        setTimeout(function(){z.textContent='❌ Erreur : connexion impossible. Réessayez.';},100);
-                      ">Erreur</button>
-                    <button type="button" style="background:var(--ambre);color:#fff;border:none;padding:8px 14px;border-radius:var(--r);cursor:pointer;font-size:.85rem;"
-                      onclick="
-                        var z = document.getElementById('demo-live-region');
-                        z.style.borderColor='var(--ambre)';z.style.color='var(--ambre)';
-                        z.textContent='';
-                        setTimeout(function(){z.textContent='⏳ Chargement en cours…';},100);
-                      ">Chargement</button>
+                      onclick="demoLiveRegion(this)" data-msg="erreur">Erreur</button>
+                    <button type="button" style="background:#d69e2e;color:#1a1a2e;font-weight:600;border:none;padding:8px 14px;border-radius:var(--r);cursor:pointer;font-size:.85rem;"
+                      onclick="demoLiveRegion(this)" data-msg="chargement">Chargement</button>
                     <button type="button" style="background:#e2e8f0;border:none;padding:8px 14px;border-radius:var(--r);cursor:pointer;font-size:.85rem;"
-                      onclick="
-                        var z = document.getElementById('demo-live-region');
-                        z.style.borderColor='var(--bord)';z.style.color='var(--txt2)';
-                        z.textContent='Zone de notification (vide)';
-                      ">Réinitialiser</button>
+                      onclick="demoLiveRegion(this)" data-msg="reset">Réinitialiser</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
-
           <!-- Onglets accessibles -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -3910,7 +3429,6 @@ function notifier(message) {
           aria-selected="false"
           tabindex="-1"&gt;CSS&lt;/button&gt;
 &lt;/div&gt;
-
 &lt;div role="tabpanel"
      id="panel-html"
      aria-labelledby="tab-html"&gt;
@@ -3922,7 +3440,6 @@ function notifier(message) {
      hidden&gt;
   Contenu du panel CSS
 &lt;/div&gt;
-
 &lt;!-- Navigation clavier : flèche gauche/droite entre tabs
      tabindex="-1" sur les tabs non sélectionnés
      tabindex="0" sur le tab actif --&gt;</code></pre>
@@ -3931,49 +3448,29 @@ function notifier(message) {
                 <div class="balise-exemple-label">Rendu interactif (flèches ← → pour naviguer)</div>
                 <div class="demo-zone">
                   <div role="tablist" aria-label="Onglets de démonstration" style="display:flex;gap:4px;border-bottom:2px solid var(--bord);margin-bottom:12px;">
+                    <!--
+                      PATTERN ONGLETS WAI-ARIA — tabindex="0" sur tous les tabs.
+                      La navigation ←/→ est gérée entièrement par JS (addEventListener).
+                      tabindex="0" = tous atteignables au Tab ET à la souris.
+                      aria-selected="true/false" = indique l'onglet actif aux lecteurs d'écran.
+                    -->
                     <button role="tab" id="t1" aria-controls="p1" aria-selected="true" tabindex="0"
                       style="padding:8px 16px;border:none;border-bottom:3px solid var(--primaire);background:none;font-weight:700;cursor:pointer;font-size:.88rem;color:var(--primaire);"
-                      onclick="activerOnglet('t1','p1')" onkeydown="navOnglets(event)">HTML</button>
-                    <button role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="-1"
+                      onclick="activerOnglet(this)" data-tab="t1" data-panel="p1">HTML</button>
+                    <button role="tab" id="t2" aria-controls="p2" aria-selected="false" tabindex="0"
                       style="padding:8px 16px;border:none;border-bottom:3px solid transparent;background:none;cursor:pointer;font-size:.88rem;color:var(--txt2);"
-                      onclick="activerOnglet('t2','p2')" onkeydown="navOnglets(event)">CSS</button>
-                    <button role="tab" id="t3" aria-controls="p3" aria-selected="false" tabindex="-1"
+                      onclick="activerOnglet(this)" data-tab="t2" data-panel="p2">CSS</button>
+                    <button role="tab" id="t3" aria-controls="p3" aria-selected="false" tabindex="0"
                       style="padding:8px 16px;border:none;border-bottom:3px solid transparent;background:none;cursor:pointer;font-size:.88rem;color:var(--txt2);"
-                      onclick="activerOnglet('t3','p3')" onkeydown="navOnglets(event)">JavaScript</button>
+                      onclick="activerOnglet(this)" data-tab="t3" data-panel="p3">JavaScript</button>
                   </div>
                   <div id="p1" role="tabpanel" aria-labelledby="t1" style="font-size:.9rem;"><strong>HTML</strong> — HyperText Markup Language. La structure de la page.</div>
                   <div id="p2" role="tabpanel" aria-labelledby="t2" hidden style="font-size:.9rem;"><strong>CSS</strong> — Cascading Style Sheets. La présentation visuelle.</div>
                   <div id="p3" role="tabpanel" aria-labelledby="t3" hidden style="font-size:.9rem;"><strong>JavaScript</strong> — L'interactivité et la logique côté client.</div>
-                  <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
-                  function activerOnglet(tabId, panelId) {
-                    ['t1','t2','t3'].forEach(function(id) {
-                      var tab = document.getElementById(id);
-                      var panel = document.getElementById(id.replace('t','p'));
-                      var actif = id === tabId;
-                      tab.setAttribute('aria-selected', String(actif));
-                      tab.setAttribute('tabindex', actif ? '0' : '-1');
-                      tab.style.fontWeight = actif ? '700' : '400';
-                      tab.style.color = actif ? 'var(--primaire)' : 'var(--txt2)';
-                      tab.style.borderBottom = actif ? '3px solid var(--primaire)' : '3px solid transparent';
-                      if (actif) { panel.removeAttribute('hidden'); }
-                      else { panel.setAttribute('hidden',''); }
-                    });
-                    document.getElementById(tabId).focus();
-                  }
-                  function navOnglets(e) {
-                    var tabs = ['t1','t2','t3'];
-                    var idx = tabs.indexOf(e.target.id);
-                    if (e.key==='ArrowRight') { e.preventDefault(); activerOnglet(tabs[(idx+1)%3], 'p'+(((idx+1)%3)+1)); }
-                    if (e.key==='ArrowLeft')  { e.preventDefault(); activerOnglet(tabs[(idx+2)%3], 'p'+(((idx+2)%3)+1)); }
-                    if (e.key==='Home')        { e.preventDefault(); activerOnglet(tabs[0],'p1'); }
-                    if (e.key==='End')         { e.preventDefault(); activerOnglet(tabs[2],'p3'); }
-                  }
-                  </script>
                 </div>
               </div>
             </div>
           </div>
-
           <!-- Contraste -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -3995,15 +3492,15 @@ function notifier(message) {
                 </div>
                 <div>
                   <p style="font-size:.75rem;font-weight:700;color:var(--txt2);margin-bottom:6px;">✅ PASSE — 4.6:1 (AA)</p>
-                  <div style="background:#fff;border:1px solid var(--bord);padding:10px;border-radius:var(--r);color:#b45309;font-size:.9rem;">#b45309 sur #ffffff</div>
+                  <div style="background:#fff;border:1px solid var(--bord);padding:10px;border-radius:var(--r);color:#92400e;font-size:.9rem;">#b45309 sur #ffffff</div>
                 </div>
                 <div>
                   <p style="font-size:.75rem;font-weight:700;color:var(--rouge);margin-bottom:6px;">❌ ÉCHOUE — 2.5:1 (insuffisant)</p>
-                  <div style="background:#fff;border:1px solid var(--bord);padding:10px;border-radius:var(--r);color:#22c55e;font-size:.9rem;">#22c55e sur #ffffff</div>
+                  <div style="background:#fff;border:1px solid var(--bord);padding:10px;border-radius:var(--r);font-size:.9rem;display:flex;align-items:center;gap:8px;"><span style="display:inline-block;width:14px;height:14px;background:#22c55e;border-radius:2px;flex-shrink:0;" aria-hidden="true"></span><span style="color:#1a1a2e;">#22c55e sur #ffffff — contraste 2.28:1 (insuffisant)</span></div>
                 </div>
                 <div>
                   <p style="font-size:.75rem;font-weight:700;color:var(--rouge);margin-bottom:6px;">❌ ÉCHOUE — 2.8:1 (insuffisant)</p>
-                  <div style="background:#fff;border:1px solid var(--bord);padding:10px;border-radius:var(--r);color:#f59e0b;font-size:.9rem;">#f59e0b sur #ffffff</div>
+                  <div style="background:#fff;border:1px solid var(--bord);padding:10px;border-radius:var(--r);font-size:.9rem;display:flex;align-items:center;gap:8px;"><span style="display:inline-block;width:14px;height:14px;background:#f59e0b;border-radius:2px;flex-shrink:0;" aria-hidden="true"></span><span style="color:#1a1a2e;">#f59e0b sur #ffffff — contraste 2.15:1 (insuffisant)</span></div>
                 </div>
                 <div>
                   <p style="font-size:.75rem;font-weight:700;color:var(--txt2);margin-bottom:6px;">✅ PASSE — 5.2:1 (AA en dark)</p>
@@ -4017,7 +3514,6 @@ function notifier(message) {
               </p>
             </div>
           </div>
-
           <!-- Focus visible -->
           <div class="balise-bloc">
             <div class="balise-head">
@@ -4034,7 +3530,6 @@ function notifier(message) {
                 <pre><code>/* ❌ MAUVAIS — supprime tout focus */
 * { outline: none; }
 a:focus { outline: none; }
-
 /* ✅ CORRECT — focus clavier visible, souris invisible */
 :focus-visible {
   outline: 3px solid #005fcc;
@@ -4044,7 +3539,6 @@ a:focus { outline: none; }
 :focus:not(:focus-visible) {
   outline: none;   /* Retire l'outline pour les clics souris */
 }
-
 /* Focus personnalisé avec box-shadow (contourne les overflow:hidden) */
 :focus-visible {
   outline: none;
@@ -4056,15 +3550,14 @@ a:focus { outline: none; }
                 <div class="demo-zone" style="display:flex;gap:10px;flex-wrap:wrap;">
                   <a href="#" style="padding:8px 14px;background:#f0f4f8;border-radius:var(--r);color:var(--bleu);text-decoration:none;font-size:.88rem;">Lien (Tab me)</a>
                   <button type="button" style="padding:8px 14px;background:var(--primaire);color:#fff;border:none;border-radius:var(--r);cursor:pointer;font-size:.88rem;">Bouton (Tab me)</button>
-                  <input type="text" placeholder="Input (Tab me)" style="padding:8px 12px;border:1px solid var(--bord);border-radius:var(--r);font-size:.88rem;width:150px;">
+                  <label for="inp-focus-demo" id="lbl-focus-demo" style="font-size:.8rem;font-weight:600;color:var(--txt2);">Input</label>
+                  <input type="text" id="inp-focus-demo" placeholder="Tab me" aria-labelledby="lbl-focus-demo" style="padding:8px 12px;border:1px solid var(--bord);border-radius:var(--r);font-size:.88rem;width:150px;">
                 </div>
               </div>
             </div>
           </div>
-
         </div>
       </div>
-
       <!-- ─────────────────────────────────────────────────────────────
            BLOC 5 : OUTILS ET RESSOURCES
            ───────────────────────────────────────────────────────────── -->
@@ -4081,7 +3574,6 @@ a:focus { outline: none; }
             </div>
             <div class="balise-body">
               <div class="demo-zone" style="display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:14px;">
-
                 <div style="border:1px solid var(--bord);border-radius:var(--r);padding:14px;">
                   <h3 style="font-size:.9rem;font-weight:700;margin-bottom:8px;">🔌 Extensions navigateur</h3>
                   <ul style="padding-left:16px;font-size:.83rem;color:var(--txt2);">
@@ -4092,7 +3584,6 @@ a:focus { outline: none; }
                     <li><strong>Color Contrast Analyzer</strong> — TPGI</li>
                   </ul>
                 </div>
-
                 <div style="border:1px solid var(--bord);border-radius:var(--r);padding:14px;">
                   <h3 style="font-size:.9rem;font-weight:700;margin-bottom:8px;">📢 Lecteurs d'écran</h3>
                   <ul style="padding-left:16px;font-size:.83rem;color:var(--txt2);">
@@ -4103,7 +3594,6 @@ a:focus { outline: none; }
                     <li><strong>Orca</strong> — Linux, gratuit</li>
                   </ul>
                 </div>
-
                 <div style="border:1px solid var(--bord);border-radius:var(--r);padding:14px;">
                   <h3 style="font-size:.9rem;font-weight:700;margin-bottom:8px;">🌐 Outils en ligne</h3>
                   <ul style="padding-left:16px;font-size:.83rem;color:var(--txt2);">
@@ -4114,7 +3604,6 @@ a:focus { outline: none; }
                     <li><strong>rgaa.numerique.gouv.fr</strong> — Référentiel RGAA</li>
                   </ul>
                 </div>
-
                 <div style="border:1px solid var(--bord);border-radius:var(--r);padding:14px;">
                   <h3 style="font-size:.9rem;font-weight:700;margin-bottom:8px;">✅ Checklist rapide</h3>
                   <ul style="padding-left:16px;font-size:.83rem;color:var(--txt2);">
@@ -4127,19 +3616,14 @@ a:focus { outline: none; }
                     <li>Valider le HTML (W3C)</li>
                   </ul>
                 </div>
-
               </div>
             </div>
           </div>
         </div>
       </div>
-
     </section>
-
-
   </div><!-- fin .wrapper -->
 </main>
-
 <!--
   ════════════════════════════════════════════════════════════════════════
   8. <footer>
@@ -4150,7 +3634,7 @@ a:focus { outline: none; }
   Pas besoin de role="contentinfo" (redondant).
 -->
 <footer class="site-footer">
-  <p>© IntA11Y - Solutions<span id="annee"></span> — Référence HTML5 pédagogique</p>
+  <p>© IntA11Y - Solutions <span id="annee"></span> — Référence HTML5 pédagogique</p>
   <nav aria-label="Liens légaux" style="margin-top:8px;">
     <ul style="list-style:none;display:flex;justify-content:center;gap:20px;flex-wrap:wrap;">
       <li><a href="#">Mentions légales</a></li>
@@ -4160,48 +3644,6 @@ a:focus { outline: none; }
   </nav>
 </footer>
 
-<!--
-  ════════════════════════════════════════════════════════════════════════
-  <script> à la fin du <body>
-  ════════════════════════════════════════════════════════════════════════
-  Placé ICI (en bas) pour deux raisons :
-  1. Le HTML est entièrement chargé et parsé → on peut manipuler le DOM
-  2. Pas de blocage du rendu de la page (le contenu s'affiche d'abord)
--->
-<script>
-  // Année dynamique dans le footer
-  var spanAnnee = document.getElementById('annee');
-  if (spanAnnee) spanAnnee.textContent = new Date().getFullYear();
-</script>
-
-<!--
-  ════════════════════════════════════════════════════════════════════════
-  FIN DU FICHIER
-  Structure complète du document HTML5 :
-
-  <!DOCTYPE html>           → Type de document
-  <html lang="fr">          → Balise racine
-    <head>                  → Métadonnées (invisible)
-      <meta charset>        → Encodage
-      <meta viewport>       → Responsive
-      <title>               → Onglet navigateur
-      <meta description>    → SEO
-      <meta og:*>           → Réseaux sociaux
-      <link canonical>      → SEO
-      <link stylesheet>     → CSS externe
-      <link icon>           → Favicon
-      <style>               → CSS inline
-      <script defer>        → JS en avance
-    </head>
-    <body>                  → Contenu visible
-      <a class="skip">      → Accessibilité clavier
-      <header>              → En-tête + <nav>
-      <main>                → Contenu principal
-        <section>           → Sections thématiques
-          <article>         → Contenu autonome
-          <aside>           → Contenu secondaire
-          <h1>-<h6>         → Titres
-          <p> <ul> <ol>     → Texte et listes
-          <a>               → Liens
-          <img>             → Images
-      
+<script src="./scripts/app.js"></script>
+</body>
+</html>
