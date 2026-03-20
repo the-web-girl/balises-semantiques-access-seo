@@ -1,0 +1,2274 @@
+<!DOCTYPE html>
+<html lang="fr" dir="ltr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Design Patterns — Composants accessibles &amp; responsives — École du Web</title>
+  <meta name="description" content="7 design patterns HTML/CSS/JS : carousel, formulaire, card produit, tooltip, modale, menu simple et menu complexe. Tous accessibles WCAG/RGAA et responsives.">
+  <meta name="theme-color" content="#1a1a2e">
+  <style>
+    /* ══════════════════════════════════════════════════════
+       DESIGN SYSTEM — hérité de index.html
+       Variables, reset, header, footer identiques
+    ══════════════════════════════════════════════════════ */
+    :root {
+      --primaire: #1a1a2e;
+      --accent:   #22c55e;
+      --fond:     #f8f9fa;
+      --card:     #ffffff;
+      --txt:      #1a1a2e;
+      --txt2:     #4a5568;
+      --bord:     #e2e8f0;
+      --rouge:    #e53e3e;
+      --bleu:     #3182ce;
+      --ambre:    #d69e2e;
+      --violet:   #805ad5;
+      --r:        6px;
+      --r-lg:     12px;
+      --shadow:   0 1px 3px rgba(0,0,0,.08), 0 4px 12px rgba(0,0,0,.06);
+      --shadow-lg:0 8px 32px rgba(0,0,0,.14);
+    }
+
+    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--fond);
+      color: var(--txt);
+      line-height: 1.7;
+    }
+
+    /* ── ACCESSIBILITÉ GLOBALE ── */
+    :focus-visible {
+      outline: 3px solid var(--accent);
+      outline-offset: 3px;
+      border-radius: 3px;
+    }
+    :focus:not(:focus-visible) { outline: none; }
+
+    .skip {
+      position: absolute; top: -100px; left: 16px; z-index: 9999;
+      background: var(--primaire); color: #fff;
+      padding: 10px 18px; border-radius: 0 0 var(--r) var(--r);
+      text-decoration: none; font-weight: 700;
+      transition: top .2s;
+    }
+    .skip:focus { top: 0; }
+
+    .visually-hidden {
+      position: absolute; width: 1px; height: 1px;
+      overflow: hidden; clip: rect(0,0,0,0); white-space: nowrap;
+    }
+
+    /* ── LAYOUT ── */
+    .wrapper { max-width: 1100px; margin: 0 auto; padding: 0 24px; }
+
+    /* ── HEADER — identique à index.html ── */
+    .site-header {
+      background: var(--primaire); color: #fff;
+      padding: 0 28px; height: 64px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 200;
+      box-shadow: 0 2px 8px rgba(0,0,0,.3);
+    }
+    .site-header .logo {
+      font-size: 1.1rem; font-weight: 700; color: #fff;
+      text-decoration: none; white-space: nowrap;
+    }
+    .site-header nav ul { display: flex; gap: 4px; list-style: none; }
+    .site-header nav a {
+      color: rgba(255,255,255,.85); text-decoration: none;
+      padding: 6px 12px; border-radius: var(--r); font-size: .88rem;
+      transition: background .18s; white-space: nowrap;
+    }
+    .site-header nav a:hover { background: rgba(255,255,255,.12); }
+    .site-header nav a.active {
+      background: rgba(34,197,94,.25);
+      color: #fff;
+    }
+    .burger-nav {
+      display: none; background: none;
+      border: 1px solid rgba(255,255,255,.35);
+      color: #fff; border-radius: var(--r);
+      padding: 6px 12px; cursor: pointer; font-size: 1.2rem;
+      min-height: 44px; min-width: 44px;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      background: linear-gradient(135deg, var(--primaire) 0%, #16213e 100%);
+      color: #fff; padding: 56px 28px; text-align: center;
+    }
+    .hero h1 { font-size: 2.2rem; margin-bottom: 10px; }
+    .hero p { font-size: 1.05rem; color: rgba(255,255,255,.75); max-width: 580px; margin: 0 auto 20px; }
+    .hero-link {
+      display: inline-flex; align-items: center; gap: 8px;
+      background: rgba(255,255,255,.12); color: #fff;
+      text-decoration: none; padding: 8px 18px; border-radius: var(--r);
+      font-size: .9rem; border: 1px solid rgba(255,255,255,.25);
+      transition: background .18s;
+    }
+    .hero-link:hover { background: rgba(255,255,255,.2); }
+
+    /* ── MAIN ── */
+    main { padding: 48px 28px 80px; }
+
+    /* ── SECTIONS PATTERNS ── */
+    .pattern-section {
+      margin-bottom: 60px;
+      scroll-margin-top: 80px;
+    }
+    .pattern-section-title {
+      font-size: 1.3rem; font-weight: 700;
+      margin-bottom: 6px; padding-top: 16px;
+      padding-bottom: 14px;
+      border-bottom: 2px solid var(--primaire);
+      display: flex; align-items: center; gap: 10px;
+    }
+    .pattern-label {
+      font-size: .72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .05em; padding: 3px 10px; border-radius: 20px;
+      background: var(--primaire); color: #fff;
+    }
+    .pattern-desc {
+      font-size: .9rem; color: var(--txt2);
+      margin: 12px 0 20px; max-width: 700px; line-height: 1.7;
+    }
+    .pattern-wcag {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: .78rem; font-weight: 700; color: #276749;
+      background: #f0fff4; border: 1px solid #9ae6b4;
+      padding: 3px 10px; border-radius: 20px; margin-bottom: 20px;
+    }
+
+    /* Boîte de démonstration */
+    .demo-box {
+      background: var(--card); border: 1px solid var(--bord);
+      border-radius: var(--r-lg); overflow: hidden;
+      box-shadow: var(--shadow);
+    }
+    .demo-box-header {
+      background: var(--primaire); padding: 10px 18px;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .demo-box-dot {
+      width: 10px; height: 10px; border-radius: 50%;
+    }
+    .demo-box-title {
+      font-size: .78rem; color: rgba(255,255,255,.7);
+      font-family: monospace; margin-left: 6px;
+    }
+    .demo-box-body { padding: 28px 24px; }
+
+    /* ══════════════════════════════════════════════════════
+       1. CAROUSEL
+    ══════════════════════════════════════════════════════ */
+    .carousel {
+      position: relative;
+      overflow: hidden;
+      border-radius: var(--r);
+    }
+    .carousel-track-wrapper {
+      overflow: hidden;
+    }
+    .carousel-track {
+      display: flex;
+      transition: transform .4s cubic-bezier(.4,0,.2,1);
+      will-change: transform;
+    }
+    .carousel-slide {
+      min-width: 100%;
+      flex-shrink: 0;
+    }
+    .carousel-slide-inner {
+      border-radius: var(--r);
+      overflow: hidden;
+      background: linear-gradient(135deg, var(--primaire), #16213e);
+      padding: 40px 32px;
+      color: #fff;
+      min-height: 220px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      gap: 10px;
+      position: relative;
+    }
+    .carousel-slide-inner::after {
+      content: '';
+      position: absolute; inset: 0;
+      background: radial-gradient(circle at 80% 50%, rgba(34,197,94,.15), transparent 60%);
+      pointer-events: none;
+    }
+    .carousel-slide-tag {
+      font-size: .72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .08em; color: var(--accent);
+    }
+    .carousel-slide-title { font-size: 1.4rem; font-weight: 700; line-height: 1.2; }
+    .carousel-slide-text  { font-size: .9rem; color: rgba(255,255,255,.75); max-width: 420px; }
+
+    /* Boutons précédent/suivant */
+    .carousel-btn {
+      position: absolute; top: 50%; transform: translateY(-50%);
+      background: rgba(255,255,255,.15); backdrop-filter: blur(4px);
+      border: 1px solid rgba(255,255,255,.3);
+      color: #fff; border-radius: 50%;
+      width: 42px; height: 42px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 1.1rem; z-index: 2;
+      transition: background .18s, transform .18s;
+    }
+    .carousel-btn:hover { background: rgba(255,255,255,.28); }
+    .carousel-btn:active { transform: translateY(-50%) scale(.94); }
+    .carousel-btn[disabled] { opacity: .35; cursor: not-allowed; }
+    .carousel-prev { left: 12px; }
+    .carousel-next { right: 12px; }
+
+    /* Points de navigation */
+    .carousel-dots {
+      display: flex; justify-content: center; gap: 8px;
+      margin-top: 16px;
+    }
+    .carousel-dot {
+      width: 8px; height: 8px; border-radius: 50%;
+      background: var(--bord); border: none; cursor: pointer;
+      padding: 0; transition: background .2s, transform .2s;
+    }
+    .carousel-dot.active {
+      background: var(--primaire);
+      transform: scale(1.3);
+    }
+    .carousel-dot:hover { background: var(--txt2); }
+
+    /* Live region pour annoncer le slide courant */
+    .carousel-live {
+      position: absolute; width:1px; height:1px;
+      overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       2. FORMULAIRE
+    ══════════════════════════════════════════════════════ */
+    .form-pattern {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+    .form-field {
+      display: flex;
+      flex-direction: column;
+      gap: 5px;
+    }
+    .form-field.full { grid-column: 1 / -1; }
+
+    .form-label {
+      font-size: .85rem; font-weight: 600; color: var(--txt);
+    }
+    .form-label .req { color: var(--rouge); margin-left: 2px; }
+
+    .form-input,
+    .form-select,
+    .form-textarea {
+      padding: 10px 14px;
+      border: 1.5px solid var(--bord);
+      border-radius: var(--r);
+      font-size: .9rem;
+      font-family: inherit;
+      color: var(--txt);
+      background: #fff;
+      transition: border-color .18s, box-shadow .18s;
+      width: 100%;
+    }
+    .form-input:hover, .form-select:hover, .form-textarea:hover {
+      border-color: #a0aec0;
+    }
+    .form-input:focus, .form-select:focus, .form-textarea:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 3px rgba(34,197,94,.2);
+    }
+    .form-input[aria-invalid="true"],
+    .form-select[aria-invalid="true"],
+    .form-textarea[aria-invalid="true"] {
+      border-color: var(--rouge);
+      box-shadow: 0 0 0 3px rgba(229,62,62,.15);
+    }
+    .form-textarea { resize: vertical; min-height: 90px; }
+    .form-hint {
+      font-size: .78rem; color: var(--txt2);
+    }
+    .form-error {
+      font-size: .78rem; color: var(--rouge); font-weight: 600;
+      display: flex; align-items: center; gap: 4px;
+    }
+    .form-error[hidden] { display: none; }
+
+    /* Groupe de radios / checkboxes */
+    .radio-group, .check-group {
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .radio-label, .check-label {
+      display: flex; align-items: center; gap: 8px;
+      font-size: .88rem; cursor: pointer;
+      padding: 8px 12px; border-radius: var(--r);
+      border: 1.5px solid var(--bord);
+      transition: border-color .18s, background .18s;
+    }
+    .radio-label:has(input:checked),
+    .check-label:has(input:checked) {
+      border-color: var(--accent);
+      background: rgba(34,197,94,.06);
+    }
+    .radio-label:has(input:focus-visible),
+    .check-label:has(input:focus-visible) {
+      outline: 3px solid var(--accent);
+      outline-offset: 2px;
+    }
+    .radio-label input, .check-label input {
+      width: 16px; height: 16px; accent-color: var(--accent); cursor: pointer;
+    }
+
+    /* Boutons du formulaire */
+    .form-actions { grid-column: 1/-1; display:flex; gap:10px; flex-wrap:wrap; }
+    .btn-primary {
+      background: var(--primaire); color: #fff;
+      border: none; padding: 11px 24px; border-radius: var(--r);
+      font-size: .9rem; font-weight: 600; cursor: pointer;
+      display: inline-flex; align-items: center; gap: 7px;
+      min-height: 44px; transition: background .18s, transform .18s;
+    }
+    .btn-primary:hover { background: #2d2d4a; transform: translateY(-1px); }
+    .btn-secondary {
+      background: none; color: var(--txt);
+      border: 1.5px solid var(--bord); padding: 11px 22px;
+      border-radius: var(--r); font-size: .9rem; cursor: pointer;
+      min-height: 44px; transition: border-color .18s, background .18s;
+    }
+    .btn-secondary:hover { border-color: var(--txt2); background: #f0f0f0; }
+
+    /* Notification résultat formulaire */
+    .form-result {
+      grid-column: 1/-1;
+      padding: 12px 16px; border-radius: var(--r);
+      font-size: .88rem; font-weight: 600;
+      display: none; align-items: center; gap: 8px;
+    }
+    .form-result.success {
+      background: #f0fff4; border: 1px solid #9ae6b4; color: #276749;
+    }
+    .form-result.error {
+      background: #fff5f5; border: 1px solid #fed7d7; color: #c53030;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       3. CARD PRODUIT
+    ══════════════════════════════════════════════════════ */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 20px;
+    }
+    .product-card {
+      background: var(--card);
+      border: 1px solid var(--bord);
+      border-radius: var(--r-lg);
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      box-shadow: var(--shadow);
+      transition: box-shadow .2s, transform .2s;
+    }
+    .product-card:hover {
+      box-shadow: var(--shadow-lg);
+      transform: translateY(-3px);
+    }
+    .product-card-img {
+      position: relative;
+      aspect-ratio: 4/3;
+      overflow: hidden;
+      background: #e2e8f0;
+    }
+    .product-card-img img {
+      width: 100%; height: 100%;
+      object-fit: cover;
+      display: block;
+      transition: transform .4s ease;
+    }
+    .product-card:hover .product-card-img img {
+      transform: scale(1.05);
+    }
+    .product-badge {
+      position: absolute; top: 10px; left: 10px;
+      font-size: .7rem; font-weight: 700; text-transform: uppercase;
+      padding: 3px 8px; border-radius: 20px; letter-spacing: .04em;
+    }
+    .badge-new   { background: var(--primaire); color: #fff; }
+    .badge-sale  { background: var(--rouge);    color: #fff; }
+    .badge-sold  { background: #a0aec0;         color: #fff; }
+
+    /* Bouton favori flottant */
+    .product-fav {
+      position: absolute; top: 10px; right: 10px;
+      background: #fff; border: 1px solid var(--bord);
+      border-radius: 50%; width: 36px; height: 36px;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: .95rem;
+      box-shadow: 0 2px 6px rgba(0,0,0,.1);
+      transition: transform .18s, background .18s;
+    }
+    .product-fav:hover { background: #fff5f5; transform: scale(1.1); }
+    .product-fav[aria-pressed="true"] { background: #fff5f5; }
+
+    .product-card-body {
+      padding: 16px; flex: 1; display: flex; flex-direction: column; gap: 6px;
+    }
+    .product-cat { font-size: .72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .05em; color: var(--txt2); }
+    .product-name {
+      font-size: .97rem; font-weight: 700; color: var(--txt);
+      line-height: 1.3;
+    }
+    .product-name a { color: inherit; text-decoration: none; }
+    .product-name a:hover { color: var(--bleu); text-decoration: underline; }
+    .product-rating {
+      display: flex; align-items: center; gap: 5px; font-size: .82rem; color: var(--txt2);
+    }
+    .stars { color: var(--ambre); letter-spacing: 1px; }
+    .product-price-row { display: flex; align-items: baseline; gap: 8px; margin-top: 4px; }
+    .product-price {
+      font-size: 1.15rem; font-weight: 800; color: var(--txt);
+    }
+    .product-price-old {
+      font-size: .88rem; color: var(--txt2); text-decoration: line-through;
+    }
+    .product-price-discount {
+      font-size: .75rem; font-weight: 700; color: var(--rouge);
+      background: #fff5f5; padding: 1px 6px; border-radius: 20px;
+    }
+    .product-card-footer {
+      padding: 0 16px 16px;
+    }
+    .btn-cart {
+      width: 100%; background: var(--primaire); color: #fff;
+      border: none; padding: 10px; border-radius: var(--r);
+      font-size: .88rem; font-weight: 600; cursor: pointer;
+      display: flex; align-items: center; justify-content: center; gap: 7px;
+      min-height: 44px; transition: background .18s;
+    }
+    .btn-cart:hover { background: #2d2d4a; }
+    .btn-cart:disabled {
+      background: #a0aec0; cursor: not-allowed;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       4. TOOLTIP
+    ══════════════════════════════════════════════════════ */
+    .tooltip-demo-grid {
+      display: flex; flex-wrap: wrap; gap: 24px; align-items: flex-start;
+    }
+    .tooltip-wrapper {
+      position: relative;
+      display: inline-block;
+    }
+    /* Le tooltip est accessible via role="tooltip" et aria-describedby */
+    [role="tooltip"] {
+      position: absolute;
+      bottom: calc(100% + 8px);
+      left: 50%; transform: translateX(-50%);
+      background: var(--primaire); color: #fff;
+      font-size: .78rem; font-weight: 500;
+      padding: 6px 12px; border-radius: var(--r);
+      white-space: nowrap; pointer-events: none;
+      opacity: 0; visibility: hidden;
+      transition: opacity .15s, visibility .15s;
+      z-index: 100;
+      /* Flèche en bas */
+      filter: drop-shadow(0 2px 4px rgba(0,0,0,.2));
+    }
+    [role="tooltip"]::after {
+      content: '';
+      position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+      border: 5px solid transparent;
+      border-top-color: var(--primaire);
+    }
+    /* Variantes de position */
+    [role="tooltip"].tooltip-bottom {
+      top: calc(100% + 8px); bottom: auto;
+    }
+    [role="tooltip"].tooltip-bottom::after {
+      top: auto; bottom: 100%;
+      border-top-color: transparent;
+      border-bottom-color: var(--primaire);
+    }
+    [role="tooltip"].tooltip-right {
+      left: calc(100% + 8px); top: 50%; bottom: auto;
+      transform: translateY(-50%);
+    }
+    [role="tooltip"].tooltip-right::after {
+      top: 50%; left: auto; right: 100%; bottom: auto;
+      transform: translateY(-50%);
+      border-top-color: transparent;
+      border-right-color: var(--primaire);
+    }
+
+    /* Afficher au hover ET focus (WCAG 1.4.13) */
+    .tooltip-trigger:hover [role="tooltip"],
+    .tooltip-trigger:focus-within [role="tooltip"] {
+      opacity: 1; visibility: visible;
+    }
+
+    /* Bouton déclencheur */
+    .tooltip-trigger button,
+    .tooltip-btn {
+      background: var(--primaire); color: #fff;
+      border: none; padding: 10px 18px; border-radius: var(--r);
+      cursor: pointer; font-size: .88rem; font-weight: 600;
+      min-height: 44px; transition: background .18s;
+      display: inline-flex; align-items: center; gap: 6px;
+    }
+    .tooltip-trigger button:hover, .tooltip-btn:hover { background: #2d2d4a; }
+    .tooltip-info {
+      background: none; border: 2px solid var(--bord); color: var(--txt);
+      border-radius: 50%; width: 28px; height: 28px;
+      font-weight: 700; cursor: pointer; font-size: .85rem;
+      display: inline-flex; align-items: center; justify-content: center;
+      transition: background .18s;
+    }
+    .tooltip-info:hover { background: #f0f4f8; }
+
+    /* ══════════════════════════════════════════════════════
+       5. MODALE
+    ══════════════════════════════════════════════════════ */
+    .modal-overlay {
+      position: fixed; inset: 0;
+      background: rgba(0,0,0,.55);
+      z-index: 300;
+      display: flex; align-items: center; justify-content: center;
+      padding: 16px;
+      opacity: 0; visibility: hidden;
+      transition: opacity .22s, visibility .22s;
+    }
+    .modal-overlay.open {
+      opacity: 1; visibility: visible;
+    }
+    .modal-box {
+      background: var(--card);
+      border-radius: var(--r-lg);
+      box-shadow: var(--shadow-lg);
+      width: 100%; max-width: 500px;
+      max-height: 90vh; overflow-y: auto;
+      transform: translateY(16px);
+      transition: transform .22s cubic-bezier(.4,0,.2,1);
+      position: relative;
+    }
+    .modal-overlay.open .modal-box {
+      transform: translateY(0);
+    }
+    .modal-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 20px 22px 14px;
+      border-bottom: 1px solid var(--bord);
+      gap: 12px;
+    }
+    .modal-title {
+      font-size: 1.1rem; font-weight: 700; color: var(--txt);
+      flex: 1; line-height: 1.3;
+    }
+    .modal-close-btn {
+      background: none; border: 1px solid var(--bord);
+      border-radius: 50%; width: 36px; height: 36px; min-width: 36px;
+      font-size: .95rem; cursor: pointer; color: var(--txt);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0; transition: background .18s;
+    }
+    .modal-close-btn:hover { background: #f0f4f8; }
+    .modal-body { padding: 18px 22px; }
+    .modal-body p { font-size: .92rem; color: var(--txt2); line-height: 1.75; margin-bottom: 12px; }
+    .modal-body p:last-child { margin-bottom: 0; }
+    .modal-footer {
+      display: flex; gap: 10px; flex-wrap: wrap;
+      padding: 14px 22px 22px;
+      border-top: 1px solid var(--bord);
+    }
+
+    /* Variante de modale — alerte destructive */
+    .modal-box.modal-danger .modal-header { border-bottom-color: #fed7d7; }
+    .modal-box.modal-danger .modal-title { color: var(--rouge); }
+
+    /* Bouton ouvrir modale */
+    .open-modal-btn {
+      background: var(--primaire); color: #fff;
+      border: none; padding: 10px 20px; border-radius: var(--r);
+      font-size: .9rem; font-weight: 600; cursor: pointer;
+      min-height: 44px; transition: background .18s;
+      display: inline-flex; align-items: center; gap: 7px;
+    }
+    .open-modal-btn:hover { background: #2d2d4a; }
+    .open-modal-btn.danger { background: var(--rouge); }
+    .open-modal-btn.danger:hover { background: #c53030; }
+
+    /* ══════════════════════════════════════════════════════
+       6. MENU SIMPLE
+    ══════════════════════════════════════════════════════ */
+    .nav-simple {
+      background: var(--primaire);
+      border-radius: var(--r);
+      padding: 8px;
+      display: flex; align-items: center; justify-content: space-between;
+      gap: 8px; flex-wrap: wrap;
+    }
+    .nav-simple-logo {
+      color: #fff; font-weight: 700; font-size: .97rem;
+      text-decoration: none; padding: 4px 8px; flex-shrink: 0;
+    }
+    .nav-simple-links {
+      display: flex; gap: 2px; list-style: none; flex-wrap: wrap;
+    }
+    .nav-simple-links a {
+      color: rgba(255,255,255,.8); text-decoration: none;
+      padding: 8px 14px; border-radius: var(--r);
+      font-size: .88rem; transition: background .18s; white-space: nowrap;
+      min-height: 44px; display: inline-flex; align-items: center;
+    }
+    .nav-simple-links a:hover { background: rgba(255,255,255,.12); color: #fff; }
+    .nav-simple-links a[aria-current="page"] {
+      background: rgba(34,197,94,.25); color: #fff; font-weight: 600;
+    }
+    .nav-simple-links a[aria-current="page"]::before {
+      content: ''; display: inline-block;
+      width: 6px; height: 6px; border-radius: 50%;
+      background: var(--accent); margin-right: 7px; flex-shrink: 0;
+    }
+    .nav-simple-cta {
+      background: var(--accent); color: var(--primaire) !important;
+      font-weight: 700 !important; border-radius: var(--r);
+    }
+    .nav-simple-cta:hover { background: #16a34a !important; color: #fff !important; }
+
+    /* Burger du menu simple */
+    .nav-simple-burger {
+      display: none; background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.25);
+      color: #fff; border-radius: var(--r);
+      padding: 0 12px; min-height: 44px; min-width: 44px;
+      cursor: pointer; font-size: 1.2rem;
+      align-items: center; justify-content: center;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       7. MENU COMPLEXE (Mega Menu + Dropdown)
+    ══════════════════════════════════════════════════════ */
+    .nav-complex {
+      background: var(--primaire);
+      border-radius: var(--r);
+      padding: 0 12px;
+      display: flex; align-items: center;
+      gap: 0; position: relative; flex-wrap: wrap;
+    }
+    .nav-complex-logo {
+      color: #fff; font-weight: 700; font-size: .97rem;
+      text-decoration: none; padding: 14px 12px;
+      flex-shrink: 0; margin-right: 8px;
+    }
+    .nav-complex-items {
+      display: flex; list-style: none; flex: 1; gap: 2px;
+    }
+    .nav-complex-item {
+      position: relative;
+    }
+    .nav-complex-link {
+      color: rgba(255,255,255,.85); text-decoration: none;
+      padding: 14px 14px; font-size: .88rem;
+      display: flex; align-items: center; gap: 5px;
+      white-space: nowrap; transition: background .18s;
+      border: none; background: none; cursor: pointer;
+      font-family: inherit; min-height: 52px;
+    }
+    .nav-complex-link:hover,
+    .nav-complex-link[aria-expanded="true"] {
+      background: rgba(255,255,255,.1); color: #fff;
+    }
+    /* Icône flèche dropdown */
+    .nav-arrow {
+      font-size: .65rem; transition: transform .2s;
+      display: inline-block;
+    }
+    .nav-complex-link[aria-expanded="true"] .nav-arrow {
+      transform: rotate(180deg);
+    }
+
+    /* Dropdown simple */
+    .dropdown {
+      position: absolute; top: 100%; left: 0;
+      background: #fff; border-radius: var(--r);
+      box-shadow: var(--shadow-lg); min-width: 200px;
+      border: 1px solid var(--bord);
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transform: translateY(6px);
+      transition: opacity .18s, visibility .18s, transform .18s;
+      z-index: 50;
+    }
+    .dropdown.open {
+      opacity: 1; visibility: visible;
+      pointer-events: auto; transform: translateY(0);
+    }
+    .dropdown ul { list-style: none; padding: 6px; }
+    .dropdown li a, .dropdown li button {
+      display: flex; align-items: center; gap: 10px;
+      padding: 9px 12px; border-radius: var(--r);
+      font-size: .88rem; color: var(--txt); text-decoration: none;
+      width: 100%; text-align: left; background: none; border: none;
+      cursor: pointer; font-family: inherit;
+      transition: background .15s;
+    }
+    .dropdown li a:hover, .dropdown li button:hover {
+      background: #f0f4f8;
+    }
+    .dropdown-icon { font-size: 1rem; width: 20px; text-align: center; flex-shrink: 0; }
+    .dropdown-sep { height: 1px; background: var(--bord); margin: 4px 6px; }
+
+    /* Mega menu */
+    .megamenu {
+      position: absolute; top: 100%; left: -120px;
+      background: #fff; border-radius: var(--r-lg);
+      box-shadow: var(--shadow-lg); width: 520px;
+      border: 1px solid var(--bord);
+      opacity: 0; visibility: hidden; pointer-events: none;
+      transform: translateY(6px);
+      transition: opacity .18s, visibility .18s, transform .18s;
+      z-index: 50; padding: 16px;
+    }
+    .megamenu.open {
+      opacity: 1; visibility: visible;
+      pointer-events: auto; transform: translateY(0);
+    }
+    .megamenu-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+    .megamenu-card {
+      display: flex; align-items: flex-start; gap: 12px;
+      padding: 12px; border-radius: var(--r);
+      text-decoration: none; color: var(--txt);
+      transition: background .15s;
+    }
+    .megamenu-card:hover { background: #f0f4f8; }
+    .megamenu-card-icon {
+      font-size: 1.4rem; width: 36px; height: 36px;
+      background: #f0f4f8; border-radius: var(--r);
+      display: flex; align-items: center; justify-content: center;
+      flex-shrink: 0;
+    }
+    .megamenu-card-title { font-size: .88rem; font-weight: 600; margin-bottom: 2px; }
+    .megamenu-card-desc  { font-size: .78rem; color: var(--txt2); line-height: 1.4; }
+    .megamenu-footer {
+      border-top: 1px solid var(--bord); margin-top: 12px;
+      padding-top: 12px; display: flex; justify-content: space-between; align-items: center;
+    }
+    .megamenu-footer-link {
+      font-size: .82rem; color: var(--bleu); text-decoration: none; font-weight: 600;
+    }
+    .megamenu-footer-link:hover { text-decoration: underline; }
+
+    /* Actions droite nav complexe */
+    .nav-complex-actions {
+      display: flex; align-items: center; gap: 6px; margin-left: auto;
+    }
+    .nav-complex-actions a {
+      color: rgba(255,255,255,.85); text-decoration: none;
+      padding: 8px 14px; border-radius: var(--r);
+      font-size: .85rem; min-height: 44px;
+      display: inline-flex; align-items: center;
+      transition: background .18s;
+    }
+    .nav-complex-actions a:hover { background: rgba(255,255,255,.12); color: #fff; }
+    .nav-complex-actions .cta {
+      background: var(--accent); color: var(--primaire) !important;
+      font-weight: 700; border-radius: var(--r);
+    }
+    .nav-complex-actions .cta:hover { background: #16a34a !important; }
+
+    /* Burger menu complexe */
+    .nav-complex-burger {
+      display: none; background: rgba(255,255,255,.1);
+      border: 1px solid rgba(255,255,255,.25);
+      color: #fff; border-radius: var(--r);
+      min-height: 44px; min-width: 44px;
+      cursor: pointer; font-size: 1.2rem;
+      align-items: center; justify-content: center;
+      margin-left: auto;
+    }
+
+    /* Panel mobile menu complexe */
+    .nav-complex-mobile-panel {
+      display: none; width: 100%;
+      background: #16213e;
+      border-radius: 0 0 var(--r) var(--r);
+      padding: 8px;
+    }
+    .nav-complex-mobile-panel.open { display: block; }
+    .nav-complex-mobile-panel a,
+    .nav-complex-mobile-panel button {
+      display: flex; align-items: center; gap: 10px;
+      color: rgba(255,255,255,.85); text-decoration: none;
+      padding: 10px 14px; border-radius: var(--r);
+      font-size: .9rem; width: 100%; text-align: left;
+      background: none; border: none; cursor: pointer; font-family: inherit;
+      transition: background .15s; min-height: 44px;
+    }
+    .nav-complex-mobile-panel a:hover,
+    .nav-complex-mobile-panel button:hover { background: rgba(255,255,255,.1); }
+    .nav-complex-mobile-panel .mobile-section-title {
+      font-size: .72rem; font-weight: 700; text-transform: uppercase;
+      letter-spacing: .06em; color: rgba(255,255,255,.4);
+      padding: 10px 14px 4px; pointer-events: none;
+    }
+    .nav-complex-mobile-panel hr { border-color: rgba(255,255,255,.1); margin: 4px 0; }
+
+    /* ── FOOTER ── */
+    .site-footer {
+      background: var(--primaire); color: rgba(255,255,255,.7);
+      text-align: center; padding: 28px 20px; font-size: .85rem;
+    }
+    .site-footer a { color: rgba(255,255,255,.7); text-decoration: underline; }
+    .site-footer-links {
+      list-style: none; display: flex; justify-content: center;
+      flex-wrap: wrap; gap: 20px; margin-top: 8px;
+    }
+
+    /* ══════════════════════════════════════════════════════
+       RESPONSIVE MEDIA QUERIES
+    ══════════════════════════════════════════════════════ */
+    @media (max-width: 900px) {
+      .cards-grid { grid-template-columns: repeat(2, 1fr); }
+      .megamenu { width: 320px; left: 0; }
+      .megamenu-grid { grid-template-columns: 1fr; }
+    }
+    @media (max-width: 768px) {
+      .site-header { padding: 0 16px; }
+      .site-header nav { display: none; }
+      .burger-nav { display: flex; }
+      .form-pattern { grid-template-columns: 1fr; }
+      .form-field.full { grid-column: 1; }
+      .tooltip-demo-grid { gap: 16px; }
+      .nav-complex-items,
+      .nav-complex-actions { display: none; }
+      .nav-complex-burger { display: flex; }
+      /* Menu simple burger */
+      .nav-simple-burger { display: flex; }
+      .nav-simple-links { display: none; width: 100%; flex-direction: column; padding: 8px 0; }
+      .nav-simple-links.open { display: flex; }
+      .nav-simple-links a { padding: 10px 14px; }
+    }
+    @media (max-width: 560px) {
+      .cards-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 1.6rem; }
+      .modal-footer { flex-direction: column; }
+      .modal-footer .btn-primary,
+      .modal-footer .btn-secondary { width: 100%; justify-content: center; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after {
+        animation-duration: .01ms !important;
+        transition-duration: .01ms !important;
+      }
+    }
+  </style>
+</head>
+<body>
+
+<!-- SKIP LINK -->
+<a href="#main-content" class="skip">Aller au contenu principal</a>
+
+<!-- ════════════════════════════════
+     HEADER
+════════════════════════════════ -->
+<header class="site-header">
+  <a href="./index.html" class="logo" aria-label="IntA11Y - Solutions— Accueil">🎓 École du Web</a>
+  <nav aria-label="Navigation principale">
+    <ul>
+      <li><a href="./index.html">Référence HTML5</a></li>
+      <li><a href="./patterns.html" aria-current="page" class="active">Design Patterns</a></li>
+      <li><a href="./accessibilite-handicaps.html">♿ Guides handicaps</a></li>
+    </ul>
+  </nav>
+  <button class="burger-nav" id="site-burger" type="button"
+          aria-controls="site-mobile-nav"
+          aria-expanded="false"
+          aria-label="Ouvrir le menu">
+    <span aria-hidden="true">☰</span>
+  </button>
+</header>
+
+<!-- Menu mobile site header -->
+<div id="site-mobile-nav" hidden style="background:var(--primaire);padding:8px 16px 14px;">
+  <nav aria-label="Navigation mobile">
+    <ul style="list-style:none;display:flex;flex-direction:column;gap:4px;">
+      <li><a href="./index.html" style="color:rgba(255,255,255,.85);text-decoration:none;padding:10px 12px;border-radius:var(--r);display:block;font-size:.9rem;">Référence HTML5</a></li>
+      <li><a href="./patterns.html" style="color:#fff;font-weight:600;background:rgba(34,197,94,.2);padding:10px 12px;border-radius:var(--r);display:block;font-size:.9rem;">Design Patterns</a></li>
+    </ul>
+  </nav>
+</div>
+
+<!-- ════════════════════════════════
+     HERO
+════════════════════════════════ -->
+<div class="hero">
+  <h1>Design Patterns</h1>
+  <p>7 composants accessibles WCAG&nbsp;2.2 et responsives, prêts à intégrer dans vos projets.</p>
+  <a href="./index.html" class="hero-link">
+    <span aria-hidden="true">←</span> Retour à la référence HTML5
+  </a>
+</div>
+
+<!-- ════════════════════════════════
+     CONTENU PRINCIPAL
+════════════════════════════════ -->
+<main id="main-content" tabindex="-1">
+<div class="wrapper">
+
+  <!-- TABLE DES MATIÈRES -->
+  <nav aria-label="Table des matières" style="margin:32px 0 48px;">
+    <p style="font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.05em;color:var(--txt2);margin-bottom:10px;">Sommaire</p>
+    <ol style="list-style:none;display:flex;flex-wrap:wrap;gap:8px;padding:0;">
+      <li><a href="#carousel"   style="background:var(--card);border:1px solid var(--bord);color:var(--bleu);text-decoration:none;padding:6px 14px;border-radius:20px;font-size:.85rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;"><span aria-hidden="true">01</span> Carousel</a></li>
+      <li><a href="#formulaire" style="background:var(--card);border:1px solid var(--bord);color:var(--bleu);text-decoration:none;padding:6px 14px;border-radius:20px;font-size:.85rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;"><span aria-hidden="true">02</span> Formulaire</a></li>
+      <li><a href="#card"       style="background:var(--card);border:1px solid var(--bord);color:var(--bleu);text-decoration:none;padding:6px 14px;border-radius:20px;font-size:.85rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;"><span aria-hidden="true">03</span> Card produit</a></li>
+      <li><a href="#tooltip"    style="background:var(--card);border:1px solid var(--bord);color:var(--bleu);text-decoration:none;padding:6px 14px;border-radius:20px;font-size:.85rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;"><span aria-hidden="true">04</span> Tooltip</a></li>
+      <li><a href="#modale"     style="background:var(--card);border:1px solid var(--bord);color:var(--bleu);text-decoration:none;padding:6px 14px;border-radius:20px;font-size:.85rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;"><span aria-hidden="true">05</span> Modale</a></li>
+      <li><a href="#menu-simple"  style="background:var(--card);border:1px solid var(--bord);color:var(--bleu);text-decoration:none;padding:6px 14px;border-radius:20px;font-size:.85rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;"><span aria-hidden="true">06</span> Menu simple</a></li>
+      <li><a href="#menu-complexe" style="background:var(--card);border:1px solid var(--bord);color:var(--bleu);text-decoration:none;padding:6px 14px;border-radius:20px;font-size:.85rem;font-weight:600;display:inline-flex;align-items:center;gap:6px;"><span aria-hidden="true">07</span> Menu complexe</a></li>
+    </ol>
+  </nav>
+
+  <!-- ════════════════════════════════
+       1. CAROUSEL
+  ════════════════════════════════ -->
+  <section class="pattern-section" id="carousel" aria-labelledby="titre-carousel">
+    <h2 class="pattern-section-title" id="titre-carousel">
+      <span aria-hidden="true">01</span>
+      Carousel
+      <span class="pattern-label">Pattern</span>
+    </h2>
+    <p class="pattern-desc">
+      Composant de défilement de diapositives. Navigation par boutons, points cliquables et clavier (← →).
+      La zone live annonce le slide courant aux lecteurs d'écran sans déplacer le focus.
+    </p>
+    <p class="pattern-wcag">✓ WCAG 2.1.1 Clavier · 2.2.2 Pause/Stop · 1.3.1 Structure · 4.1.2 Nom/Rôle/Valeur</p>
+
+    <div class="demo-box">
+      <div class="demo-box-header">
+        <span class="demo-box-dot" style="background:#ff5f57"></span>
+        <span class="demo-box-dot" style="background:#febc2e"></span>
+        <span class="demo-box-dot" style="background:#28c840"></span>
+        <span class="demo-box-title">carousel.html</span>
+      </div>
+      <div class="demo-box-body">
+
+        <!--
+          CAROUSEL ACCESSIBLE
+          ─────────────────────────────────────────────────────
+          role="region" + aria-label → landmark nommé
+          aria-live="polite" → annonce le slide courant
+          aria-roledescription="carousel" → rôle métier lisible
+          Boutons prev/next : aria-label explicites
+          Dots : aria-label "Aller au slide N" + aria-current="true"
+          Pas d'autoplay (WCAG 2.2.2) — ou avec pause si autoplay
+        -->
+        <section aria-roledescription="carousel"
+                 aria-label="Actualités du cours front-end"
+                 id="carousel-1">
+
+          <!-- Zone annonce lecteur d'écran -->
+          <div aria-live="polite" aria-atomic="true" class="carousel-live" id="c1-live"></div>
+
+          <div class="carousel">
+
+            <!-- Track de slides -->
+            <div class="carousel-track-wrapper" aria-label="Diapositives">
+              <div class="carousel-track" id="c1-track">
+
+                <div class="carousel-slide"
+                     role="group"
+                     aria-roledescription="diapositive"
+                     aria-label="1 sur 4 — HTML de A à Z"
+                     id="c1-slide-0">
+                  <div class="carousel-slide-inner">
+                    <span class="carousel-slide-tag">Nouveau cours</span>
+                    <strong class="carousel-slide-title">HTML de A à Z</strong>
+                    <p class="carousel-slide-text">Maîtrisez les fondamentaux du langage de balisage web. Balises, sémantique, accessibilité.</p>
+                  </div>
+                </div>
+
+                <div class="carousel-slide"
+                     role="group"
+                     aria-roledescription="diapositive"
+                     aria-label="2 sur 4 — CSS de A à Z"
+                     id="c1-slide-1">
+                  <div class="carousel-slide-inner" style="background:linear-gradient(135deg,#16213e,#0f3460);">
+                    <span class="carousel-slide-tag">Populaire</span>
+                    <strong class="carousel-slide-title">CSS de A à Z</strong>
+                    <p class="carousel-slide-text">Flexbox, Grid, animations, variables CSS et design responsive. Stylisez avec précision.</p>
+                  </div>
+                </div>
+
+                <div class="carousel-slide"
+                     role="group"
+                     aria-roledescription="diapositive"
+                     aria-label="3 sur 4 — JavaScript de A à Z"
+                     id="c1-slide-2">
+                  <div class="carousel-slide-inner" style="background:linear-gradient(135deg,#1a1a2e,#2d1b4e);">
+                    <span class="carousel-slide-tag">Essentiel</span>
+                    <strong class="carousel-slide-title">JavaScript de A à Z</strong>
+                    <p class="carousel-slide-text">DOM, événements, fetch, ES6+. Le langage incontournable pour rendre vos pages interactives.</p>
+                  </div>
+                </div>
+
+                <div class="carousel-slide"
+                     role="group"
+                     aria-roledescription="diapositive"
+                     aria-label="4 sur 4 — React de A à Z"
+                     id="c1-slide-3">
+                  <div class="carousel-slide-inner" style="background:linear-gradient(135deg,#0d2137,#1a3a5c);">
+                    <span class="carousel-slide-tag">Avancé</span>
+                    <strong class="carousel-slide-title">React de A à Z</strong>
+                    <p class="carousel-slide-text">Composants, hooks, state, routing. Le framework JS le plus demandé des entreprises.</p>
+                  </div>
+                </div>
+
+              </div><!-- .carousel-track -->
+            </div><!-- .carousel-track-wrapper -->
+
+            <!-- Bouton Précédent -->
+            <button class="carousel-btn carousel-prev"
+                    type="button"
+                    id="c1-prev"
+                    aria-label="Diapositive précédente"
+                    aria-controls="c1-track">
+              <span aria-hidden="true">‹</span>
+            </button>
+
+            <!-- Bouton Suivant -->
+            <button class="carousel-btn carousel-next"
+                    type="button"
+                    id="c1-next"
+                    aria-label="Diapositive suivante"
+                    aria-controls="c1-track">
+              <span aria-hidden="true">›</span>
+            </button>
+
+          </div><!-- .carousel -->
+
+          <!-- Indicateurs (dots) -->
+          <div class="carousel-dots" role="group" aria-label="Choisir une diapositive">
+            <button class="carousel-dot active" type="button"
+                    aria-label="Aller à la diapositive 1 : HTML de A à Z"
+                    aria-current="true"
+                    data-index="0"></button>
+            <button class="carousel-dot" type="button"
+                    aria-label="Aller à la diapositive 2 : CSS de A à Z"
+                    data-index="1"></button>
+            <button class="carousel-dot" type="button"
+                    aria-label="Aller à la diapositive 3 : JavaScript de A à Z"
+                    data-index="2"></button>
+            <button class="carousel-dot" type="button"
+                    aria-label="Aller à la diapositive 4 : React de A à Z"
+                    data-index="3"></button>
+          </div>
+
+        </section><!-- carousel region -->
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════
+       2. FORMULAIRE
+  ════════════════════════════════ -->
+  <section class="pattern-section" id="formulaire" aria-labelledby="titre-form">
+    <h2 class="pattern-section-title" id="titre-form">
+      <span aria-hidden="true">02</span>
+      Formulaire
+      <span class="pattern-label">Pattern</span>
+    </h2>
+    <p class="pattern-desc">
+      Formulaire d'inscription complet avec validation inline accessible. Labels liés, messages d'erreur annoncés par
+      <code style="background:#1a1a2e;color:#22c55e;padding:1px 5px;border-radius:3px;font-size:.82rem;">role="alert"</code>,
+      indicateurs visuels colorés et retour de soumission.
+    </p>
+    <p class="pattern-wcag">✓ WCAG 1.3.1 · 3.3.1 Erreurs · 3.3.2 Labels · 3.3.3 Suggestions · 1.4.3 Contraste</p>
+
+    <div class="demo-box">
+      <div class="demo-box-header">
+        <span class="demo-box-dot" style="background:#ff5f57"></span>
+        <span class="demo-box-dot" style="background:#febc2e"></span>
+        <span class="demo-box-dot" style="background:#28c840"></span>
+        <span class="demo-box-title">formulaire.html</span>
+      </div>
+      <div class="demo-box-body">
+
+        <form id="form-inscription"
+              novalidate
+              aria-label="Formulaire d'inscription"
+              class="form-pattern">
+
+          <!-- Prénom -->
+          <div class="form-field">
+            <label class="form-label" for="f-prenom">
+              Prénom <span class="req" aria-hidden="true">*</span>
+              <span class="visually-hidden">(obligatoire)</span>
+            </label>
+            <input type="text" id="f-prenom" name="prenom"
+                   class="form-input"
+                   required aria-required="true"
+                   aria-invalid="false"
+                   aria-describedby="f-prenom-err"
+                   autocomplete="given-name"
+                   placeholder="Marie">
+            <span id="f-prenom-err" role="alert" class="form-error" hidden>
+              ⚠ Le prénom est obligatoire.
+            </span>
+          </div>
+
+          <!-- Nom -->
+          <div class="form-field">
+            <label class="form-label" for="f-nom">
+              Nom <span class="req" aria-hidden="true">*</span>
+              <span class="visually-hidden">(obligatoire)</span>
+            </label>
+            <input type="text" id="f-nom" name="nom"
+                   class="form-input"
+                   required aria-required="true"
+                   aria-invalid="false"
+                   aria-describedby="f-nom-err"
+                   autocomplete="family-name"
+                   placeholder="Dupont">
+            <span id="f-nom-err" role="alert" class="form-error" hidden>
+              ⚠ Le nom est obligatoire.
+            </span>
+          </div>
+
+          <!-- Email -->
+          <div class="form-field">
+            <label class="form-label" for="f-email">
+              Email <span class="req" aria-hidden="true">*</span>
+            </label>
+            <input type="email" id="f-email" name="email"
+                   class="form-input"
+                   required aria-required="true"
+                   aria-invalid="false"
+                   aria-describedby="f-email-hint f-email-err"
+                   autocomplete="email"
+                   placeholder="marie@exemple.com">
+            <span id="f-email-hint" class="form-hint">Format : <a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="224c4d4f62464d4f434b4c470c414d4f">[email&#160;protected]</a></span>
+            <span id="f-email-err" role="alert" class="form-error" hidden>
+              ⚠ Adresse email invalide. Vérifiez le format.
+            </span>
+          </div>
+
+          <!-- Téléphone -->
+          <div class="form-field">
+            <label class="form-label" for="f-tel">Téléphone</label>
+            <input type="tel" id="f-tel" name="tel"
+                   class="form-input"
+                   aria-describedby="f-tel-hint"
+                   autocomplete="tel"
+                   placeholder="+33 6 00 00 00 00">
+            <span id="f-tel-hint" class="form-hint">Facultatif — Format international</span>
+          </div>
+
+          <!-- Niveau -->
+          <div class="form-field full">
+            <fieldset style="border:1.5px solid var(--bord);border-radius:var(--r);padding:14px 16px;">
+              <legend style="font-size:.85rem;font-weight:700;padding:0 6px;color:var(--txt);">
+                Votre niveau <span class="req" aria-hidden="true">*</span>
+              </legend>
+              <div class="radio-group" style="flex-direction:row;flex-wrap:wrap;gap:10px;margin-top:8px;">
+                <label class="radio-label" for="f-niv-deb">
+                  <input type="radio" id="f-niv-deb" name="niveau" value="debutant" required>
+                  🌱 Débutant
+                </label>
+                <label class="radio-label" for="f-niv-int">
+                  <input type="radio" id="f-niv-int" name="niveau" value="intermediaire">
+                  🚀 Intermédiaire
+                </label>
+                <label class="radio-label" for="f-niv-av">
+                  <input type="radio" id="f-niv-av" name="niveau" value="avance">
+                  ⚡ Avancé
+                </label>
+              </div>
+            </fieldset>
+          </div>
+
+          <!-- Objectifs -->
+          <div class="form-field full">
+            <label class="form-label" for="f-objectifs">Votre objectif principal</label>
+            <select id="f-objectifs" name="objectif" class="form-select">
+              <option value="" disabled selected>Choisissez…</option>
+              <option value="emploi">Trouver un emploi développeur</option>
+              <option value="freelance">Devenir freelance</option>
+              <option value="projet">Créer mon propre projet</option>
+              <option value="loisir">Apprendre par curiosité</option>
+            </select>
+          </div>
+
+          <!-- Message -->
+          <div class="form-field full">
+            <label class="form-label" for="f-message">Message <span class="form-hint" style="font-weight:400;">(facultatif)</span></label>
+            <textarea id="f-message" name="message"
+                      class="form-textarea"
+                      aria-describedby="f-message-hint"
+                      placeholder="Dites-nous en plus sur votre projet ou vos questions…"
+                      maxlength="500"></textarea>
+            <span id="f-message-hint" class="form-hint">500 caractères maximum.</span>
+          </div>
+
+          <!-- CGU -->
+          <div class="form-field full">
+            <label class="check-label" for="f-cgu">
+              <input type="checkbox" id="f-cgu" name="cgu"
+                     required aria-required="true"
+                     aria-invalid="false"
+                     aria-describedby="f-cgu-err">
+              J'accepte les <a href="#" style="color:var(--bleu);">conditions d'utilisation</a>
+              <span class="visually-hidden">(obligatoire)</span>
+            </label>
+            <span id="f-cgu-err" role="alert" class="form-error" hidden>
+              ⚠ Vous devez accepter les conditions pour continuer.
+            </span>
+          </div>
+
+          <!-- Résultat de soumission -->
+          <div id="form-result"
+               role="status"
+               aria-live="polite"
+               class="form-result">
+          </div>
+
+          <!-- Actions -->
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">
+              <span aria-hidden="true">✓</span> Créer mon compte
+            </button>
+            <button type="reset" class="btn-secondary">Réinitialiser</button>
+          </div>
+
+          <p style="font-size:.78rem;color:var(--txt2);grid-column:1/-1;">
+            <span aria-hidden="true" style="color:var(--rouge);">*</span> Champs obligatoires
+          </p>
+
+        </form>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════
+       3. CARD PRODUIT
+  ════════════════════════════════ -->
+  <section class="pattern-section" id="card" aria-labelledby="titre-card">
+    <h2 class="pattern-section-title" id="titre-card">
+      <span aria-hidden="true">03</span>
+      Card produit
+      <span class="pattern-label">Pattern</span>
+    </h2>
+    <p class="pattern-desc">
+      Carte produit avec image, badge, prix barré, note, favori et bouton d'ajout au panier.
+      Le titre est un lien — la carte entière n'est pas le lien (évite les liens trop longs à l'annonce).
+    </p>
+    <p class="pattern-wcag">✓ WCAG 1.1.1 Alt · 1.4.3 Contraste · 2.4.4 Texte du lien · 2.5.5 Taille cible</p>
+
+    <div class="demo-box">
+      <div class="demo-box-header">
+        <span class="demo-box-dot" style="background:#ff5f57"></span>
+        <span class="demo-box-dot" style="background:#febc2e"></span>
+        <span class="demo-box-dot" style="background:#28c840"></span>
+        <span class="demo-box-title">card-produit.html</span>
+      </div>
+      <div class="demo-box-body">
+
+        <div class="cards-grid">
+
+          <!-- Card 1 — En stock avec badge Nouveau -->
+          <article class="product-card" aria-label="HTML de A à Z — Cours disponible">
+            <div class="product-card-img">
+              <img src="https://picsum.photos/seed/html/400/300"
+                   alt="Illustration du cours HTML de A à Z — interface de code"
+                   width="400" height="300"
+                   loading="lazy" decoding="async">
+              <span class="product-badge badge-new" aria-label="Nouveau">Nouveau</span>
+              <button class="product-fav"
+                      type="button"
+                      aria-pressed="false"
+                      aria-label="Ajouter HTML de A à Z aux favoris"
+                      id="fav-1"
+                      onclick="toggleFav(this)">
+                <span aria-hidden="true">♡</span>
+              </button>
+            </div>
+            <div class="product-card-body">
+              <p class="product-cat">HTML · Débutant</p>
+              <h3 class="product-name">
+                <a href="#" aria-label="HTML de A à Z — Voir le cours">HTML de A à Z</a>
+              </h3>
+              <div class="product-rating" aria-label="Note : 4,8 sur 5 — 312 avis">
+                <span class="stars" aria-hidden="true">★★★★★</span>
+                <span>4.8</span>
+                <span style="color:var(--txt2);">(312 avis)</span>
+              </div>
+              <div class="product-price-row">
+                <span class="product-price" aria-label="Prix : 49 euros">49 €</span>
+                <span class="product-price-old" aria-label="Ancien prix : 79 euros">79 €</span>
+                <span class="product-price-discount" aria-label="Réduction de 38 pour cent">−38%</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="btn-cart" type="button"
+                      aria-label="Ajouter HTML de A à Z au panier">
+                <span aria-hidden="true">🛒</span> Ajouter au panier
+              </button>
+            </div>
+          </article>
+
+          <!-- Card 2 — Avec badge Promo -->
+          <article class="product-card" aria-label="JavaScript de A à Z — Cours disponible">
+            <div class="product-card-img">
+              <img src="https://picsum.photos/seed/js/400/300"
+                   alt="Illustration du cours JavaScript — code sur écran sombre"
+                   width="400" height="300"
+                   loading="lazy" decoding="async">
+              <span class="product-badge badge-sale" aria-label="Promotion">Promo</span>
+              <button class="product-fav"
+                      type="button"
+                      aria-pressed="true"
+                      aria-label="Retirer JavaScript de A à Z des favoris"
+                      id="fav-2"
+                      onclick="toggleFav(this)"
+                      style="background:#fff5f5;">
+                <span aria-hidden="true">♥</span>
+              </button>
+            </div>
+            <div class="product-card-body">
+              <p class="product-cat">JavaScript · Intermédiaire</p>
+              <h3 class="product-name">
+                <a href="#" aria-label="JavaScript de A à Z — Voir le cours">JavaScript de A à Z</a>
+              </h3>
+              <div class="product-rating" aria-label="Note : 4,9 sur 5 — 589 avis">
+                <span class="stars" aria-hidden="true">★★★★★</span>
+                <span>4.9</span>
+                <span style="color:var(--txt2);">(589 avis)</span>
+              </div>
+              <div class="product-price-row">
+                <span class="product-price" aria-label="Prix : 59 euros">59 €</span>
+                <span class="product-price-old" aria-label="Ancien prix : 99 euros">99 €</span>
+                <span class="product-price-discount" aria-label="Réduction de 40 pour cent">−40%</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="btn-cart" type="button"
+                      aria-label="Ajouter JavaScript de A à Z au panier">
+                <span aria-hidden="true">🛒</span> Ajouter au panier
+              </button>
+            </div>
+          </article>
+
+          <!-- Card 3 — Épuisé -->
+          <article class="product-card" aria-label="React de A à Z — Cours temporairement indisponible">
+            <div class="product-card-img">
+              <img src="https://picsum.photos/seed/react/400/300"
+                   alt="Illustration du cours React — composants d'interface"
+                   width="400" height="300"
+                   loading="lazy" decoding="async"
+                   style="filter:grayscale(.5);">
+              <span class="product-badge badge-sold" aria-label="Épuisé">Épuisé</span>
+              <button class="product-fav"
+                      type="button"
+                      aria-pressed="false"
+                      aria-label="Ajouter React de A à Z aux favoris"
+                      id="fav-3"
+                      onclick="toggleFav(this)">
+                <span aria-hidden="true">♡</span>
+              </button>
+            </div>
+            <div class="product-card-body">
+              <p class="product-cat">React · Avancé</p>
+              <h3 class="product-name">
+                <a href="#" aria-label="React de A à Z — Voir le cours">React de A à Z</a>
+              </h3>
+              <div class="product-rating" aria-label="Note : 4,7 sur 5 — 241 avis">
+                <span class="stars" aria-hidden="true">★★★★☆</span>
+                <span>4.7</span>
+                <span style="color:var(--txt2);">(241 avis)</span>
+              </div>
+              <div class="product-price-row">
+                <span class="product-price" aria-label="Prix : 69 euros">69 €</span>
+              </div>
+            </div>
+            <div class="product-card-footer">
+              <button class="btn-cart" type="button"
+                      disabled
+                      aria-disabled="true"
+                      aria-label="React de A à Z — Indisponible actuellement">
+                <span aria-hidden="true">⌛</span> Indisponible
+              </button>
+            </div>
+          </article>
+
+        </div><!-- .cards-grid -->
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════
+       4. TOOLTIP
+  ════════════════════════════════ -->
+  <section class="pattern-section" id="tooltip" aria-labelledby="titre-tooltip">
+    <h2 class="pattern-section-title" id="titre-tooltip">
+      <span aria-hidden="true">04</span>
+      Tooltip
+      <span class="pattern-label">Pattern</span>
+    </h2>
+    <p class="pattern-desc">
+      Infobulle accessible via CSS pur (hover + focus-within). Quatre positions disponibles.
+      Chaque tooltip a un <code style="background:#1a1a2e;color:#22c55e;padding:1px 5px;border-radius:3px;font-size:.82rem;">role="tooltip"</code>
+      et son déclencheur est lié via <code style="background:#1a1a2e;color:#22c55e;padding:1px 5px;border-radius:3px;font-size:.82rem;">aria-describedby</code>.
+    </p>
+    <p class="pattern-wcag">✓ WCAG 1.3.1 · 1.4.13 Hover/Focus · 4.1.2 Nom/Rôle/Valeur</p>
+
+    <div class="demo-box">
+      <div class="demo-box-header">
+        <span class="demo-box-dot" style="background:#ff5f57"></span>
+        <span class="demo-box-dot" style="background:#febc2e"></span>
+        <span class="demo-box-dot" style="background:#28c840"></span>
+        <span class="demo-box-title">tooltip.html</span>
+      </div>
+      <div class="demo-box-body" style="padding:40px 24px;">
+
+        <div class="tooltip-demo-grid">
+
+          <!-- Tooltip haut (défaut) -->
+          <span class="tooltip-wrapper tooltip-trigger">
+            <button class="tooltip-btn"
+                    type="button"
+                    aria-describedby="tt-1">
+              <span aria-hidden="true">💾</span> Sauvegarder
+            </button>
+            <span role="tooltip" id="tt-1">
+              Ctrl + S
+            </span>
+          </span>
+
+          <!-- Tooltip bas -->
+          <span class="tooltip-wrapper tooltip-trigger">
+            <button class="tooltip-btn"
+                    type="button"
+                    aria-describedby="tt-2">
+              <span aria-hidden="true">📤</span> Partager
+            </button>
+            <span role="tooltip" id="tt-2" class="tooltip-bottom">
+              Copie le lien dans le presse-papier
+            </span>
+          </span>
+
+          <!-- Tooltip droite -->
+          <span class="tooltip-wrapper tooltip-trigger">
+            <button class="tooltip-btn"
+                    type="button"
+                    aria-describedby="tt-3">
+              <span aria-hidden="true">🗑</span> Supprimer
+            </button>
+            <span role="tooltip" id="tt-3" class="tooltip-right">
+              Action irréversible
+            </span>
+          </span>
+
+          <!-- Tooltip sur icône d'aide -->
+          <span class="tooltip-wrapper tooltip-trigger" style="display:inline-flex;align-items:center;gap:8px;">
+            <span style="font-size:.9rem;">Mot de passe</span>
+            <button class="tooltip-info"
+                    type="button"
+                    aria-describedby="tt-4"
+                    aria-label="Aide sur le mot de passe">
+              ?
+            </button>
+            <span role="tooltip" id="tt-4">
+              8 caractères minimum, 1 majuscule, 1 chiffre
+            </span>
+          </span>
+
+          <!-- Tooltip longue -->
+          <span class="tooltip-wrapper tooltip-trigger">
+            <button class="tooltip-btn"
+                    type="button"
+                    aria-describedby="tt-5"
+                    style="background:var(--ambre);">
+              <span aria-hidden="true">⚠</span> Attention
+            </button>
+            <span role="tooltip" id="tt-5"
+                  style="white-space:normal;max-width:220px;text-align:left;line-height:1.5;">
+              Cette action modifie les données de production. Assurez-vous d'avoir une sauvegarde.
+            </span>
+          </span>
+
+        </div>
+
+        <p style="font-size:.8rem;color:var(--txt2);margin-top:24px;">
+          💡 Survolez ou mettez le focus (Tab) sur chaque bouton pour voir le tooltip.
+          Appuyez sur Échap pour fermer (WCAG 1.4.13).
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════
+       5. MODALE
+  ════════════════════════════════ -->
+  <section class="pattern-section" id="modale" aria-labelledby="titre-modale">
+    <h2 class="pattern-section-title" id="titre-modale">
+      <span aria-hidden="true">05</span>
+      Modale
+      <span class="pattern-label">Pattern</span>
+    </h2>
+    <p class="pattern-desc">
+      Trois variantes : information, formulaire et confirmation destructive. Focus trap complet,
+      fermeture par Échap, overlay cliquable, et restauration du focus sur le déclencheur.
+    </p>
+    <p class="pattern-wcag">✓ WCAG 2.1.1 Clavier · 2.1.2 Pas de piège · 2.4.3 Focus · 4.1.2 Role/Valeur</p>
+
+    <div class="demo-box">
+      <div class="demo-box-header">
+        <span class="demo-box-dot" style="background:#ff5f57"></span>
+        <span class="demo-box-dot" style="background:#febc2e"></span>
+        <span class="demo-box-dot" style="background:#28c840"></span>
+        <span class="demo-box-title">modale.html</span>
+      </div>
+      <div class="demo-box-body" style="display:flex;flex-wrap:wrap;gap:12px;">
+
+        <!-- Bouton → Modale info -->
+        <button class="open-modal-btn" type="button"
+                aria-haspopup="dialog"
+                onclick="openModal('modal-info')">
+          <span aria-hidden="true">ℹ</span> Modale information
+        </button>
+
+        <!-- Bouton → Modale formulaire -->
+        <button class="open-modal-btn" type="button"
+                aria-haspopup="dialog"
+                onclick="openModal('modal-form')">
+          <span aria-hidden="true">✏</span> Modale formulaire
+        </button>
+
+        <!-- Bouton → Modale danger -->
+        <button class="open-modal-btn danger" type="button"
+                aria-haspopup="dialog"
+                onclick="openModal('modal-danger')">
+          <span aria-hidden="true">⚠</span> Modale confirmation
+        </button>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════
+       6. MENU SIMPLE
+  ════════════════════════════════ -->
+  <section class="pattern-section" id="menu-simple" aria-labelledby="titre-nav-simple">
+    <h2 class="pattern-section-title" id="titre-nav-simple">
+      <span aria-hidden="true">06</span>
+      Menu simple
+      <span class="pattern-label">Pattern</span>
+    </h2>
+    <p class="pattern-desc">
+      Navigation horizontale avec lien actif, bouton CTA, et menu burger mobile.
+      Chaque lien a un texte descriptif. Le lien actif porte <code style="background:#1a1a2e;color:#22c55e;padding:1px 5px;border-radius:3px;font-size:.82rem;">aria-current="page"</code>.
+    </p>
+    <p class="pattern-wcag">✓ WCAG 2.4.1 Skip · 2.4.4 Texte lien · 2.4.7 Focus · 4.1.2 Rôle/Valeur</p>
+
+    <div class="demo-box">
+      <div class="demo-box-header">
+        <span class="demo-box-dot" style="background:#ff5f57"></span>
+        <span class="demo-box-dot" style="background:#febc2e"></span>
+        <span class="demo-box-dot" style="background:#28c840"></span>
+        <span class="demo-box-title">menu-simple.html</span>
+      </div>
+      <div class="demo-box-body" style="padding:16px;">
+
+        <nav class="nav-simple" aria-label="Navigation principale du site">
+          <a href="#" class="nav-simple-logo" aria-label="Mon Site — Accueil">🎓 Mon Site</a>
+
+          <!-- Burger mobile -->
+          <button class="nav-simple-burger"
+                  type="button"
+                  id="simple-burger"
+                  aria-controls="simple-nav-links"
+                  aria-expanded="false"
+                  aria-label="Ouvrir le menu de navigation">
+            <span aria-hidden="true" id="simple-burger-ico">☰</span>
+          </button>
+
+          <ul class="nav-simple-links" id="simple-nav-links" role="list">
+            <li><a href="#" aria-current="page">Accueil</a></li>
+            <li><a href="#">Cours</a></li>
+            <li><a href="#">Blog</a></li>
+            <li><a href="#">Tarifs</a></li>
+            <li><a href="#">Contact</a></li>
+            <li><a href="#" class="nav-simple-cta">S'inscrire</a></li>
+          </ul>
+        </nav>
+
+        <p style="font-size:.8rem;color:var(--txt2);margin-top:12px;">
+          💡 Réduisez la fenêtre (&lt; 768px) pour voir le burger mobile.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ════════════════════════════════
+       7. MENU COMPLEXE
+  ════════════════════════════════ -->
+  <section class="pattern-section" id="menu-complexe" aria-labelledby="titre-nav-complexe">
+    <h2 class="pattern-section-title" id="titre-nav-complexe">
+      <span aria-hidden="true">07</span>
+      Menu complexe
+      <span class="pattern-label">Pattern</span>
+    </h2>
+    <p class="pattern-desc">
+      Navigation avec dropdown simple et mega menu. Ouverture au click/Entrée, fermeture à Échap et clic extérieur.
+      <code style="background:#1a1a2e;color:#22c55e;padding:1px 5px;border-radius:3px;font-size:.82rem;">aria-expanded</code> sur chaque déclencheur.
+      Version mobile avec panel replié.
+    </p>
+    <p class="pattern-wcag">✓ WCAG 2.1.1 Clavier · 2.4.3 Focus · 4.1.2 Rôle · 2.4.7 Focus visible</p>
+
+    <div class="demo-box">
+      <div class="demo-box-header">
+        <span class="demo-box-dot" style="background:#ff5f57"></span>
+        <span class="demo-box-dot" style="background:#febc2e"></span>
+        <span class="demo-box-dot" style="background:#28c840"></span>
+        <span class="demo-box-title">menu-complexe.html</span>
+      </div>
+      <div class="demo-box-body" style="padding:12px;">
+
+        <nav class="nav-complex" aria-label="Navigation principale">
+          <a href="#" class="nav-complex-logo" aria-label="IntA11Y - Solutions— Accueil">🎓 École du Web</a>
+
+          <!-- Burger mobile -->
+          <button class="nav-complex-burger"
+                  type="button"
+                  id="complex-burger"
+                  aria-controls="complex-mobile-panel"
+                  aria-expanded="false"
+                  aria-label="Ouvrir le menu de navigation">
+            <span aria-hidden="true" id="complex-burger-ico">☰</span>
+          </button>
+
+          <!-- Liens desktop -->
+          <ul class="nav-complex-items" role="list">
+
+            <!-- Lien simple -->
+            <li class="nav-complex-item">
+              <a href="#" class="nav-complex-link" aria-current="page">Accueil</a>
+            </li>
+
+            <!-- Dropdown Cours -->
+            <li class="nav-complex-item">
+              <button class="nav-complex-link"
+                      type="button"
+                      id="dd-cours-btn"
+                      aria-expanded="false"
+                      aria-controls="dd-cours"
+                      aria-haspopup="menu">
+                Cours <span class="nav-arrow" aria-hidden="true">▾</span>
+              </button>
+              <div class="dropdown" id="dd-cours" role="menu" aria-labelledby="dd-cours-btn">
+                <ul>
+                  <li role="none"><a href="#" role="menuitem"><span class="dropdown-icon" aria-hidden="true">🟢</span> HTML de A à Z</a></li>
+                  <li role="none"><a href="#" role="menuitem"><span class="dropdown-icon" aria-hidden="true">🔵</span> CSS de A à Z</a></li>
+                  <li role="none"><a href="#" role="menuitem"><span class="dropdown-icon" aria-hidden="true">🟡</span> JavaScript de A à Z</a></li>
+                  <li role="none"><div class="dropdown-sep" role="separator"></div></li>
+                  <li role="none"><a href="#" role="menuitem"><span class="dropdown-icon" aria-hidden="true">⚛</span> React de A à Z</a></li>
+                  <li role="none"><a href="#" role="menuitem"><span class="dropdown-icon" aria-hidden="true">🔷</span> TypeScript</a></li>
+                  <li role="none"><div class="dropdown-sep" role="separator"></div></li>
+                  <li role="none"><a href="#" role="menuitem" style="color:var(--bleu);font-weight:600;"><span class="dropdown-icon">→</span> Voir tous les cours</a></li>
+                </ul>
+              </div>
+            </li>
+
+            <!-- Mega Menu Ressources -->
+            <li class="nav-complex-item">
+              <button class="nav-complex-link"
+                      type="button"
+                      id="mega-btn"
+                      aria-expanded="false"
+                      aria-controls="mega-menu"
+                      aria-haspopup="menu">
+                Ressources <span class="nav-arrow" aria-hidden="true">▾</span>
+              </button>
+              <div class="megamenu" id="mega-menu" role="menu" aria-labelledby="mega-btn">
+                <div class="megamenu-grid">
+                  <a href="#" class="megamenu-card" role="menuitem">
+                    <div class="megamenu-card-icon" aria-hidden="true">📄</div>
+                    <div>
+                      <p class="megamenu-card-title">Documentation</p>
+                      <p class="megamenu-card-desc">Référence complète des balises HTML5 et APIs</p>
+                    </div>
+                  </a>
+                  <a href="#" class="megamenu-card" role="menuitem">
+                    <div class="megamenu-card-icon" aria-hidden="true">🎨</div>
+                    <div>
+                      <p class="megamenu-card-title">Design Patterns</p>
+                      <p class="megamenu-card-desc">Composants accessibles et responsives prêts à l'emploi</p>
+                    </div>
+                  </a>
+                  <a href="#" class="megamenu-card" role="menuitem">
+                    <div class="megamenu-card-icon" aria-hidden="true">♿</div>
+                    <div>
+                      <p class="megamenu-card-title">Accessibilité</p>
+                      <p class="megamenu-card-desc">Guide WCAG 2.2, RGAA 4.1 et ARIA complet</p>
+                    </div>
+                  </a>
+                  <a href="#" class="megamenu-card" role="menuitem">
+                    <div class="megamenu-card-icon" aria-hidden="true">🛠</div>
+                    <div>
+                      <p class="megamenu-card-title">Outils</p>
+                      <p class="megamenu-card-desc">Validators, contrast checkers, lecteurs d'écran</p>
+                    </div>
+                  </a>
+                </div>
+                <div class="megamenu-footer">
+                  <p style="font-size:.82rem;color:var(--txt2);">Nouveauté : Design Patterns v2</p>
+                  <a href="#" class="megamenu-footer-link">Voir toutes les ressources →</a>
+                </div>
+              </div>
+            </li>
+
+            <!-- Lien simple -->
+            <li class="nav-complex-item">
+              <a href="#" class="nav-complex-link">Blog</a>
+            </li>
+            <li class="nav-complex-item">
+              <a href="#" class="nav-complex-link">Tarifs</a>
+            </li>
+
+          </ul>
+
+          <!-- Actions droite -->
+          <div class="nav-complex-actions">
+            <a href="#">Se connecter</a>
+            <a href="#" class="cta">S'inscrire</a>
+          </div>
+
+          <!-- Panel mobile -->
+          <div class="nav-complex-mobile-panel" id="complex-mobile-panel">
+            <div class="mobile-section-title">Navigation</div>
+            <a href="#">Accueil</a>
+            <div class="mobile-section-title" style="margin-top:8px;">Cours</div>
+            <a href=""><span aria-hidden="true">🟢</span> HTML de A à Z</a>
+            <a href=""><span aria-hidden="true">🔵</span> CSS de A à Z</a>
+            <a href=""><span aria-hidden="true">🟡</span> JavaScript de A à Z</a>
+            <a href=""><span aria-hidden="true">⚛</span> React de A à Z</a>
+            <div class="mobile-section-title" style="margin-top:8px;">Ressources</div>
+            <a href="">Documentation</a>
+            <a href="">Design Patterns</a>
+            <a href="">Accessibilité</a>
+            <hr>
+            <a href="" style="font-weight:600;">Se connecter</a>
+            <a href="" style="background:rgba(34,197,94,.2);color:#fff;font-weight:700;">S'inscrire</a>
+          </div>
+
+        </nav>
+
+        <p style="font-size:.8rem;color:var(--txt2);margin-top:12px;">
+          💡 Cliquez sur "Cours" ou "Ressources" pour les menus. Réduisez la fenêtre pour voir le burger.
+          Utilisez Tab + Entrée pour naviguer au clavier. Échap pour fermer.
+        </p>
+
+      </div>
+    </div>
+  </section>
+
+</div><!-- .wrapper -->
+</main>
+
+<!-- ════════════════════════════════
+     MODALES (hors du flux)
+════════════════════════════════ -->
+
+<!-- Modale information -->
+<div class="modal-overlay"
+     id="modal-info"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="modal-info-title"
+     aria-describedby="modal-info-desc">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modal-info-title">ℹ Mise à jour disponible</h2>
+      <button class="modal-close-btn" type="button"
+              aria-label="Fermer la fenêtre d'information"
+              onclick="closeModal('modal-info')">
+        <span aria-hidden="true">✕</span>
+      </button>
+    </div>
+    <div class="modal-body" id="modal-info-desc">
+      <p>Une nouvelle version du cours <strong>HTML de A à Z</strong> est disponible. Elle inclut 3 nouvelles leçons sur les Web Components et des exercices pratiques mis à jour.</p>
+      <p>Vos progressions sont automatiquement conservées. Aucune action n'est requise de votre part.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-primary" type="button" onclick="closeModal('modal-info')">
+        <span aria-hidden="true">✓</span> Compris
+      </button>
+      <button class="btn-secondary" type="button" onclick="closeModal('modal-info')">
+        Voir les nouveautés
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- Modale formulaire -->
+<div class="modal-overlay"
+     id="modal-form"
+     role="dialog"
+     aria-modal="true"
+     aria-labelledby="modal-form-title"
+     aria-describedby="modal-form-desc">
+  <div class="modal-box">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modal-form-title">✏ Modifier le profil</h2>
+      <button class="modal-close-btn" type="button"
+              aria-label="Fermer le formulaire de modification"
+              onclick="closeModal('modal-form')">
+        <span aria-hidden="true">✕</span>
+      </button>
+    </div>
+    <div class="modal-body" id="modal-form-desc">
+      <form novalidate aria-label="Formulaire de modification de profil" style="display:flex;flex-direction:column;gap:14px;">
+        <div class="form-field">
+          <label class="form-label" for="mf-name">Nom complet</label>
+          <input type="text" id="mf-name" class="form-input" value="Marie Dupont" autocomplete="name">
+        </div>
+        <div class="form-field">
+          <label class="form-label" for="mf-email">Email</label>
+          <input type="email" id="mf-email" class="form-input" value="marie@exemple.com" autocomplete="email">
+        </div>
+        <div class="form-field">
+          <label class="form-label" for="mf-bio">Biographie</label>
+          <textarea id="mf-bio" class="form-textarea" style="resize:vertical;min-height:70px;">Développeuse front-end passionnée par l'accessibilité.</textarea>
+        </div>
+      </form>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-primary" type="button" onclick="closeModal('modal-form')">
+        <span aria-hidden="true">💾</span> Enregistrer
+      </button>
+      <button class="btn-secondary" type="button" onclick="closeModal('modal-form')">Annuler</button>
+    </div>
+  </div>
+</div>
+
+<!-- Modale danger -->
+<div class="modal-overlay"
+     id="modal-danger"
+     role="alertdialog"
+     aria-modal="true"
+     aria-labelledby="modal-danger-title"
+     aria-describedby="modal-danger-desc">
+  <!--
+    role="alertdialog" (et non "dialog") pour les confirmations critiques.
+    Le lecteur d'écran annonce immédiatement le contenu à l'ouverture.
+  -->
+  <div class="modal-box modal-danger">
+    <div class="modal-header">
+      <h2 class="modal-title" id="modal-danger-title">⚠ Supprimer le compte</h2>
+      <button class="modal-close-btn" type="button"
+              aria-label="Annuler la suppression"
+              onclick="closeModal('modal-danger')">
+        <span aria-hidden="true">✕</span>
+      </button>
+    </div>
+    <div class="modal-body" id="modal-danger-desc">
+      <p>Vous êtes sur le point de <strong>supprimer définitivement</strong> votre compte et toutes vos données.</p>
+      <p>Cette action est <strong>irréversible</strong>. Toutes vos progressions, favoris et factures seront supprimés.</p>
+    </div>
+    <div class="modal-footer">
+      <button class="btn-secondary" type="button" onclick="closeModal('modal-danger')" autofocus>
+        Annuler
+      </button>
+      <button type="button"
+              style="background:var(--rouge);color:#fff;border:none;padding:11px 22px;border-radius:var(--r);font-weight:600;cursor:pointer;min-height:44px;"
+              onclick="closeModal('modal-danger')">
+        <span aria-hidden="true">🗑</span> Supprimer définitivement
+      </button>
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════════════════
+     FOOTER
+════════════════════════════════ -->
+<footer class="site-footer">
+  <p>© IntA11Y - Solutions<span id="yr-p"></span> — Design Patterns accessibles</p>
+  <nav aria-label="Liens utiles">
+    <ul class="site-footer-links">
+      <li><a href="./index.html">Référence HTML5</a></li>
+      <li><a href="#">Accessibilité</a></li>
+      <li><a href="#">Mentions légales</a></li>
+    </ul>
+  </nav>
+</footer>
+
+<!-- ════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════ -->
+<script>
+/* ================================================================
+   DESIGN PATTERNS — JavaScript
+   - openModal / closeModal / toggleFav : window.xxx (accessibles
+     depuis les onclick="" du HTML)
+   - carousel, formulaire, menus : IIFE isolées
+================================================================ */
+
+/* ────────────────────────────────────────────────────────────────
+   HEADER BURGER
+──────────────────────────────────────────────────────────────── */
+(function () {
+  var btn = document.getElementById("site-burger");
+  var nav = document.getElementById("site-mobile-nav");
+  if (!btn) return;
+  btn.addEventListener("click", function (e) {
+    e.stopPropagation();
+    var open = btn.getAttribute("aria-expanded") === "true";
+    btn.setAttribute("aria-expanded", String(!open));
+    btn.querySelector("span").textContent = open ? "☰" : "✕";
+    btn.setAttribute("aria-label", open ? "Ouvrir le menu" : "Fermer le menu");
+    if (nav) { open ? nav.setAttribute("hidden","") : nav.removeAttribute("hidden"); }
+  });
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest(".site-header") && nav && !nav.hidden) {
+      nav.setAttribute("hidden","");
+      btn.setAttribute("aria-expanded","false");
+      btn.querySelector("span").textContent = "☰";
+    }
+  });
+}());
+
+/* ────────────────────────────────────────────────────────────────
+   1. CAROUSEL
+──────────────────────────────────────────────────────────────── */
+(function () {
+  var track  = document.getElementById("c1-track");
+  var prev   = document.getElementById("c1-prev");
+  var next   = document.getElementById("c1-next");
+  var live   = document.getElementById("c1-live");
+  var dots   = document.querySelectorAll("#carousel-1 .carousel-dot");
+  var slides = document.querySelectorAll("#carousel-1 .carousel-slide");
+  if (!track) return;
+
+  var total  = slides.length;
+  var cur    = 0;
+  var LABELS = [
+    "Diapositive 1 sur 4 : HTML de A \u00e0 Z",
+    "Diapositive 2 sur 4 : CSS de A \u00e0 Z",
+    "Diapositive 3 sur 4 : JavaScript de A \u00e0 Z",
+    "Diapositive 4 sur 4 : React de A \u00e0 Z"
+  ];
+
+  function goTo(n) {
+    cur = ((n % total) + total) % total;
+    track.style.transform = "translateX(-" + (cur * 100) + "%)";
+    dots.forEach(function (d, i) {
+      d.classList.toggle("active", i === cur);
+      d.setAttribute("aria-current", i === cur ? "true" : "false");
+    });
+    if (live) {
+      live.textContent = "";
+      setTimeout(function () { live.textContent = LABELS[cur]; }, 100);
+    }
+  }
+
+  if (prev) prev.addEventListener("click", function () { goTo(cur - 1); });
+  if (next) next.addEventListener("click", function () { goTo(cur + 1); });
+
+  dots.forEach(function (d) {
+    d.addEventListener("click", function () {
+      goTo(parseInt(this.getAttribute("data-index"), 10));
+    });
+  });
+
+  var region = document.getElementById("carousel-1");
+  if (region) {
+    region.addEventListener("keydown", function (e) {
+      if (e.key === "ArrowLeft")  { e.preventDefault(); goTo(cur - 1); }
+      if (e.key === "ArrowRight") { e.preventDefault(); goTo(cur + 1); }
+    });
+  }
+}());
+
+/* ────────────────────────────────────────────────────────────────
+   2. FORMULAIRE
+──────────────────────────────────────────────────────────────── */
+(function () {
+  var form = document.getElementById("form-inscription");
+  if (!form) return;
+
+  function isEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+
+  function setErr(inputId, errId, msg) {
+    var inp = document.getElementById(inputId);
+    var err = document.getElementById(errId);
+    if (!inp || !err) return;
+    inp.setAttribute("aria-invalid","true");
+    inp.style.cssText += ";border-color:var(--rouge);box-shadow:0 0 0 3px rgba(229,62,62,.15)";
+    err.textContent = msg;
+    err.removeAttribute("hidden");
+  }
+  function clrErr(inputId, errId) {
+    var inp = document.getElementById(inputId);
+    var err = document.getElementById(errId);
+    if (!inp || !err) return;
+    inp.setAttribute("aria-invalid","false");
+    inp.style.borderColor = "";
+    inp.style.boxShadow   = "";
+    err.setAttribute("hidden","");
+  }
+
+  document.getElementById("f-prenom").addEventListener("blur", function () {
+    if (!this.value.trim()) setErr("f-prenom","f-prenom-err","⚠ Le prénom est obligatoire.");
+    else clrErr("f-prenom","f-prenom-err");
+  });
+  document.getElementById("f-nom").addEventListener("blur", function () {
+    if (!this.value.trim()) setErr("f-nom","f-nom-err","⚠ Le nom est obligatoire.");
+    else clrErr("f-nom","f-nom-err");
+  });
+  document.getElementById("f-email").addEventListener("blur", function () {
+    var v = this.value.trim();
+    if (!v)            setErr("f-email","f-email-err","⚠ L\u2019email est obligatoire.");
+    else if (!isEmail(v)) setErr("f-email","f-email-err","⚠ Format invalide : nom@domaine.com");
+    else clrErr("f-email","f-email-err");
+  });
+
+  form.addEventListener("submit", function (e) {
+    e.preventDefault();
+    var ok     = true;
+    var prenom = document.getElementById("f-prenom");
+    var nom    = document.getElementById("f-nom");
+    var email  = document.getElementById("f-email");
+    var cgu    = document.getElementById("f-cgu");
+
+    if (!prenom.value.trim())  { setErr("f-prenom","f-prenom-err","⚠ Le prénom est obligatoire."); ok=false; }
+    else clrErr("f-prenom","f-prenom-err");
+    if (!nom.value.trim())     { setErr("f-nom","f-nom-err","⚠ Le nom est obligatoire."); ok=false; }
+    else clrErr("f-nom","f-nom-err");
+    if (!email.value.trim())         { setErr("f-email","f-email-err","⚠ L\u2019email est obligatoire."); ok=false; }
+    else if (!isEmail(email.value))  { setErr("f-email","f-email-err","⚠ Format invalide : nom@domaine.com"); ok=false; }
+    else clrErr("f-email","f-email-err");
+
+    var cguErr = document.getElementById("f-cgu-err");
+    if (!cgu.checked) { cgu.setAttribute("aria-invalid","true"); cguErr.removeAttribute("hidden"); ok=false; }
+    else              { cgu.setAttribute("aria-invalid","false"); cguErr.setAttribute("hidden",""); }
+
+    var res = document.getElementById("form-result");
+    if (ok) {
+      res.className    = "form-result success";
+      res.style.display = "flex";
+      res.textContent  = "✅ Compte créé avec succès ! Vérifiez votre email.";
+      res.setAttribute("tabindex","-1"); res.focus();
+    } else {
+      res.className    = "form-result error";
+      res.style.display = "flex";
+      res.textContent  = "❌ Des erreurs sont présentes. Vérifiez les champs en rouge.";
+      var first = form.querySelector("[aria-invalid='true']");
+      if (first) first.focus();
+    }
+  });
+
+  form.addEventListener("reset", function () {
+    var res = document.getElementById("form-result");
+    if (res) res.style.display = "none";
+    ["f-prenom","f-nom","f-email"].forEach(function (id) {
+      var inp = document.getElementById(id);
+      if (inp) { inp.setAttribute("aria-invalid","false"); inp.style.borderColor=""; inp.style.boxShadow=""; }
+    });
+    ["f-prenom-err","f-nom-err","f-email-err","f-cgu-err"].forEach(function (id) {
+      var el = document.getElementById(id); if (el) el.setAttribute("hidden","");
+    });
+    var cgu = document.getElementById("f-cgu");
+    if (cgu) cgu.setAttribute("aria-invalid","false");
+  });
+}());
+
+/* ────────────────────────────────────────────────────────────────
+   3. CARDS — Favori
+   window.toggleFav car appelée via onclick="" dans le HTML
+──────────────────────────────────────────────────────────────── */
+window.toggleFav = function (btn) {
+  var pressed = btn.getAttribute("aria-pressed") === "true";
+  var article = btn.closest("article");
+  var titre   = article ? article.querySelector(".product-name a").textContent.trim() : "ce cours";
+  btn.setAttribute("aria-pressed", String(!pressed));
+  btn.querySelector("span").textContent = pressed ? "♡" : "♥";
+  btn.style.background = pressed ? "" : "#fff5f5";
+  btn.setAttribute("aria-label",
+    (pressed ? "Ajouter " : "Retirer ") + titre +
+    (pressed ? " aux favoris" : " des favoris")
+  );
+};
+
+/* ────────────────────────────────────────────────────────────────
+   4. TOOLTIP — Fermeture Échap (WCAG 1.4.13)
+──────────────────────────────────────────────────────────────── */
+document.addEventListener("keydown", function (e) {
+  if (e.key !== "Escape") return;
+  var f = document.activeElement;
+  if (f && f.closest(".tooltip-trigger")) f.blur();
+});
+
+/* ────────────────────────────────────────────────────────────────
+   5. MODALES
+   window.openModal / window.closeModal car appelées via onclick=""
+──────────────────────────────────────────────────────────────── */
+var _mTriggers = {};
+var _mTraps    = {};
+var _mClicks   = {};
+
+window.openModal = function (id) {
+  var ov = document.getElementById(id);
+  if (!ov) { console.warn("openModal: #" + id + " introuvable"); return; }
+
+  _mTriggers[id] = document.activeElement;
+  ov.classList.add("open");
+  document.body.style.overflow = "hidden";
+
+  _mTraps[id] = function (e) {
+    if (e.key === "Escape") { window.closeModal(id); return; }
+    if (e.key !== "Tab") return;
+    var els = Array.from(ov.querySelectorAll(
+      "button:not([disabled]),[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled])"
+    )).filter(function (el) { return el.offsetParent !== null; });
+    if (!els.length) return;
+    var first = els[0], last = els[els.length - 1];
+    if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+    else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+  };
+  _mClicks[id] = function (e) { if (e.target === ov) window.closeModal(id); };
+
+  ov.addEventListener("keydown", _mTraps[id]);
+  ov.addEventListener("click",   _mClicks[id]);
+
+  setTimeout(function () {
+    var auto  = ov.querySelector("[autofocus]");
+    var first = ov.querySelector("button:not([disabled]),[href],input:not([disabled]),select:not([disabled]),textarea:not([disabled])");
+    if (auto) auto.focus(); else if (first) first.focus();
+  }, 80);
+};
+
+window.closeModal = function (id) {
+  var ov = document.getElementById(id);
+  if (!ov) return;
+  ov.classList.remove("open");
+  document.body.style.overflow = "";
+  if (_mTraps[id])  { ov.removeEventListener("keydown", _mTraps[id]);  delete _mTraps[id]; }
+  if (_mClicks[id]) { ov.removeEventListener("click",   _mClicks[id]); delete _mClicks[id]; }
+  if (_mTriggers[id]) { _mTriggers[id].focus(); delete _mTriggers[id]; }
+};
+
+/* ────────────────────────────────────────────────────────────────
+   6. MENU SIMPLE
+──────────────────────────────────────────────────────────────── */
+(function () {
+  var btn   = document.getElementById("simple-burger");
+  var links = document.getElementById("simple-nav-links");
+  var ico   = document.getElementById("simple-burger-ico");
+  if (!btn || !links) return;
+
+  btn.addEventListener("click", function (e) {
+    e.stopPropagation();
+    var open = btn.getAttribute("aria-expanded") === "true";
+    btn.setAttribute("aria-expanded", String(!open));
+    if (ico) ico.textContent = open ? "☰" : "✕";
+    btn.setAttribute("aria-label", open ? "Ouvrir le menu" : "Fermer le menu");
+    links.classList.toggle("open", !open);
+  });
+
+  document.addEventListener("click", function (e) {
+    if (!e.target.closest(".nav-simple")) {
+      links.classList.remove("open");
+      btn.setAttribute("aria-expanded","false");
+      if (ico) ico.textContent = "☰";
+    }
+  });
+}());
+
+/* ────────────────────────────────────────────────────────────────
+   7. MENU COMPLEXE
+──────────────────────────────────────────────────────────────── */
+(function () {
+  /* Mobile burger */
+  var cBtn   = document.getElementById("complex-burger");
+  var cPanel = document.getElementById("complex-mobile-panel");
+  var cIco   = document.getElementById("complex-burger-ico");
+  if (cBtn && cPanel) {
+    cBtn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var open = cBtn.getAttribute("aria-expanded") === "true";
+      cBtn.setAttribute("aria-expanded", String(!open));
+      if (cIco) cIco.textContent = open ? "☰" : "✕";
+      cPanel.classList.toggle("open", !open);
+    });
+  }
+
+  /* Dropdowns */
+  var dds = [
+    { btnId: "dd-cours-btn", menuId: "dd-cours" },
+    { btnId: "mega-btn",     menuId: "mega-menu"  }
+  ];
+
+  function closeAll() {
+    dds.forEach(function (d) {
+      var b = document.getElementById(d.btnId);
+      var m = document.getElementById(d.menuId);
+      if (b) b.setAttribute("aria-expanded","false");
+      if (m) m.classList.remove("open");
+    });
+  }
+
+  dds.forEach(function (d) {
+    var btn  = document.getElementById(d.btnId);
+    var menu = document.getElementById(d.menuId);
+    if (!btn || !menu) return;
+
+    btn.addEventListener("click", function (e) {
+      e.stopPropagation();
+      var isOpen = btn.getAttribute("aria-expanded") === "true";
+      closeAll();
+      if (!isOpen) {
+        btn.setAttribute("aria-expanded","true");
+        menu.classList.add("open");
+        var first = menu.querySelector("[role='menuitem'], a, button");
+        if (first) setTimeout(function () { first.focus(); }, 60);
+      }
+    });
+
+    menu.addEventListener("keydown", function (e) {
+      var items = Array.from(menu.querySelectorAll("[role='menuitem'], a, button"));
+      var idx   = items.indexOf(document.activeElement);
+      if (e.key === "Escape")     { e.preventDefault(); closeAll(); btn.focus(); }
+      else if (e.key === "ArrowDown")  { e.preventDefault(); items[(idx + 1) % items.length].focus(); }
+      else if (e.key === "ArrowUp")    { e.preventDefault(); items[(idx - 1 + items.length) % items.length].focus(); }
+      else if (e.key === "Home")       { e.preventDefault(); items[0].focus(); }
+      else if (e.key === "End")        { e.preventDefault(); items[items.length - 1].focus(); }
+    });
+  });
+
+  document.addEventListener("click",   function (e) { if (!e.target.closest(".nav-complex-item")) closeAll(); });
+  document.addEventListener("keydown", function (e) { if (e.key === "Escape") closeAll(); });
+}());
+
+/* ────────────────────────────────────────────────────────────────
+   ANNÉE FOOTER
+──────────────────────────────────────────────────────────────── */
+(function () {
+  var yr = document.getElementById("yr-p");
+  if (yr) yr.textContent = new Date().getFullYear();
+}());
+
+</script>
+</body>
+</html>
