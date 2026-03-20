@@ -3,401 +3,10 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Accessibilité numérique par type de handicap — École du Web</title>
+  <title>Accessibilité numérique par type de handicap — IntA11Y - Solutions</title>
   <meta name="description" content="Guides pratiques pour développeurs et intégrateurs : rendre sites, applications et PDF accessibles pour les troubles DYS, TDAH, TSA, handicap moteur, visuel et auditif. WCAG 2.2 et RGAA 4.1.">
   <meta name="theme-color" content="#1a1a2e">
-  <style>
-    /* ══════════════════════════════════════════
-       DESIGN SYSTEM — Identique à index.html
-    ══════════════════════════════════════════ */
-    :root {
-      --primaire: #1a1a2e;
-      --accent:   #22c55e;
-      --fond:     #f8f9fa;
-      --card:     #ffffff;
-      --txt:      #1a1a2e;
-      --txt2:     #4a5568;
-      --bord:     #e2e8f0;
-      --rouge:    #e53e3e;
-      --bleu:     #3182ce;
-      --ambre:    #d69e2e;
-      --violet:   #805ad5;
-      --r:        6px;
-      --r-lg:     12px;
-      --shadow:   0 1px 3px rgba(0,0,0,.08), 0 4px 16px rgba(0,0,0,.07);
-
-      /* Couleurs thématiques par handicap */
-      --col-dys:    #2563eb;
-      --col-tdah:   #d97706;
-      --col-tsa:    #7c3aed;
-      --col-moteur: #059669;
-      --col-visuel: #dc2626;
-      --col-auditif:#0891b2;
-      --col-pdf:    #9333ea;
-    }
-
-    *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
-    html { scroll-behavior: smooth; }
-    body {
-      font-family: 'Segoe UI', system-ui, sans-serif;
-      background: var(--fond);
-      color: var(--txt);
-      line-height: 1.75;
-      font-size: 1rem;
-    }
-
-    :focus-visible {
-      outline: 3px solid var(--accent);
-      outline-offset: 3px;
-      border-radius: 3px;
-    }
-    :focus:not(:focus-visible) { outline: none; }
-
-    .skip {
-      position: absolute; top: -100px; left: 16px; z-index: 9999;
-      background: var(--primaire); color: #fff;
-      padding: 10px 18px; border-radius: 0 0 6px 6px;
-      text-decoration: none; font-weight: 700; transition: top .2s;
-    }
-    .skip:focus { top: 0; }
-
-    .visually-hidden {
-      position: absolute; width:1px; height:1px;
-      overflow:hidden; clip:rect(0,0,0,0); white-space:nowrap;
-    }
-
-    /* ── HEADER ── */
-    .site-header {
-      background: var(--primaire); color: #fff;
-      padding: 0 28px; height: 64px;
-      display: flex; align-items: center; justify-content: space-between;
-      position: sticky; top: 0; z-index: 100;
-      box-shadow: 0 2px 8px rgba(0,0,0,.3);
-    }
-    .site-header .logo { font-size: 1.1rem; font-weight: 700; color: #fff; text-decoration: none; }
-    .site-header nav ul { display: flex; gap: 4px; list-style: none; }
-    .site-header nav a {
-      color: rgba(255,255,255,.85); text-decoration: none;
-      padding: 6px 12px; border-radius: var(--r); font-size: .85rem;
-      transition: background .18s; white-space: nowrap;
-    }
-    .site-header nav a:hover { background: rgba(255,255,255,.12); }
-    .site-header nav a.active { background: rgba(34,197,94,.25); color: #fff; font-weight: 600; }
-
-    /* ── HERO ── */
-    .hero {
-      background: linear-gradient(135deg, var(--primaire) 0%, #16213e 100%);
-      color: #fff; padding: 64px 28px 56px; text-align: center;
-      position: relative; overflow: hidden;
-    }
-    .hero::before {
-      content: '';
-      position: absolute; inset: 0;
-      background: radial-gradient(ellipse at 70% 40%, rgba(34,197,94,.12), transparent 60%),
-                  radial-gradient(ellipse at 20% 70%, rgba(49,130,206,.1), transparent 50%);
-      pointer-events: none;
-    }
-    .hero-inner { position: relative; z-index: 1; }
-    .hero-badge {
-      display: inline-flex; align-items: center; gap: 7px;
-      background: rgba(34,197,94,.18); border: 1px solid rgba(34,197,94,.35);
-      color: var(--accent); padding: 5px 14px; border-radius: 20px;
-      font-size: .78rem; font-weight: 700; text-transform: uppercase;
-      letter-spacing: .06em; margin-bottom: 18px;
-    }
-    .hero h1 { font-size: 2.3rem; font-weight: 800; margin-bottom: 14px; line-height: 1.15; }
-    .hero p  { font-size: 1.05rem; color: rgba(255,255,255,.75); max-width: 600px; margin: 0 auto 24px; }
-    .hero-links { display: flex; gap: 10px; justify-content: center; flex-wrap: wrap; }
-    .hero-link {
-      display: inline-flex; align-items: center; gap: 7px;
-      background: rgba(255,255,255,.1); color: rgba(255,255,255,.9);
-      text-decoration: none; padding: 8px 18px; border-radius: var(--r);
-      font-size: .88rem; border: 1px solid rgba(255,255,255,.2);
-      transition: background .18s;
-    }
-    .hero-link:hover { background: rgba(255,255,255,.18); }
-
-    /* ── LAYOUT ── */
-    .page-wrapper { max-width: 1140px; margin: 0 auto; padding: 0 24px; }
-
-    /* ── SOMMAIRE ── */
-    .sommaire {
-      background: var(--card); border: 1px solid var(--bord);
-      border-radius: var(--r-lg); padding: 28px; margin: 40px 0;
-      box-shadow: var(--shadow);
-    }
-    .sommaire-title {
-      font-size: .72rem; font-weight: 800; text-transform: uppercase;
-      letter-spacing: .08em; color: var(--txt2); margin-bottom: 16px;
-    }
-    .sommaire-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
-      gap: 10px;
-    }
-    .sommaire-item {
-      display: flex; align-items: center; gap: 10px;
-      padding: 10px 14px; border-radius: var(--r);
-      text-decoration: none; color: var(--txt);
-      border: 1.5px solid var(--bord);
-      transition: border-color .18s, background .18s, transform .18s;
-      font-size: .88rem; font-weight: 600;
-    }
-    .sommaire-item:hover {
-      border-color: var(--accent);
-      background: rgba(34,197,94,.04);
-      transform: translateY(-1px);
-    }
-    .sommaire-emoji { font-size: 1.2rem; flex-shrink: 0; }
-
-    /* ── ARTICLES ── */
-    .article-section {
-      margin-bottom: 56px;
-      scroll-margin-top: 80px;
-    }
-
-    /* En-tête d'article */
-    .article-header {
-      border-radius: var(--r-lg) var(--r-lg) 0 0;
-      padding: 32px 36px 28px;
-      color: #fff;
-      position: relative;
-      overflow: hidden;
-    }
-    .article-header::after {
-      content: '';
-      position: absolute; inset: 0;
-      background: rgba(0,0,0,.18);
-      pointer-events: none;
-    }
-    .article-header > * { position: relative; z-index: 1; }
-
-    .article-num {
-      display: inline-block;
-      font-size: .72rem; font-weight: 800; text-transform: uppercase;
-      letter-spacing: .1em; background: rgba(255,255,255,.2);
-      padding: 3px 10px; border-radius: 20px; margin-bottom: 10px;
-    }
-    .article-title {
-      font-size: 1.65rem; font-weight: 800; line-height: 1.2;
-      margin-bottom: 8px;
-    }
-    .article-subtitle {
-      font-size: .95rem; color: rgba(255,255,255,.8);
-    }
-    .article-stats {
-      display: flex; gap: 20px; margin-top: 16px; flex-wrap: wrap;
-    }
-    .article-stat {
-      font-size: .78rem; color: rgba(255,255,255,.75);
-      display: flex; align-items: center; gap: 5px;
-    }
-
-    /* Corps d'article */
-    .article-body {
-      background: var(--card); border: 1px solid var(--bord);
-      border-top: none; border-radius: 0 0 var(--r-lg) var(--r-lg);
-      padding: 0 36px 36px;
-      box-shadow: var(--shadow);
-    }
-
-    /* Sections internes */
-    .section-block {
-      padding-top: 32px;
-    }
-    .section-block + .section-block {
-      border-top: 1px solid var(--bord);
-      margin-top: 28px;
-    }
-    .section-label {
-      display: inline-flex; align-items: center; gap: 6px;
-      font-size: .7rem; font-weight: 800; text-transform: uppercase;
-      letter-spacing: .08em; color: var(--txt2);
-      background: #f0f4f8; padding: 3px 10px; border-radius: 20px;
-      margin-bottom: 10px;
-    }
-    .section-h {
-      font-size: 1.15rem; font-weight: 700;
-      margin-bottom: 12px; color: var(--txt);
-    }
-    .section-text {
-      font-size: .93rem; color: var(--txt2); line-height: 1.8;
-      margin-bottom: 14px;
-    }
-    .section-text:last-child { margin-bottom: 0; }
-    .section-text strong { color: var(--txt); }
-
-    /* Encart d'impact / témoignage */
-    .impact-box {
-      background: #f7fafc; border-left: 4px solid var(--bord);
-      border-radius: 0 var(--r) var(--r) 0;
-      padding: 16px 20px; margin: 18px 0;
-      font-size: .9rem; font-style: italic; color: var(--txt2);
-      line-height: 1.75;
-    }
-    .impact-box cite {
-      display: block; font-size: .78rem; font-style: normal;
-      font-weight: 700; color: var(--txt); margin-top: 8px;
-    }
-
-    /* Listes de bonnes pratiques */
-    .practices-grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-      gap: 14px;
-      margin: 18px 0;
-    }
-    .practice-card {
-      background: #f7fafc; border: 1px solid var(--bord);
-      border-radius: var(--r); padding: 16px;
-    }
-    .practice-card-title {
-      font-size: .85rem; font-weight: 700; margin-bottom: 8px;
-      display: flex; align-items: center; gap: 7px;
-    }
-    .practice-card ul {
-      list-style: none; padding: 0;
-      display: flex; flex-direction: column; gap: 5px;
-    }
-    .practice-card ul li {
-      font-size: .82rem; color: var(--txt2);
-      display: flex; align-items: flex-start; gap: 7px; line-height: 1.5;
-    }
-    .practice-card ul li::before {
-      content: '✓';
-      color: var(--accent); font-weight: 700; flex-shrink: 0;
-      margin-top: 1px;
-    }
-
-    /* Blocs de code */
-    .code-block {
-      background: var(--primaire); color: #e8e8f0;
-      border-radius: var(--r); padding: 18px 20px;
-      font-family: 'Courier New', monospace; font-size: .82rem;
-      line-height: 1.7; overflow-x: auto;
-      margin: 16px 0;
-    }
-    .code-comment { color: #6b7a99; }
-    .code-tag     { color: #93c5fd; }
-    .code-attr    { color: #86efac; }
-    .code-val     { color: #fcd34d; }
-    .code-str     { color: #fca5a5; }
-
-    /* Critères WCAG/RGAA */
-    .criteria-list {
-      display: flex; flex-direction: column; gap: 8px; margin: 16px 0;
-    }
-    .criterion {
-      background: var(--card); border: 1px solid var(--bord);
-      border-radius: var(--r); padding: 12px 16px;
-      display: flex; align-items: flex-start; gap: 12px;
-      font-size: .85rem;
-    }
-    .criterion-badge {
-      font-family: monospace; font-size: .75rem; font-weight: 700;
-      padding: 3px 8px; border-radius: 4px; flex-shrink: 0;
-      margin-top: 1px;
-    }
-    .badge-a   { background: #f0fff4; color: #276749; border: 1px solid #9ae6b4; }
-    .badge-aa  { background: #fffbeb; color: #b7791f; border: 1px solid #f6e05e; }
-    .badge-aaa { background: #fff5f5; color: #c53030; border: 1px solid #fed7d7; }
-    .criterion-text { color: var(--txt2); line-height: 1.55; }
-    .criterion-text strong { color: var(--txt); }
-
-    /* Encart outils */
-    .tools-box {
-      background: #f0f4f8; border-radius: var(--r);
-      padding: 18px 20px; margin: 16px 0;
-    }
-    .tools-box-title {
-      font-size: .78rem; font-weight: 800; text-transform: uppercase;
-      letter-spacing: .06em; color: var(--txt2); margin-bottom: 12px;
-    }
-    .tools-list {
-      display: flex; flex-wrap: wrap; gap: 8px;
-    }
-    .tool-tag {
-      background: var(--card); border: 1px solid var(--bord);
-      border-radius: 20px; padding: 4px 12px;
-      font-size: .78rem; font-weight: 600; color: var(--txt);
-      text-decoration: none; transition: border-color .15s, color .15s;
-    }
-    .tool-tag:hover { border-color: var(--accent); color: var(--accent); }
-
-    /* Encart "À ne pas faire" */
-    .dont-box {
-      background: #fff5f5; border: 1px solid #fed7d7;
-      border-radius: var(--r); padding: 16px 20px; margin: 14px 0;
-    }
-    .dont-box-title {
-      font-size: .78rem; font-weight: 800; color: var(--rouge);
-      text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px;
-    }
-    .dont-box ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 5px; }
-    .dont-box ul li { font-size: .85rem; color: #c53030; display: flex; gap: 7px; align-items: flex-start; line-height: 1.5; }
-    .dont-box ul li::before { content: '✗'; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-
-    /* Encart "À faire" */
-    .do-box {
-      background: #f0fff4; border: 1px solid #9ae6b4;
-      border-radius: var(--r); padding: 16px 20px; margin: 14px 0;
-    }
-    .do-box-title {
-      font-size: .78rem; font-weight: 800; color: #276749;
-      text-transform: uppercase; letter-spacing: .06em; margin-bottom: 8px;
-    }
-    .do-box ul { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 5px; }
-    .do-box ul li { font-size: .85rem; color: #276749; display: flex; gap: 7px; align-items: flex-start; line-height: 1.5; }
-    .do-box ul li::before { content: '✓'; font-weight: 700; flex-shrink: 0; margin-top: 1px; }
-
-    /* Résumé en carte */
-    .summary-card {
-      background: var(--primaire); color: #fff;
-      border-radius: var(--r); padding: 20px 24px; margin: 20px 0;
-    }
-    .summary-card-title { font-size: .78rem; font-weight: 800; text-transform: uppercase;
-      letter-spacing: .06em; color: rgba(255,255,255,.6); margin-bottom: 12px; }
-    .summary-pills { display: flex; flex-wrap: wrap; gap: 8px; }
-    .summary-pill {
-      background: rgba(34,197,94,.2); border: 1px solid rgba(34,197,94,.4);
-      color: var(--accent); padding: 4px 12px; border-radius: 20px;
-      font-size: .78rem; font-weight: 700;
-    }
-
-    /* Sources */
-    .sources-box {
-      background: #f7fafc; border: 1px solid var(--bord);
-      border-radius: var(--r); padding: 16px 20px; margin-top: 24px;
-    }
-    .sources-title {
-      font-size: .72rem; font-weight: 800; text-transform: uppercase;
-      letter-spacing: .06em; color: var(--txt2); margin-bottom: 10px;
-    }
-    .sources-list { list-style: none; padding: 0; display: flex; flex-direction: column; gap: 5px; }
-    .sources-list li { font-size: .78rem; color: var(--txt2); display: flex; gap: 6px; }
-    .sources-list a { color: var(--bleu); word-break: break-all; }
-
-    /* ── FOOTER ── */
-    .site-footer {
-      background: var(--primaire); color: rgba(255,255,255,.7);
-      text-align: center; padding: 32px 20px; font-size: .85rem;
-      margin-top: 60px;
-    }
-    .site-footer a { color: rgba(255,255,255,.7); }
-    .site-footer ul { list-style: none; display: flex; justify-content: center; gap: 24px; flex-wrap: wrap; margin-top: 8px; }
-
-    /* ── RESPONSIVE ── */
-    @media (max-width: 768px) {
-      .site-header nav { display: none; }
-      .hero h1 { font-size: 1.6rem; }
-      .article-header { padding: 22px 20px 18px; }
-      .article-body   { padding: 0 20px 24px; }
-      .practices-grid { grid-template-columns: 1fr; }
-    }
-    @media (prefers-reduced-motion: reduce) {
-      *, *::before, *::after { transition-duration: .01ms !important; animation-duration: .01ms !important; }
-    }
-  </style>
+<link rel="stylesheet" href="./styles/access.css">
 </head>
 <body>
 
@@ -407,7 +16,7 @@
      HEADER
 ══════════════════════════════════ -->
 <header class="site-header">
-  <a href="./index.html" class="logo" aria-label="IntA11Y - Solutions— Accueil">🎓 École du Web</a>
+  <a href="./index.html" class="logo" aria-label="IntA11Y - Solutions — Accueil">🎓 IntA11Y - Solutions</a>
   <nav aria-label="Navigation principale">
     <ul>
       <li><a href="./index.html">Référence HTML5</a></li>
@@ -415,7 +24,25 @@
       <li><a href="./accessibilite-handicaps.html" aria-current="page" class="active">Accessibilité</a></li>
     </ul>
   </nav>
+  <button class="site-burger"
+          type="button"
+          id="site-burger"
+          aria-controls="site-mobile-panel"
+          aria-expanded="false"
+          aria-label="Ouvrir le menu de navigation">
+    <span aria-hidden="true" id="site-burger-ico">☰</span>
+  </button>
 </header>
+
+<div class="site-mobile-nav" id="site-mobile-panel" hidden>
+  <nav aria-label="Navigation mobile">
+    <ul>
+      <li><a href="./index.html">🏗️ Référence HTML5</a></li>
+      <li><a href="./patterns.html">🎨 Design Patterns</a></li>
+      <li><a href="./accessibilite-handicaps.html" class="mobile-cta">♿ Accessibilité</a></li>
+    </ul>
+  </nav>
+</div>
 
 <!-- ══════════════════════════════════
      HERO
@@ -676,7 +303,7 @@ document.getElementById(<span class="code-str">'btn-police-dys'</span>).addEvent
        ARTICLE 2 — TDAH
   ════════════════════════════════ -->
   <article class="article-section" id="article-tdah" aria-labelledby="titre-tdah">
-    <header class="article-header" style="background: linear-gradient(135deg, #b45309, #92400e);">
+    <header class="article-header" style="background: linear-gradient(135deg, #92400e, #7c2d12);">
       <span class="article-num">Article 02</span>
       <h2 class="article-title" id="titre-tdah">⚡ Le TDAH</h2>
       <p class="article-subtitle">Trouble du Déficit de l'Attention avec ou sans Hyperactivité</p>
@@ -1305,7 +932,7 @@ bouton.addEventListener(<span class="code-str">"click"</span>, supprimerFichier)
        <span class="code-attr">aria-invalid</span>=<span class="code-val">"true"</span>
        <span class="code-attr">aria-describedby</span>=<span class="code-val">"email-err"</span><span class="code-tag">&gt;</span>
 <span class="code-tag">&lt;span</span> <span class="code-attr">id</span>=<span class="code-val">"email-err"</span> <span class="code-attr">role</span>=<span class="code-val">"alert"</span><span class="code-tag">&gt;</span>
-  ⚠ Format invalide — Ex : nom@domaine.com
+  ⚠ Format invalide — Ex : contact&#64;intally-solutions.fr
 <span class="code-tag">&lt;/span&gt;</span>
 
 <span class="code-comment">/* Indicateur visuel multi-canal */</span>
@@ -1827,7 +1454,7 @@ Aujourd'hui nous allons créer un formulaire accessible.
      FOOTER
 ══════════════════════════════════ -->
 <footer class="site-footer">
-  <p>© IntA11Y - Solutions<span id="yr-a"></span> — Articles accessibilité numérique</p>
+  <p>© IntA11Y - Solutions <span id="yr-a"></span> — Articles accessibilité numérique</p>
   <p style="font-size:.78rem;margin-top:6px;color:rgba(255,255,255,.5);">
     Sources vérifiées : DINUM (accessibilite.numerique.gouv.fr), W3C WAI, Orange a11y-guidelines, 24 Jours de Web, DesignGouv — Dernière mise à jour mars 2026
   </p>
@@ -1840,12 +1467,6 @@ Aujourd'hui nous allons créer un formulaire accessible.
   </nav>
 </footer>
 
-<script>
-(function () {
-  // Année footer
-  var yr = document.getElementById("yr-a");
-  if (yr) yr.textContent = new Date().getFullYear();
-}());
-</script>
+<script src="./scripts/access.js"></script>
 </body>
 </html>
